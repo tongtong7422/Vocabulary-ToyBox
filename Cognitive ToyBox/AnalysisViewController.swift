@@ -92,7 +92,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     chart.autoresizingMask = .FlexibleWidth | .FlexibleHeight
     
     // title
-    let categories = catAxis.categories() as [NSDate]
+    let categories = catAxis.categories() as! [NSDate]
     var formatter = NSDateFormatter()
     formatter.calendar = NSCalendar.currentCalendar()
     formatter.dateFormat = "MMM dd"
@@ -233,8 +233,8 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
         y: PerformanceData(total: total, correct: correct).accuracy))
     }
     
-    var firstViewedSeries = TKChartColumnSeries(items: firstViewedItems)
-    var totalViewedSeries = TKChartColumnSeries(items: totalViewedItems)
+    var firstViewedSeries = TKChartColumnSeries(items: firstViewedItems as [AnyObject])
+    var totalViewedSeries = TKChartColumnSeries(items: totalViewedItems as [AnyObject])
     
     
     var stackInfo = TKChartStackInfo(ID: 1, withStackMode: TKChartStackModeStack)
@@ -260,7 +260,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
-    var performanceSeries = TKChartLineSeries(items: performanceItems)
+    var performanceSeries = TKChartLineSeries(items: performanceItems as [AnyObject])
 //    performanceSeries.style.pointShape = TKPredefinedShape(type: TKShapeTypeCircle, andSize: CGSizeMake(8, 8))
     
     performanceSeries.yAxis = performanceAxis

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 class UserViewController: UIViewController, UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
   
@@ -18,6 +19,33 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   var sourceViewController: UIViewController? = nil
   
   private var userList: [UserInfo] = []
+  
+  private var _taskCount = 0
+  var taskCount:Int {
+    get {
+      return _taskCount
+    }
+    set {
+      _taskCount = newValue
+      if newValue > 2 {
+        _taskCount = 1
+        displayTutorialOptions()
+      }
+    }
+  }
+  func displayTutorialOptions () {
+    tutorialPlayButton.hidden = false
+    tutorialAnotherButton.hidden = false
+    tutorialView.paused = true
+  }
+  func hideTutorialOptions() {
+    tutorialPlayButton.hidden = true
+    tutorialAnotherButton.hidden = true
+    tutorialView.paused = false
+  }
+  @IBAction func doMoreTutorial(sender: UIButton) {
+    hideTutorialOptions()
+  }
   
   @IBOutlet weak var userCollectionView: UICollectionView!
   let reuseIdentifier = "userCell"
@@ -32,6 +60,10 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   @IBOutlet weak var freeButton: UIButton!
   @IBOutlet weak var timedButton: UIButton!
   @IBOutlet weak var cameraButton: UIButton!
+  @IBOutlet weak var tutorialOverlay: UIView!
+  @IBOutlet weak var tutorialView: SKView!
+  @IBOutlet weak var tutorialPlayButton: UIButton!
+  @IBOutlet weak var tutorialAnotherButton: UIButton!
   
   var userIcon:UIImage! = nil
   
@@ -79,12 +111,17 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
 //      }
 //    }
 //  }
+  @IBAction func startTutorial(sender: UIButton) {
+    tutorialOverlay.hidden = false
+//    tutorialView.presentScene(TutorialScene(size: tutorialView.frame.size))
+    presentTutorialScene()
+  }
   @IBAction func freeGame(sender: UIButton) {
-    UserInfoHelper.clearUser()
+//    UserInfoHelper.clearUser()
     self.performSegueWithIdentifier("gameViewSegueFree", sender: sender)
   }
   @IBAction func timedGame(sender: UIButton) {
-    UserInfoHelper.clearUser()
+//    UserInfoHelper.clearUser()
     self.performSegueWithIdentifier("gameViewSegueTimed", sender: sender)
   }
   @IBAction func settings(sender: UIButton) {
@@ -100,7 +137,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   
   // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    var cell: UserCollectionViewCell = userCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as UserCollectionViewCell
+    var cell: UserCollectionViewCell = userCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UserCollectionViewCell
     
     /* configure cell */
     var imageView = UIImageView(frame: cell.frame)
@@ -119,7 +156,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   }
   
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    var cell: UserCollectionViewCell = userCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as UserCollectionViewCell
+    var cell: UserCollectionViewCell = userCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UserCollectionViewCell
     
     if isNewUserIcon(indexPath: indexPath) {
       self.initLoginPanel()
@@ -131,7 +168,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   }
   
   func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {
-    var cell: UserCollectionViewCell = userCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as UserCollectionViewCell
+    var cell: UserCollectionViewCell = userCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UserCollectionViewCell
     
     
   }
@@ -148,13 +185,13 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   private func showLoginPanel () {
     let duration:NSTimeInterval = 0.2
     UIView.animateWithDuration(duration, animations: { () -> Void in
-      self.howToPlayButton.alpha = 0
+//      self.howToPlayButton.alpha = 0
       self.userCollectionView.alpha = 0
       self.freeButton.alpha = 0
       self.timedButton.alpha = 0
       }) { (isComplete:Bool) -> Void in
         if isComplete {
-          self.howToPlayButton.hidden = true
+//          self.howToPlayButton.hidden = true
           self.userCollectionView.hidden = true
           self.freeButton.hidden = true
           self.timedButton.hidden = true
@@ -169,7 +206,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
           
           self.loginPanelHidden = false
         } else {
-          self.howToPlayButton.alpha = 1
+//          self.howToPlayButton.alpha = 1
           self.userCollectionView.alpha = 1
           self.freeButton.alpha = 1
           self.timedButton.alpha = 1
@@ -187,7 +224,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
       self.addUserButton.alpha = 0
       }) { (isComplete:Bool) -> Void in
         if isComplete {
-          self.howToPlayButton.hidden = false
+//          self.howToPlayButton.hidden = false
           self.userCollectionView.hidden = false
           self.freeButton.hidden = false
           self.timedButton.hidden = false
@@ -196,7 +233,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
           self.addUserButton.hidden = true
           
           UIView.animateWithDuration(duration, animations: { () -> Void in
-            self.howToPlayButton.alpha = 1
+//            self.howToPlayButton.alpha = 1
             self.userCollectionView.alpha = 1
             self.freeButton.alpha = 1
             self.timedButton.alpha = 1
@@ -288,6 +325,16 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
     
   }
   
+  func presentTutorialScene () {
+    var scene = TutorialScene(size: tutorialView.frame.size)
+    scene.scaleMode = .ResizeFill
+    scene.userViewController = self
+    
+    tutorialView.presentScene(scene)
+    
+    self.taskCount++
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -303,6 +350,9 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
     self.userCollectionView.allowsSelection = true
     self.userCollectionView.allowsMultipleSelection = false
     
+    self.tutorialOverlay.hidden = true
+    self.tutorialPlayButton.hidden = true
+    self.tutorialAnotherButton.hidden = true
     
     userList = UserInfoHelper.getUserList()
 //    dateOfBirthTextField.inputView = datePicker
@@ -324,6 +374,12 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
     SoundSourceHelper.playInitialSong()
   }
   
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    tutorialOverlay.hidden = true
+    tutorialView.presentScene(nil)
+  }
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -334,7 +390,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
 //    self.view.endEditing(true)
 //  }
   
-  func textFieldShouldReturn(textField: UITextField!) -> Bool {
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
   }
@@ -354,24 +410,22 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "infoSegue" {
-      let popoverSegue = segue as UIStoryboardPopoverSegue
-      
-      
-      let infoViewController = popoverSegue.destinationViewController as InfoViewController
+      let popoverSegue = segue as! UIStoryboardPopoverSegue
+      let infoViewController = popoverSegue.destinationViewController as! InfoViewController
       infoViewController.popoverController = popoverSegue.popoverController
-      
+      infoViewController.sourceViewController = self
       
     } else if segue.identifier == "gameViewSegueTimed" {
-      (segue.destinationViewController as GameViewController).timed = true
+      (segue.destinationViewController as! GameViewController).timed = true
       
     } else if segue.identifier == "gameViewSegueFree" {
-      (segue.destinationViewController as GameViewController).counted = true
+      (segue.destinationViewController as! GameViewController).counted = true
     } else if segue.identifier == "datePickerSegue" {
-      let popoverSegue = segue as UIStoryboardPopoverSegue
-      let datePickerViewController = popoverSegue.destinationViewController as DatePickerViewController
+      let popoverSegue = segue as! UIStoryboardPopoverSegue
+      let datePickerViewController = popoverSegue.destinationViewController as! DatePickerViewController
       datePickerViewController.userViewController = self
     } else if segue.identifier == "cameraSegue" {
-      (segue.destinationViewController as CameraViewController).userViewController = self
+      (segue.destinationViewController as! CameraViewController).userViewController = self
     }
   }
   

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Cognitive_ToyBox
+import Blicket
 import UIKit
 import CoreData
 
@@ -116,7 +116,7 @@ class CTBObjectTest: XCTestCase {
     XCTAssert(ctbObj.color == nil)
     
     
-    var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var context:NSManagedObjectContext = appDelegate.managedObjectContext!
     
     var error : NSErrorPointer = nil
@@ -127,7 +127,7 @@ class CTBObjectTest: XCTestCase {
     request.predicate = predicate
     
     var results = context.executeFetchRequest(request, error: error)! as NSArray
-    var first = results.firstObject as NSManagedObject
+    var first = results.firstObject as! NSManagedObject
     
     ctbObj = CognitiveToyBoxObjectBuilder().buildFromNSManagedObject(first)
     XCTAssert(ctbObj.name == "apple")

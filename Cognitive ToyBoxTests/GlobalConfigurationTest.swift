@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 import XCTest
-import Cognitive_ToyBox
+import Blicket
 
 class GlobalConfigurationTest: XCTestCase {
   
@@ -114,14 +114,14 @@ class GlobalConfigurationTest: XCTestCase {
 }
 
 private class TestGameController: NSObject, ConfigurableGameController {
-  var stage: Stages.RawValue = 0
+  @objc var stage: Stages.RawValue = 0
   var categories = NSSet()
   
-  var numMatchingTasksBeforeFakeObjects: Int = 0
-  var numFakeObjectsAfterMatchingTasks: Int = 0
+  @objc var numMatchingTasksBeforeFakeObjects: Int = 0
+  @objc var numFakeObjectsAfterMatchingTasks: Int = 0
   
-  var numMatchingTasksBeforeVocabularyWords: Int = 0
-  var numVocabularyWordsAfterMatchingTasks: Int = 0
+  @objc var numMatchingTasksBeforeVocabularyWords: Int = 0
+  @objc var numVocabularyWordsAfterMatchingTasks: Int = 0
   
   override init () {
     super.init()
@@ -130,7 +130,7 @@ private class TestGameController: NSObject, ConfigurableGameController {
 }
 
 private class TestScene: SKScene, ConfigurableScene {
-  var background: SKSpriteNode! = nil
+  @objc var background: SKSpriteNode! = nil
   override init() {
     super.init()
   }
@@ -145,9 +145,9 @@ private class TestScene: SKScene, ConfigurableScene {
 }
 
 private class TestActionHelper: NSObject, ConfigurableActionHelper {
-  var newSessionInterval: NSTimeInterval = 0
-  var objectPresentMode: ObjectPresentMode.RawValue = ""
-  var playtimeInterval: NSTimeInterval = 0
+  @objc var newSessionInterval: NSTimeInterval = 0
+  @objc var objectPresentMode: ObjectPresentMode.RawValue = ""
+  @objc var playtimeInterval: NSTimeInterval = 0
   override init () {
     super.init()
     GlobalConfiguration.addActionHelper(self)
@@ -155,11 +155,11 @@ private class TestActionHelper: NSObject, ConfigurableActionHelper {
 }
 
 private class TestSoundSourceHelper: NSObject, ConfigurableSoundSourceHelper {
-  var rewardSoundName: RewardSoundName.RawValue = RewardSoundName.RightToneOne.rawValue
-  var errorSoundName: ErrorSoundName.RawValue = ErrorSoundName.WrongToneA.rawValue
-  var playtimeSongName: PlaytimeSongName.RawValue = PlaytimeSongName.FirstSong.rawValue
+  @objc var rewardSoundName: RewardSoundName.RawValue = RewardSoundName.RightToneOne.rawValue
+  @objc var errorSoundName: ErrorSoundName.RawValue = ErrorSoundName.WrongToneA.rawValue
+  @objc var playtimeSongName: PlaytimeSongName.RawValue = PlaytimeSongName.FirstSong.rawValue
   
-  func mute(boolValue: Bool) {
+  @objc func mute(boolValue: Bool) {
     return
   }
   override init () {

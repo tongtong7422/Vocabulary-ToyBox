@@ -12,7 +12,7 @@ import UIKit
 class CenterFlowLayout: UICollectionViewFlowLayout {
   
   override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
-    var superAttributes = super.layoutAttributesForElementsInRect(rect) as [UICollectionViewLayoutAttributes]
+    var superAttributes = super.layoutAttributesForElementsInRect(rect) as! [UICollectionViewLayoutAttributes]
     
     var rowCollections:NSMutableDictionary = [:]
     
@@ -30,7 +30,7 @@ class CenterFlowLayout: UICollectionViewFlowLayout {
     
     // Adjust the items in each row
     rowCollections.enumerateKeysAndObjectsUsingBlock { (key, obj, stop) -> Void in
-      let itemAttributesCollection = obj as [UICollectionViewLayoutAttributes]
+      let itemAttributesCollection = obj as! [UICollectionViewLayoutAttributes]
       let itemsInRow = itemAttributesCollection.count
       
       // x-x-x-x ... sum up the interim space

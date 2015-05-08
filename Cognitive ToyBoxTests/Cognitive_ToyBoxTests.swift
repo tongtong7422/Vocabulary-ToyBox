@@ -8,7 +8,7 @@
 
 import XCTest
 import UIKit
-import Cognitive_ToyBox
+import Blicket
 import CoreData
 
 class Cognitive_ToyBoxTests: XCTestCase {
@@ -42,7 +42,7 @@ class Cognitive_ToyBoxTests: XCTestCase {
         var objects = ImageSourceHelper.getObjFromDir()
         GlobalConfiguration.refreshCoreData()
         
-        var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         var context:NSManagedObjectContext = appDelegate.managedObjectContext!
         
         NSLog("Clearing Core Data...")

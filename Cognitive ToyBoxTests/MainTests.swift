@@ -8,7 +8,7 @@
 //
 //import UIKit
 //import XCTest
-//import Cognitive_ToyBox
+//import Blicket
 //
 //class MainTests: XCTestCase {
 //  

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Cognitive_ToyBox
+import Blicket
 
 class DateHelperTest: XCTestCase {
   

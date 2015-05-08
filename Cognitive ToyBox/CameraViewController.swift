@@ -17,7 +17,7 @@ class CameraViewController: UIImagePickerController, UINavigationControllerDeleg
   }
   
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-    var originalImage = info["UIImagePickerControllerOriginalImage"] as UIImage
+    var originalImage = info["UIImagePickerControllerOriginalImage"] as! UIImage
     
     /* resize image */
 //    var image = UIImage(CGImage: originalImage.CGImage, scale: userViewController.cameraButton.frame.size.width / originalImage.size.width, orientation: originalImage.imageOrientation)!

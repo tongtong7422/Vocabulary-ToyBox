@@ -15,13 +15,13 @@ import SpriteKit
 extension SKNode {
   class func unarchiveFromFile(file : NSString) -> SKNode? {
     
-    let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks")
+    let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks")
     
     var sceneData = NSData(contentsOfFile: path!, options: .DataReadingMappedIfSafe, error: nil)
     var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
     
     archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-    let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
+    let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
     archiver.finishDecoding()
     return scene
   }
@@ -40,7 +40,7 @@ public class GameViewController: UIViewController {
   
   enum Layers : CGFloat {
     case Bottom = -1000
-    case Top = 200
+    case Top = 100
     case AboveBottom = 0
     case BearBody = 1
     case BearObject = 2
@@ -59,26 +59,51 @@ public class GameViewController: UIViewController {
   @IBOutlet weak var timeCountLabel: UILabel!
   @IBOutlet weak var taskCountLabel: UIButton!
   
+  @IBOutlet weak var rewardView: UIView!
   @IBOutlet weak var continueButton: UIButton!
   @IBAction func continueGame(sender: UIButton) {
-    self.continueButton.hidden = true
-    self.quitButton.hidden = true
-    self.homeButton.hidden = false
+    
+//    self.continueButton.hidden = true
+//    self.quitButton.hidden = true
+//    self.homeButton.hidden = false
     setTimer()
 //    self.displayStartScene()
     self.counterReset = true
+    self.rewardView.hidden = true
+    
     self.presentWelcomeScene()
+    skView.paused = false
+    
   }
+  @IBOutlet weak var continueButtonBorder: UIImageView!
   @IBOutlet weak var quitButton: UIButton!
   @IBAction func quitGame(sender: UIButton) {
     GlobalConfiguration.releaseScene(self.skView.scene)
     ActionHelper.releaseBearAtlas()
     self.dismissViewControllerAnimated(false) {}
   }
+  @IBOutlet weak var quitButtonBorder: UIImageView!
   
   @IBAction func stayInGame(sender: UIButton) {
     homePanel.hidden = true
     skView.paused = false
+  }
+  
+  func displayQuitPanel () {
+    skView.paused = true
+    GlobalConfiguration.releaseScene(self.skView.scene)
+    ActionHelper.releaseBearAtlas()
+    //    let scene = QuitScene(size: skView.bounds.size)
+    //    scene.scaleMode = .ResizeFill
+    //    skView.presentScene(scene)
+    
+    //    self.homeButton.hidden = true
+    //    self.continueButton.hidden = false
+    //    self.quitButton.hidden = false
+    self.rewardView.hidden = false
+    self.timer?.invalidate()
+    
+    
   }
   
   
@@ -179,10 +204,13 @@ public class GameViewController: UIViewController {
     gameController.startNewSession(updateTaskManager: newScene)
     if gameController.task == .Match || gameController.task == .Vocabulary {
       scene = GameScene(size: skView.bounds.size)
-      (scene as GameScene).gameViewController = self
+      (scene as! GameScene).gameViewController = self
     } else if gameController.task == .Drag1 {
       scene = DragScene1(size: skView.bounds.size)
-      (scene as DragScene1).gameViewController = self
+      (scene as! DragScene1).gameViewController = self
+    } else if gameController.task == .Drag2 {
+      scene = DragScene2(size: skView.bounds.size)
+      (scene as! DragScene2).gameViewController = self
     } else {
       NSException().raise()
       return
@@ -215,9 +243,9 @@ public class GameViewController: UIViewController {
       fromScene.correctNode.removeAllActions()
       fromScene.correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
       if gameController.task != .Vocabulary {
-        scene.addNode(fromScene.mainObjectNode.copy() as SKSpriteNode, id: gameController.getMainObj().id)
+        scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
       }
-      scene.addNode(fromScene.correctNode.copy() as SKSpriteNode, id: gameController.getCorrectObj().id)
+      scene.addNode(fromScene.correctNode.copy() as! SKSpriteNode, id: gameController.getCorrectObj().id)
       
 //      scene.mainNode = gameScene.mainObjectNode.copy() as SKSpriteNode
 //      scene.mainNode.hidden = (gameScene.gameController.task == .Vocabulary)
@@ -230,7 +258,7 @@ public class GameViewController: UIViewController {
       if let mainNode_2 = fromScene.thirdOptionNode {
         mainNode_2.removeAllActions()
         mainNode_2.runAction(SKAction.rotateToAngle(0, duration: 0))
-        scene.addNode(mainNode_2.copy() as SKSpriteNode, id: fromScene.objectList[fromScene.thirdOptionIndex].id)
+        scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.thirdOptionIndex].id)
 //        scene.mainNode_2 = mainNode_2.copy() as? SKSpriteNode
 //        scene.mainNode_2?.hidden = (gameScene.gameController.task == .Vocabulary)
 //        if !scene.mainNode_2!.hidden {
@@ -245,28 +273,29 @@ public class GameViewController: UIViewController {
       fromScene.correctNode?.removeAllActions()
       fromScene.wrongNode?.removeAllActions()
       
-      scene.addNode(fromScene.mainObjectNode.copy() as SKSpriteNode, id: gameController.getMainObj().id)
+      scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
       var correctObjList = gameController.getCorrectObjList()
       var correctNodeList = fromScene.correctNodeList
       for index in 0..<correctObjList.count {
-        scene.addNode(correctNodeList[index+1].copy() as SKSpriteNode, id: correctObjList[index].id)
+        /* Dummy node is ignored */
+        scene.addNode(correctNodeList[index+1].copy() as! SKSpriteNode, id: correctObjList[index].id)
+      }
+    } else if let fromScene = skView.scene as? DragScene2 {
+      fromScene.mainObjectNode.removeAllActions()
+      fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
+      fromScene.correctNode?.removeAllActions()
+      fromScene.wrongNode?.removeAllActions()
+      
+      scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
+      var correctObjList = gameController.getCorrectObjList()
+      var correctNodeList = fromScene.correctNodeList
+      for index in 0..<correctObjList.count {
+        scene.addNode(correctNodeList[index].copy() as! SKSpriteNode, id: correctObjList[index].id)
       }
     }
     
     skView.presentScene(scene)
     
-  }
-  
-  func displayQuitPanel () {
-    GlobalConfiguration.releaseScene(self.skView.scene)
-    ActionHelper.releaseBearAtlas()
-    let scene = QuitScene(size: skView.bounds.size)
-    scene.scaleMode = .ResizeFill
-    skView.presentScene(scene)
-    self.homeButton.hidden = true
-    self.continueButton.hidden = false
-    self.quitButton.hidden = false
-    self.timer?.invalidate()
   }
   
   @IBOutlet weak var containerView: UIView!
@@ -287,7 +316,6 @@ public class GameViewController: UIViewController {
     GlobalConfiguration.checkStageUpdate()
     
     /* assign user */
-//    UserInfoHelper.switchUser(UserInfoHelper.getUserList().first)
     UserInfoHelper.switchUser(UserInfoHelper.getUserInfo())
     
     
@@ -311,9 +339,30 @@ public class GameViewController: UIViewController {
     //            skView.presentScene(scene)
     //        }
     
-    self.continueButton.hidden = true
-    self.quitButton.hidden = true
+//    self.continueButton.hidden = true
+//    self.quitButton.hidden = true
+    self.rewardView.hidden = true
     self.homePanel.hidden = true
+    
+    /* make button alive */
+    continueButton.imageView?.animationImages = [UIImage(named: "bearWaving1")!, UIImage(named: "bearWaving2")!]
+    continueButton.imageView?.animationDuration = 0.4
+    continueButton.imageView?.startAnimating()
+    
+    quitButton.imageView?.animationImages = [UIImage(named: "bearSleeping1")!, UIImage(named: "bearSleeping2")!, UIImage(named: "bearSleeping3")!]
+    quitButton.imageView?.animationDuration = 0.6
+    quitButton.imageView?.startAnimating()
+    
+    var buttonBorderImages = [UIImage(named: "emptyButton1")!, UIImage(named:"emptyButton2")!]
+    continueButtonBorder.animationImages = buttonBorderImages
+    continueButtonBorder.animationDuration = 0.4
+    continueButtonBorder.startAnimating()
+    
+    quitButtonBorder.animationImages = buttonBorderImages
+    quitButtonBorder.animationDuration = 0.4
+    quitButtonBorder.startAnimating()
+    
+    
     
     var longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressHandler")
     longPressRecognizer.minimumPressDuration = 3
@@ -350,7 +399,7 @@ public class GameViewController: UIViewController {
   
   override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
     if segue.identifier == "userSignUpSegue" {
-      (segue.destinationViewController as UserViewController).sourceViewController = self
+      (segue.destinationViewController as! UserViewController).sourceViewController = self
     } else if segue.identifier == "settingsModal" {
 //      (segue.destinationViewController as SettingsViewController).gameViewController = self
     }

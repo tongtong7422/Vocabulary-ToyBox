@@ -332,7 +332,7 @@ class SettingsViewController: UIViewController {
     
     SoundSourceHelper.playInitialSong()
     
-    let skView = self.view as SKView
+    let skView = self.view as! SKView
     
     if settingsScene == nil {
       settingsScene = SettingsScene(size: skView.bounds.size)
@@ -374,19 +374,19 @@ class SettingsViewController: UIViewController {
     
     
     if segue.identifier == "infoPopover" {
-      let popoverSegue = segue as UIStoryboardPopoverSegue
+      let popoverSegue = segue as! UIStoryboardPopoverSegue
       
       
-      let infoViewController = popoverSegue.destinationViewController as InfoViewController
+      let infoViewController = popoverSegue.destinationViewController as! InfoViewController
       infoViewController.popoverController = popoverSegue.popoverController
       
       
     }
     else if segue.identifier == "analysisPopover" {
-      let popoverSegue = segue as UIStoryboardPopoverSegue
+      let popoverSegue = segue as! UIStoryboardPopoverSegue
       
       
-      let analysisViewController = popoverSegue.destinationViewController as AnalysisViewController
+      let analysisViewController = popoverSegue.destinationViewController as! AnalysisViewController
       analysisViewController.popoverController = popoverSegue.popoverController
     }
     //    else if segue.identifier == "settingsPopover" {

@@ -24,7 +24,31 @@ public class CognitiveToyBoxObject : NSObject {
   
   public class var allObjects: [String] {
     get {
-      return ["apple", "bowl", "bucket", "fork", "guitar", "spoon", "mug", "hammer", "kettle", "pot", "horn", "paddle", "rudder", "trophy", "lug", "wif", "zup"]
+      return ["apple", "ball", "balloon", "bottle", "bowl", "bucket", "chair", "fork", "guitar", "hammer", "hat", "spoon", "mug", "kettle", "horn", "paddle", "plate", "pot", "rudder", "trophy", "table", "dax", "ibb", "lug", "pux", "veet", "wif", "yen", "zup"]
+    }
+  }
+  
+  public class var stage1Objects: [String] {
+    get {
+      return ["apple", "bottle", "ball", "balloon", "bowl", "bucket", "chair", "guitar", "hat", "spoon", "mug"]
+    }
+  }
+  
+  public class var stage2Objects: [String] {
+    get {
+      return ["kettle", "horn", "paddle", "plate", "rudder", "trophy", "table"]
+    }
+  }
+  
+  public class var stage3Objects: [String] {
+    get {
+      return ["dax", "ibb", "lug", "pux", "veet", "wif", "yen", "zup"]
+    }
+  }
+  
+  public class var tutorialObjects: [String] {
+    get {
+      return ["t_apple", "t_bowl", "t_bucket", "t_dax", "t_fork", "t_guitar", "t_hammer", "t_horn", "t_ibb", "t_kettle", "t_mug", "t_paddle", "t_pot", "t_pux", "t_rudder", "t_spoon", "t_trophy", "t_veet", "t_wif", "t_yen", "t_zup"]
     }
   }
   
@@ -102,6 +126,20 @@ public class CognitiveToyBoxObject : NSObject {
       let tail = glowName.substringFromIndex(index) // the rest
       return "\(head)2_\(tail)"
     }
+  }
+  
+  public var pluralName: String {
+    get {
+      return CognitiveToyBoxObject.getPluralName(self.name)
+    }
+  }
+  
+  public class func getPluralName (name: String) -> String {
+    if name.hasSuffix("y") {
+      return name.substringToIndex(name.endIndex.predecessor()) + "ies"
+    }
+    
+    return name + "s"
   }
   
   public var playtimeImageFileName: String {
@@ -265,8 +303,8 @@ public class CognitiveToyBoxObjectBuilder {
   }
   
   public func buildFromNSManagedObject (nsmObject:NSManagedObject) -> CognitiveToyBoxObject {
-    self.id = nsmObject.valueForKey("id") as Int
-    self.name = nsmObject.valueForKey("name") as String
+    self.id = nsmObject.valueForKey("id") as! Int
+    self.name = nsmObject.valueForKey("name") as! String
     self.material = nsmObject.valueForKey("material") as? String
     self.color = nsmObject.valueForKey("color") as? String
     self.suffix = nsmObject.valueForKey("suffix") as? String

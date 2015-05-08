@@ -1,44 +1,97 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="5cM-B6-6yH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="5cM-B6-6yH">
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="znuscriptheavy-webfont.ttf">
+            <string>ZNuscriptHeavy-Medium</string>
+            <string>ZNuscriptHeavy-Medium</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Info View Controller-->
         <scene sceneID="3eN-gL-olM">
             <objects>
-                <viewController storyboardIdentifier="infoViewController" id="jbZ-yj-uc8" customClass="InfoViewController" customModule="Cognitive_ToyBox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="infoViewController" id="jbZ-yj-uc8" customClass="InfoViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="26Q-nV-YGP">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="agq-qk-eEM">
-                                <rect key="frame" x="20" y="20" width="984" height="728"/>
+                            <view contentMode="scaleToFill" id="0IS-wQ-mkO">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Cognitive ToyBox produces toys to give your child a developmental edge. We bring cutting edge academic research to market in the form of educational toys, so that your child can benefit from toys with proven, scientific results.
-
-The Object Word Booster game teaches your child something called the “shape bias” --the fact that objects that have the same name tend to have the same shape (“balls” are round, “cars” are car-shaped, etc), while other features such as size, color and texture are less important. By locating the matching object with the same shape, rather than color or texture, your child will get specialized training in the shape bias in the form of a fun game. In the lab, toddlers who learned the shape bias at 17 months, through 7 once-a-week concentrated training sessions with nonsense words, learned three times as many real  object words when compared to control groups during that period. </string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="infoCard" id="HY0-cp-4dJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" id="V2J-pU-Ksw">
+                                        <rect key="frame" x="142" y="185" width="740" height="525"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HjY-Nc-qwV">
+                                        <rect key="frame" x="73" y="22" width="879" height="147"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="ZNuscriptHeavy-Medium" family="ZNuscriptHeavy" pointSize="42"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pdF-Cl-OUa">
+                                        <rect key="frame" x="443" y="312" width="139" height="143"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="playButton_info">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playButtonTouched:" destination="jbZ-yj-uc8" eventType="touchUpInside" id="g6I-Li-5Qc"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ol3-tg-aST">
+                                <rect key="frame" x="16" y="20" width="41" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="exitButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="exit:" destination="jbZ-yj-uc8" eventType="touchUpInside" id="Fco-uU-q0s"/>
+                                </connections>
+                            </button>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="DHU-qF-8rG">
+                                <rect key="frame" x="493" y="711" width="39" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="currentPageIndicatorTintColor" red="0.98431372549019602" green="0.99607843137254903" blue="0.73725490196078436" alpha="1" colorSpace="deviceRGB"/>
+                                <connections>
+                                    <action selector="pageChanged:" destination="jbZ-yj-uc8" eventType="valueChanged" id="LHB-73-NEi"/>
+                                </connections>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Wu8-g5-Kut"/>
                     <connections>
-                        <outlet property="textView" destination="agq-qk-eEM" id="VMV-e2-LeB"/>
+                        <outlet property="closeButton" destination="Ol3-tg-aST" id="ehG-3Z-TXA"/>
+                        <outlet property="infoCard" destination="HY0-cp-4dJ" id="fjI-W6-dHh"/>
+                        <outlet property="interView" destination="0IS-wQ-mkO" id="sxD-Ux-fKX"/>
+                        <outlet property="label" destination="HjY-Nc-qwV" id="CGV-YZ-fcW"/>
+                        <outlet property="pageControl" destination="DHU-qF-8rG" id="IE6-AK-Yj7"/>
+                        <outlet property="paperView" destination="V2J-pU-Ksw" id="0T3-Gd-gxG"/>
+                        <outlet property="playButton" destination="pdF-Cl-OUa" id="J8B-sQ-f1X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uWu-B1-8ZK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="319" y="-777"/>
+            <point key="canvasLocation" x="388" y="-788"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController restorationIdentifier="GameViewController" id="BV1-FR-VrT" customClass="GameViewController" customModule="Cognitive_ToyBox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="GameViewController" id="BV1-FR-VrT" customClass="GameViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="Game View" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,30 +101,10 @@ The Object Word Booster game teaches your child something called the “shape bi
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="homeButton"/>
                                 <connections>
-                                    <action selector="homeTouchedInitial:" destination="BV1-FR-VrT" eventType="touchUpInside" id="YoG-z1-evu"/>
+                                    <action selector="homeTouched:" destination="BV1-FR-VrT" eventType="touchUpInside" id="4jA-Ye-1N4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bVQ-yI-qnY">
-                                <rect key="frame" x="197" y="390" width="217" height="215"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <state key="normal" image="continueButton">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="continueGame:" destination="BV1-FR-VrT" eventType="touchUpInside" id="afB-wy-dAJ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zjV-HT-MJd">
-                                <rect key="frame" x="613" y="391" width="215" height="214"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <state key="normal" image="quitButton">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="quitGame:" destination="BV1-FR-VrT" eventType="touchUpInside" id="inp-TT-fDn"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" id="C1c-6a-nkK">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" id="C1c-6a-nkK">
                                 <rect key="frame" x="956" y="20" width="52" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
@@ -115,15 +148,64 @@ The Object Word Booster game teaches your child something called the “shape bi
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" id="INf-wa-eAc">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rewardBackground" id="Lso-iy-uOl">
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep playing or exit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B8T-HI-yUn">
+                                        <rect key="frame" x="342" y="613" width="340" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="ZNuscriptHeavy-Medium" family="ZNuscriptHeavy" pointSize="49"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyButton1" id="JWf-Ii-oVY">
+                                        <rect key="frame" x="197" y="390" width="217" height="215"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyButton1" id="1dr-Of-kNM">
+                                        <rect key="frame" x="612" y="390" width="217" height="215"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="Om3-iw-5Yh">
+                                        <rect key="frame" x="246" y="435" width="118" height="125"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="bearWaving1">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="continueGame:" destination="BV1-FR-VrT" eventType="touchUpInside" id="c3x-b1-ofp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="E6f-Qy-4yf">
+                                        <rect key="frame" x="642" y="410" width="156" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="bearSleeping1">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="quitGame:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Lsz-CJ-9jt"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
                     <connections>
-                        <outlet property="continueButton" destination="bVQ-yI-qnY" id="ZFH-4C-JzJ"/>
+                        <outlet property="continueButton" destination="Om3-iw-5Yh" id="5jB-u7-9SZ"/>
+                        <outlet property="continueButtonBorder" destination="JWf-Ii-oVY" id="qCq-no-y7N"/>
                         <outlet property="homeButton" destination="yxh-cb-HXj" id="XqA-d1-BDp"/>
                         <outlet property="homePanel" destination="moZ-wi-tME" id="wp9-Aw-mPh"/>
-                        <outlet property="quitButton" destination="zjV-HT-MJd" id="z2C-4c-b4C"/>
+                        <outlet property="quitButton" destination="E6f-Qy-4yf" id="JDC-pD-Jdq"/>
+                        <outlet property="quitButtonBorder" destination="1dr-Of-kNM" id="Y4T-Nq-HS9"/>
+                        <outlet property="rewardView" destination="INf-wa-eAc" id="N5w-p5-eLU"/>
                         <outlet property="skView" destination="3se-qz-xqx" id="eq8-9j-ATC"/>
                         <outlet property="taskCountLabel" destination="C1c-6a-nkK" id="NTB-xe-aIy"/>
                     </connections>
@@ -135,7 +217,7 @@ The Object Word Booster game teaches your child something called the “shape bi
         <!--Date Picker View Controller-->
         <scene sceneID="hun-Fr-CkJ">
             <objects>
-                <viewController modalPresentationStyle="currentContext" id="ThW-Bz-6nB" customClass="DatePickerViewController" customModule="Cognitive_ToyBox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="currentContext" id="ThW-Bz-6nB" customClass="DatePickerViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vta-9d-yew">
                         <rect key="frame" x="0.0" y="0.0" width="540" height="216"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -163,7 +245,7 @@ The Object Word Booster game teaches your child something called the “shape bi
         <!--Camera View Controller-->
         <scene sceneID="90P-zz-4wX">
             <objects>
-                <viewController id="zU9-D2-aI9" customClass="CameraViewController" customModule="Cognitive_ToyBox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zU9-D2-aI9" customClass="CameraViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sgM-2K-DVc">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -177,19 +259,22 @@ The Object Word Booster game teaches your child something called the “shape bi
         <!--User View Controller-->
         <scene sceneID="ZwR-sc-bek">
             <objects>
-                <viewController id="5cM-B6-6yH" customClass="UserViewController" customModule="Cognitive_ToyBox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5cM-B6-6yH" customClass="UserViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="olr-Ha-2D7" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="aYG-lJ-Yju">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="aYG-lJ-Yju">
                                 <rect key="frame" x="16" y="20" width="208" height="88"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="howToPlayButton">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="startTutorial:" destination="5cM-B6-6yH" eventType="touchUpInside" id="Q1w-B4-QBI"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pCm-XN-7Xg">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pCm-XN-7Xg">
                                 <rect key="frame" x="897" y="20" width="51" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="settingButton">
@@ -199,19 +284,7 @@ The Object Word Booster game teaches your child something called the “shape bi
                                     <action selector="settings:" destination="5cM-B6-6yH" eventType="touchUpInside" id="uPg-EG-dJQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="peQ-fO-phR">
-                                <rect key="frame" x="956" y="20" width="52" height="55"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="infoButton">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="jbZ-yj-uc8" kind="popover" identifier="infoSegue" popoverAnchorView="peQ-fO-phR" id="sUc-iU-SHg">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2ZY-2q-881">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2ZY-2q-881">
                                 <rect key="frame" x="133" y="632" width="166" height="72"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <state key="normal" image="freeButton">
@@ -221,7 +294,7 @@ The Object Word Booster game teaches your child something called the “shape bi
                                     <action selector="freeGame:" destination="5cM-B6-6yH" eventType="touchUpInside" id="agp-yb-h3K"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="br1-de-dle">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="br1-de-dle">
                                 <rect key="frame" x="725" y="634" width="156" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <state key="normal" image="timedButton">
@@ -232,7 +305,7 @@ The Object Word Booster game teaches your child something called the “shape bi
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nVR-iY-mKa">
-                                <rect key="frame" x="836" y="20" width="53" height="57"/>
+                                <rect key="frame" x="955" y="20" width="53" height="57"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="soundButton">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -241,19 +314,31 @@ The Object Word Booster game teaches your child something called the “shape bi
                                     <action selector="switchSoundMode:" destination="5cM-B6-6yH" eventType="touchUpInside" id="7Ul-hx-ue8"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="BlT-3B-ZeK">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dlm-VM-xhf">
+                                <rect key="frame" x="16" y="20" width="204" height="85"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="aboutButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="jbZ-yj-uc8" kind="popover" identifier="infoSegue" popoverAnchorView="dlm-VM-xhf" id="MPL-wf-Wi6">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
+                            <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="BlT-3B-ZeK">
                                 <rect key="frame" x="307" y="549" width="410" height="155"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="15" minimumInteritemSpacing="15" id="4II-3R-1Zr" customClass="CenterFlowLayout" customModule="Cognitive_ToyBox" customModuleProvider="target">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="15" minimumInteritemSpacing="15" id="4II-3R-1Zr" customClass="CenterFlowLayout" customModule="Blicket" customModuleProvider="target">
                                     <size key="itemSize" width="70" height="70"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="userCell" id="PDA-DT-Ojk" customClass="UserCollectionViewCell" customModule="Cognitive_ToyBox" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="userCell" id="PDA-DT-Ojk" customClass="UserCollectionViewCell" customModule="Blicket" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
@@ -327,6 +412,54 @@ The Object Word Booster game teaches your child something called the “shape bi
                                     <action selector="addUser:" destination="5cM-B6-6yH" eventType="touchUpInside" id="0Af-6x-qmX"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Cg1-V1-2QO">
+                                <rect key="frame" x="409" y="555" width="207" height="88"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <state key="normal" image="playButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="freeGame:" destination="5cM-B6-6yH" eventType="touchUpInside" id="xcq-xZ-oBa"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="o9V-1e-ohV">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorialOverlay" id="nsH-Bs-2kC">
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" id="wL0-b7-X6u" customClass="SKView">
+                                        <rect key="frame" x="53" y="144" width="915" height="575"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mgS-gd-rfK">
+                                                <rect key="frame" x="102" y="343" width="285" height="120"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <state key="normal" image="playButton_large">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="freeGame:" destination="5cM-B6-6yH" eventType="touchUpInside" id="gYb-hg-VlN"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="QMa-z9-zDj">
+                                                <rect key="frame" x="528" y="343" width="285" height="120"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                <state key="normal" image="showAnotherButton">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="doMoreTutorial:" destination="5cM-B6-6yH" eventType="touchUpInside" id="ZIk-Z7-c68"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
@@ -342,6 +475,10 @@ The Object Word Booster game teaches your child something called the “shape bi
                         <outlet property="loginPanel" destination="kJE-It-TGD" id="sNB-82-2MX"/>
                         <outlet property="nameTextField" destination="BNN-6G-Kmo" id="arq-Md-nWy"/>
                         <outlet property="timedButton" destination="br1-de-dle" id="Uie-Jy-jBR"/>
+                        <outlet property="tutorialAnotherButton" destination="QMa-z9-zDj" id="Z0Q-5N-45Y"/>
+                        <outlet property="tutorialOverlay" destination="o9V-1e-ohV" id="sZ4-7H-tt6"/>
+                        <outlet property="tutorialPlayButton" destination="mgS-gd-rfK" id="z7k-80-xcN"/>
+                        <outlet property="tutorialView" destination="wL0-b7-X6u" id="MNU-EU-WCN"/>
                         <outlet property="userCollectionView" destination="BlT-3B-ZeK" id="gln-qz-Y3D"/>
                         <segue destination="BV1-FR-VrT" kind="modal" identifier="gameViewSegueFree" modalTransitionStyle="crossDissolve" id="qgI-FX-cXz"/>
                         <segue destination="6Ln-pq-8Nx" kind="modal" identifier="settingsSegue" modalTransitionStyle="crossDissolve" id="KnM-fI-uzh"/>
@@ -354,12 +491,12 @@ The Object Word Booster game teaches your child something called the “shape bi
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oOF-64-5c9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2048" y="153"/>
+            <point key="canvasLocation" x="-2048" y="126"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="bO1-1I-0hK">
             <objects>
-                <viewController id="6Ln-pq-8Nx" customClass="SettingsViewController" customModule="Cognitive_ToyBox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6Ln-pq-8Nx" customClass="SettingsViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="QKo-Hd-0CE" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -384,7 +521,7 @@ The Object Word Booster game teaches your child something called the “shape bi
                                     <action selector="popoverAnalysis:" destination="6Ln-pq-8Nx" eventType="touchUpInside" id="Oui-OG-SQy"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" id="VjO-sg-PGM">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" id="VjO-sg-PGM">
                                 <rect key="frame" x="20" y="726" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <state key="normal">
@@ -837,7 +974,7 @@ The Object Word Booster game teaches your child something called the “shape bi
         <!--Analysis View Controller-->
         <scene sceneID="fS9-wD-Qff">
             <objects>
-                <viewController id="c8U-AQ-cW3" customClass="AnalysisViewController" customModule="Cognitive_ToyBox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="c8U-AQ-cW3" customClass="AnalysisViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HNr-Ox-wXI">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -880,20 +1017,44 @@ The Object Word Booster game teaches your child something called the “shape bi
             </objects>
             <point key="canvasLocation" x="319" y="153"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="sW2-A7-VOd">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="RHz-gb-NQT" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="WfJ-do-7iI">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ydR-N6-ivR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1425" y="-1293.5"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="aboutButton" width="204" height="85"/>
         <image name="addUserButton" width="215" height="99"/>
+        <image name="bearSleeping1" width="156" height="150"/>
+        <image name="bearWaving1" width="118" height="125"/>
         <image name="camera" width="65" height="50"/>
-        <image name="continueButton" width="217" height="215"/>
         <image name="counterBadge" width="52" height="70"/>
+        <image name="emptyButton1" width="207" height="208"/>
+        <image name="exitButton" width="41" height="41"/>
         <image name="freeButton" width="166" height="72"/>
         <image name="homeButton" width="51" height="56"/>
         <image name="howToPlayButton" width="208" height="88"/>
-        <image name="infoButton" width="52" height="55"/>
-        <image name="quitButton" width="215" height="214"/>
+        <image name="infoCard" width="1024" height="768"/>
+        <image name="playButton" width="204" height="86"/>
+        <image name="playButton_info" width="139" height="143"/>
+        <image name="playButton_large" width="285" height="120"/>
+        <image name="rewardBackground" width="1024" height="768"/>
         <image name="settingButton" width="51" height="56"/>
+        <image name="showAnotherButton" width="285" height="120"/>
         <image name="soundButton" width="53" height="57"/>
         <image name="timedButton" width="156" height="70"/>
+        <image name="tutorialOverlay" width="1024" height="768"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
