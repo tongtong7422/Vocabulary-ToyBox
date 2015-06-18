@@ -36,25 +36,25 @@ class GameControllerTest: XCTestCase {
     }
   }
   
-  func testStartNewSession () {
-    for i in 0..<100 {
-      gameController.startNewSession(updateTaskManager: false)
-//      XCTAssert(gameController.getMainObj() != nil)
-      XCTAssert(gameController.sameNameObject.name == gameController.getMainObj().name)
-      XCTAssert(gameController.diffNameObject.name != gameController.getMainObj().name)
-      
-    }
-    
-  }
-  
-  func testGetObjPair () {
-    for i in 0..<100 {
-      gameController.startNewSession(updateTaskManager: false)
-      var pair = gameController.getObjPair()
-      XCTAssert((pair.0.id == gameController.sameNameObject.id && pair.1.id == gameController.diffNameObject.id)
-        || (pair.1.id == gameController.sameNameObject.id && pair.0.id == gameController.diffNameObject.id))
-    }
-  }
+//  func testStartNewSession () {
+//    for i in 0..<100 {
+//      gameController.startNewSession(updateTaskManager: false)
+////      XCTAssert(gameController.getMainObj() != nil)
+//      XCTAssert(gameController.sameNameObject.name == gameController.getMainObj().name)
+//      XCTAssert(gameController.diffNameObject.name != gameController.getMainObj().name)
+//      
+//    }
+//    
+//  }
+//  
+//  func testGetObjPair () {
+//    for i in 0..<100 {
+//      gameController.startNewSession(updateTaskManager: false)
+//      var pair = gameController.getObjPair()
+//      XCTAssert((pair.0.id == gameController.sameNameObject.id && pair.1.id == gameController.diffNameObject.id)
+//        || (pair.1.id == gameController.sameNameObject.id && pair.0.id == gameController.diffNameObject.id))
+//    }
+//  }
   
   func testGetCorrectObj () {
     for i in 0..<100 {

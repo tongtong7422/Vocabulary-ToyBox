@@ -61,8 +61,8 @@ public class GameController: NSObject {
     
     
     static func updateTaskQueue (gameController: GameController) {
-//      taskQueue = [.Match, .Match, .Match, .Drag1, .Drag1]
-      taskQueue = [.Drag2]
+//      taskQueue = [.Match, .Drag, .Bucket]
+      taskQueue = [.Material, .Color, .Length]
     }
     
     static func nextSession (gameController: GameController) {
@@ -107,16 +107,18 @@ public class GameController: NSObject {
   
   
   private var _mainObject : CognitiveToyBoxObject! = nil
-  private var _sameNameObject : CognitiveToyBoxObject! = nil//USE LIST
-  private var _diffNameObject : CognitiveToyBoxObject! = nil
+  private var _options: [[CognitiveToyBoxObject]] = []
+  private var _correctIndex:Int = 0
+//  private var _sameNameObject : CognitiveToyBoxObject! = nil//USE LIST
+//  private var _diffNameObject : CognitiveToyBoxObject! = nil
+//  
+//  private var _firstObject : CognitiveToyBoxObject! = nil
+//  private var _secondObject : CognitiveToyBoxObject! = nil
   
-  private var _firstObject : CognitiveToyBoxObject! = nil
-  private var _secondObject : CognitiveToyBoxObject! = nil
-  
-  private var _sameNameObjectList: [CognitiveToyBoxObject] = []
-  private var _diffNameObjectList: [CognitiveToyBoxObject] = []
-  private var _firstObjectList: [CognitiveToyBoxObject] = []
-  private var _secondObjectList: [CognitiveToyBoxObject] = []
+//  private var _sameNameObjectList: [CognitiveToyBoxObject] = []
+//  private var _diffNameObjectList: [CognitiveToyBoxObject] = []
+//  private var _firstObjectList: [CognitiveToyBoxObject] = []
+//  private var _secondObjectList: [CognitiveToyBoxObject] = []
   
   
   private var _numMatchingTasksBeforeFakeObjects: Int = 5
@@ -157,56 +159,62 @@ public class GameController: NSObject {
   }
   
   
-  public var sameNameObject: CognitiveToyBoxObject {
+//  public var sameNameObject: CognitiveToyBoxObject {
+//    get {
+//      return _sameNameObject
+//    }
+//  }
+//  
+//  public var diffNameObject: CognitiveToyBoxObject {
+//    get {
+//      return _diffNameObject
+//    }
+//  }
+//  
+//  public var firstObject: CognitiveToyBoxObject {
+//    get {
+//      return _firstObject
+//    }
+//  }
+//  
+//  public var secondObject: CognitiveToyBoxObject {
+//    get {
+//      return _secondObject
+//    }
+//  }
+  
+  /* A list of options where each element is a list of objects */
+  public var options: [[CognitiveToyBoxObject]] {
     get {
-      return _sameNameObject
+      return _options
     }
   }
   
-  public var diffNameObject: CognitiveToyBoxObject {
-    get {
-      return _diffNameObject
-    }
-  }
+//  public var sameNameObjectList: [CognitiveToyBoxObject] {
+//    get {
+//      return _sameNameObjectList
+//    }
+//  }
+//  
+//  public var diffNameObjectList: [CognitiveToyBoxObject] {
+//    get {
+//      return _diffNameObjectList
+//    }
+//  }
+//  
+//  public var firstObjectList: [CognitiveToyBoxObject] {
+//    get {
+//      return _firstObjectList
+//    }
+//  }
+//  
+//  public var secondObjectList: [CognitiveToyBoxObject] {
+//    get {
+//      return _secondObjectList
+//    }
+//  }
   
-  public var firstObject: CognitiveToyBoxObject {
-    get {
-      return _firstObject
-    }
-  }
-  
-  public var secondObject: CognitiveToyBoxObject {
-    get {
-      return _secondObject
-    }
-  }
-  
-  public var sameNameObjectList: [CognitiveToyBoxObject] {
-    get {
-      return _sameNameObjectList
-    }
-  }
-  
-  public var diffNameObjectList: [CognitiveToyBoxObject] {
-    get {
-      return _diffNameObjectList
-    }
-  }
-  
-  public var firstObjectList: [CognitiveToyBoxObject] {
-    get {
-      return _firstObjectList
-    }
-  }
-  
-  public var secondObjectList: [CognitiveToyBoxObject] {
-    get {
-      return _secondObjectList
-    }
-  }
-  
-  private var _correctIndex:UInt32 = 0
-  public var correctIndex:UInt32 {
+  public var correctIndex:Int {
     get {
       return _correctIndex
     }
@@ -249,60 +257,164 @@ public class GameController: NSObject {
     }
     TaskManager.lastName = self._mainObject.name
     
-    self._sameNameObject = nil
-    self._diffNameObject = nil
+//    self._sameNameObject = nil
+//    self._diffNameObject = nil
+    self._options = []
+    self._correctIndex = 0
     
     let exceptId = self._mainObject.id
     let name = self._mainObject.name
     let material = self._mainObject.material
     let color = self._mainObject.color
     
-    if TaskManager.task == .Match || TaskManager.task == .Vocabulary {
+    switch TaskManager.task {
+    case .Match: fallthrough
+    case .Vocabulary:
+      var sameNameObject:CognitiveToyBoxObject!
+      var diffNameObject:CognitiveToyBoxObject!
       if mode == .Tutorial {
-        self._sameNameObject = self._mainObject
-        self._diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectTutorial(name: name, material: material, color: color)
-      } else {
-        self._sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
+        sameNameObject = self._mainObject
+        diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectTutorial(name: name, material: material, color: color)
         
-        if self._sameNameObject == nil {
-          self._sameNameObject = self._mainObject
+      } else {
+        sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
+        
+        if sameNameObject == nil {
+          sameNameObject = self._mainObject
         }
         
         
         /* if already get same material, get diff color, vise versa */
-        if self._sameNameObject.material == material && material != nil && self._sameNameObject.color != color {
+        if sameNameObject.material == material && material != nil && sameNameObject.color != color {
           
-          self._diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory)
+          diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory)
           
-        } else if self._sameNameObject.color == color && color != nil && self._sameNameObject.material != material {
+        } else if sameNameObject.color == color && color != nil && sameNameObject.material != material {
           
-          self._diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory)
+          diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory)
           
         }
         
-        if self._diffNameObject == nil {
-          self._diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObject(name: name, material: material, color: color, forNames: _stage.searchCategory)
+        if diffNameObject == nil {
+          diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObject(name: name, material: material, color: color, forNames: _stage.searchCategory)
         }
       }
       
       /* make sure not crash */
-      if self._diffNameObject == nil {
+      if diffNameObject == nil {
         self.startNewSession(updateTaskManager: false)
         return
       }
-    } else {
+      
+      self._options.append([sameNameObject])
+      self._options.append([diffNameObject])
+      
+      
+    case .Drag:
+      fallthrough
+    case .Bucket:
+      var sameNameObjectList:[CognitiveToyBoxObject]
+      var diffNameObjectList:[CognitiveToyBoxObject]
+      
       var listCount:Int = 1
-      if self.task == .Drag1 {
+      if self.task == .Drag {
         listCount = 2
-      } else if self.task == .Drag2 {
-        listCount = 4
+      } else if self.task == .Bucket {
+        listCount = 5
       }
-      self._sameNameObjectList = getRandomListWithSameName(listCount)
-      self._diffNameObjectList = getRandomListWithDiffName(listCount)
-      if self._sameNameObjectList.count != listCount || self._diffNameObjectList.count != listCount {
+      sameNameObjectList = getRandomListWithSameName(listCount)
+      diffNameObjectList = getRandomListWithDiffName(listCount)
+      if sameNameObjectList.count != listCount || diffNameObjectList.count != listCount {
         startNewSession(updateTaskManager: false)
         return
       }
+      
+      self._options.append(sameNameObjectList)
+      self._options.append(diffNameObjectList)
+    case .Some:
+      if material == nil || color == nil {
+        startNewSession(updateTaskManager: false)
+        return
+      }
+      
+      var sameNameObject:CognitiveToyBoxObject!
+      var sameColorObject:CognitiveToyBoxObject!
+      var sameMaterialObject:CognitiveToyBoxObject!
+      
+      sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
+      sameColorObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
+      sameMaterialObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
+      
+      
+      if sameNameObject == nil || sameColorObject == nil || sameMaterialObject == nil {
+        startNewSession(updateTaskManager: false)
+        return
+      }
+      
+      /* material is the correct choice */
+      self._options.append([sameMaterialObject])
+      self._options.append([sameNameObject])
+      self._options.append([sameColorObject])
+      
+    case .Material:
+      if material == nil || color == nil {
+        startNewSession(updateTaskManager: false)
+        return
+      }
+      
+      /* same material diff color */
+      var sameMaterialObject:CognitiveToyBoxObject! = nil
+      
+      /* same color diff material */
+      var sameColorObject:CognitiveToyBoxObject! = nil
+      
+      sameMaterialObject = CognitiveToyBoxObjectSearchHelper.getSameNameObjectOnMaterial(name: name, exceptId: exceptId, material: material!, color: color!)
+      sameColorObject = CognitiveToyBoxObjectSearchHelper.getSameNameObjectOnColor(name: name, exceptId: exceptId, material: material!, color: color!)
+      
+      if sameColorObject == nil || sameMaterialObject == nil {
+        startNewSession(updateTaskManager: false)
+        return
+      }
+      
+      /* Material is special. Different material is correct answer */
+      self._options.append([sameColorObject])
+      self._options.append([sameMaterialObject])
+      
+    case .Color:
+      if material == nil || color == nil {
+        startNewSession(updateTaskManager: false)
+        return
+      }
+      
+      /* same material diff color */
+      var sameMaterialObject:CognitiveToyBoxObject! = nil
+      
+      /* same color diff material */
+      var sameColorObject:CognitiveToyBoxObject! = nil
+      
+      sameMaterialObject = CognitiveToyBoxObjectSearchHelper.getSameNameObjectOnMaterial(name: name, exceptId: exceptId, material: material!, color: color!)
+      sameColorObject = CognitiveToyBoxObjectSearchHelper.getSameNameObjectOnColor(name: name, exceptId: exceptId, material: material!, color: color!)
+      
+      if sameColorObject == nil || sameMaterialObject == nil {
+        startNewSession(updateTaskManager: false)
+        return
+      }
+      
+      /* Color is special. Different color is correct answer */
+      self._options.append([sameMaterialObject])
+      self._options.append([sameColorObject])
+      
+    case .Length:
+      var sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
+      if sameNameObject == nil {
+        startNewSession(updateTaskManager: false)
+        return
+      }
+      
+      /* Same attribute is correct answer */
+      self._options.append([mainObject])
+      self._options.append([sameNameObject!])
+      
     }
     
     
@@ -318,34 +430,30 @@ public class GameController: NSObject {
   }
   
   /* return a pair of objects shown in the left and right block respectively (game rule part I). */
-  public func getObjPair () -> (CognitiveToyBoxObject, CognitiveToyBoxObject) {
-    return (_firstObject, _secondObject)
-  }
+//  public func getObjPair () -> (CognitiveToyBoxObject, CognitiveToyBoxObject) {
+//    return (_firstObject, _secondObject)
+//  }
   
-  public func getListPair () -> ([CognitiveToyBoxObject], [CognitiveToyBoxObject]) {
-    return (_firstObjectList, _secondObjectList)
-  }
+//  public func getListPair () -> ([CognitiveToyBoxObject], [CognitiveToyBoxObject]) {
+//    return (_firstObjectList, _secondObjectList)
+//  }
   
   public func getCorrectObj () -> CognitiveToyBoxObject {
-//    return _firstObject.name == _mainObject.name ? _firstObject : _secondObject
-    switch task {
-    case .Match:
-      fallthrough
-    case .Vocabulary:
-      return _sameNameObject
-    case .Drag1: fallthrough
-    case .Drag2:
-      return _sameNameObjectList[0]
-    }
+    return self._options[Int(self._correctIndex)].first!
   }
   
   public func getCorrectObjList () -> [CognitiveToyBoxObject] {
-    return _sameNameObjectList
+    return self._options[Int(self._correctIndex)]
   }
   
   /* return all objects with the same name as picked */
   public func getListWithSameName () -> [CognitiveToyBoxObject] {
     return CognitiveToyBoxObjectSearchHelper.getSameNameAll(name: self._mainObject.name, limit: 10)
+  }
+  
+  /* return all objects with the same material as picked */
+  public func getListWithSameMaterial () -> [CognitiveToyBoxObject] {
+    return CognitiveToyBoxObjectSearchHelper.getSameMaterialAll(material: self._mainObject.material!, limit: 10)
   }
   
   /* return random objects with the same name */
@@ -358,7 +466,7 @@ public class GameController: NSObject {
     
     
     var randomList:[CognitiveToyBoxObject] = []
-    while randomList.count < count {
+    while randomList.count < count && list.count > 0 {
       var index = Int(arc4random_uniform(UInt32(list.count)))
       randomList.append(list.objectAtIndex(index) as! CognitiveToyBoxObject)
       list.removeObjectAtIndex(index)
@@ -398,19 +506,11 @@ public class GameController: NSObject {
   
   /* reshuffle. PRIVATE! */
   private func reshuffle () {
-    self._correctIndex = arc4random_uniform(2)
-    if self._correctIndex == 0 {
-      self._firstObject = self._sameNameObject
-      self._secondObject = self._diffNameObject
-      self._firstObjectList = self._sameNameObjectList
-      self._secondObjectList = self._diffNameObjectList
-    }
-    else {
-      self._firstObject = self._diffNameObject
-      self._secondObject = self._sameNameObject
-      self._firstObjectList = self._diffNameObjectList
-      self._secondObjectList = self._sameNameObjectList
-    }
+    var correctList = self._options.removeAtIndex(self._correctIndex)
+    self._options.shuffle()
+    
+    self._correctIndex = Int(arc4random_uniform(UInt32(self._options.count+1)))
+    self._options.insert(correctList, atIndex: self._correctIndex)
   }
   
   /* first stage */

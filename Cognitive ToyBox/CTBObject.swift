@@ -139,6 +139,10 @@ public class CognitiveToyBoxObject : NSObject {
       return name.substringToIndex(name.endIndex.predecessor()) + "ies"
     }
     
+    if name.hasSuffix("x") {
+      return name.substringToIndex(name.endIndex.predecessor()) + "es"
+    }
+    
     return name + "s"
   }
   

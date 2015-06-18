@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="5cM-B6-6yH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="5cM-B6-6yH">
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="znuscriptheavy-webfont.ttf">
+            <string>ZNuscriptHeavy-Medium</string>
             <string>ZNuscriptHeavy-Medium</string>
             <string>ZNuscriptHeavy-Medium</string>
         </mutableArray>
@@ -148,16 +149,23 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" id="INf-wa-eAc">
+                            <view contentMode="scaleToFill" id="INf-wa-eAc" customClass="SKView">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rewardBackground" id="Lso-iy-uOl">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rewardTrophy" id="G54-TF-rUp">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep playing or exit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B8T-HI-yUn">
-                                        <rect key="frame" x="342" y="613" width="340" height="46"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ew8-V8-Wbq">
+                                        <rect key="frame" x="498" y="242" width="29" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep playing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B8T-HI-yUn">
+                                        <rect key="frame" x="202" y="613" width="207" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="ZNuscriptHeavy-Medium" family="ZNuscriptHeavy" pointSize="49"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -191,6 +199,13 @@
                                             <action selector="quitGame:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Lsz-CJ-9jt"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="exit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bAF-Eb-R4n">
+                                        <rect key="frame" x="688" y="613" width="64" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="ZNuscriptHeavy-Medium" family="ZNuscriptHeavy" pointSize="49"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -208,6 +223,7 @@
                         <outlet property="rewardView" destination="INf-wa-eAc" id="N5w-p5-eLU"/>
                         <outlet property="skView" destination="3se-qz-xqx" id="eq8-9j-ATC"/>
                         <outlet property="taskCountLabel" destination="C1c-6a-nkK" id="NTB-xe-aIy"/>
+                        <outlet property="taskCountLabelTrophy" destination="ew8-V8-Wbq" id="sF8-cu-25c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -1017,21 +1033,6 @@
             </objects>
             <point key="canvasLocation" x="319" y="153"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="sW2-A7-VOd">
-            <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="RHz-gb-NQT" sceneMemberID="viewController">
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="WfJ-do-7iI">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ydR-N6-ivR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1425" y="-1293.5"/>
-        </scene>
     </scenes>
     <resources>
         <image name="aboutButton" width="204" height="85"/>
@@ -1049,7 +1050,7 @@
         <image name="playButton" width="204" height="86"/>
         <image name="playButton_info" width="139" height="143"/>
         <image name="playButton_large" width="285" height="120"/>
-        <image name="rewardBackground" width="1024" height="768"/>
+        <image name="rewardTrophy" width="1024" height="768"/>
         <image name="settingButton" width="51" height="56"/>
         <image name="showAnotherButton" width="285" height="120"/>
         <image name="soundButton" width="53" height="57"/>

@@ -21,7 +21,7 @@ extension SKNode {
     var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
     
     archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-    let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
+    let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! TriadScene
     archiver.finishDecoding()
     return scene
   }
@@ -58,10 +58,12 @@ public class GameViewController: UIViewController {
   @IBOutlet weak var infoButton: UIButton!
   @IBOutlet weak var timeCountLabel: UILabel!
   @IBOutlet weak var taskCountLabel: UIButton!
+  @IBOutlet weak var taskCountLabelTrophy: UILabel!
   
-  @IBOutlet weak var rewardView: UIView!
+  @IBOutlet weak var rewardView: SKView!
   @IBOutlet weak var continueButton: UIButton!
   @IBAction func continueGame(sender: UIButton) {
+    SoundSourceHelper.stopBGM()
     
 //    self.continueButton.hidden = true
 //    self.quitButton.hidden = true
@@ -70,6 +72,7 @@ public class GameViewController: UIViewController {
 //    self.displayStartScene()
     self.counterReset = true
     self.rewardView.hidden = true
+    rewardView.presentScene(nil)
     
     self.presentWelcomeScene()
     skView.paused = false
@@ -78,6 +81,7 @@ public class GameViewController: UIViewController {
   @IBOutlet weak var continueButtonBorder: UIImageView!
   @IBOutlet weak var quitButton: UIButton!
   @IBAction func quitGame(sender: UIButton) {
+    SoundSourceHelper.stopBGM()
     GlobalConfiguration.releaseScene(self.skView.scene)
     ActionHelper.releaseBearAtlas()
     self.dismissViewControllerAnimated(false) {}
@@ -85,8 +89,10 @@ public class GameViewController: UIViewController {
   @IBOutlet weak var quitButtonBorder: UIImageView!
   
   @IBAction func stayInGame(sender: UIButton) {
+    
     homePanel.hidden = true
     skView.paused = false
+    
   }
   
   func displayQuitPanel () {
@@ -101,9 +107,14 @@ public class GameViewController: UIViewController {
     //    self.continueButton.hidden = false
     //    self.quitButton.hidden = false
     self.rewardView.hidden = false
+    
+    let scene = ConfettiScene(size: rewardView.bounds.size)
+    scene.scaleMode = .ResizeFill
+    rewardView.presentScene(scene)
+    
     self.timer?.invalidate()
     
-    
+    SoundSourceHelper.playTrophySound()
   }
   
   
@@ -127,6 +138,7 @@ public class GameViewController: UIViewController {
     set {
       _taskCount = newValue
       self.taskCountLabel.setTitle(String(_taskCount), forState: UIControlState.allZeros)
+      self.taskCountLabelTrophy.text = String(_taskCount)
     }
   }
   
@@ -186,10 +198,14 @@ public class GameViewController: UIViewController {
   public func presentWelcomeScene () {
     if self.counted {
       if taskCount % 5 == 0 && !counterReset {
+        counterReset = true
         self.displayQuitPanel()
         return
       }
     }
+    
+    taskCount++
+    counterReset = false
     
     GlobalConfiguration.releaseScene(skView.scene)
     let scene = WelcomeScene(size: skView.bounds.size)
@@ -202,25 +218,34 @@ public class GameViewController: UIViewController {
     GlobalConfiguration.releaseScene(skView.scene)
     var scene:SKScene
     gameController.startNewSession(updateTaskManager: newScene)
-    if gameController.task == .Match || gameController.task == .Vocabulary {
-      scene = GameScene(size: skView.bounds.size)
-      (scene as! GameScene).gameViewController = self
-    } else if gameController.task == .Drag1 {
-      scene = DragScene1(size: skView.bounds.size)
-      (scene as! DragScene1).gameViewController = self
-    } else if gameController.task == .Drag2 {
-      scene = DragScene2(size: skView.bounds.size)
-      (scene as! DragScene2).gameViewController = self
-    } else {
-      NSException().raise()
+    switch gameController.task {
+    case .Match: fallthrough
+    case .Vocabulary:
+      scene = TriadScene(size: skView.bounds.size)
+      (scene as! TriadScene).gameViewController = self
+    case .Drag:
+      scene = DragScene(size: skView.bounds.size)
+      (scene as! DragScene).gameViewController = self
+    case .Bucket:
+      scene = BucketScene(size: skView.bounds.size)
+      (scene as! BucketScene).gameViewController = self
+    case .Some:
+      scene = SomeScene(size: skView.bounds.size)
+      (scene as! SomeScene).gameViewController = self
+    case .Material:
+      fallthrough
+    case .Color:
+      fallthrough
+    case .Length:
+      scene = AdjectiveScene(size: skView.bounds.size)
+      (scene as! AdjectiveScene).gameViewController = self
+    default:
       return
     }
     scene.scaleMode = .ResizeFill
     
     skView.presentScene(scene)
     
-    self.taskCount++
-    self.counterReset = false
   }
   
   /* from GameScene */
@@ -232,12 +257,9 @@ public class GameViewController: UIViewController {
     
     /* transfer data */
     scene.objectName = gameController.getMainObj().name
-    if let fromScene = skView.scene as? GameScene {
-//      scene.mainId = gameController.getMainObj().id
-//      scene.correctId = gameController.getCorrectObj().id
+    if let fromScene = skView.scene as? TriadScene {
       scene.timeToPlayLabel.text = fromScene.foundLabel.text
-//
-//      
+ 
       fromScene.mainObjectNode.removeAllActions()
       fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
       fromScene.correctNode.removeAllActions()
@@ -247,27 +269,14 @@ public class GameViewController: UIViewController {
       }
       scene.addNode(fromScene.correctNode.copy() as! SKSpriteNode, id: gameController.getCorrectObj().id)
       
-//      scene.mainNode = gameScene.mainObjectNode.copy() as SKSpriteNode
-//      scene.mainNode.hidden = (gameScene.gameController.task == .Vocabulary)
-//      if !scene.mainNode.hidden {
-//        scene.presentingObjects++
-//      }
-//      scene.correctNode = gameScene.correctNode.copy() as SKSpriteNode
-//      scene.presentingObjects++
-//      
-      if let mainNode_2 = fromScene.thirdOptionNode {
+      if let mainNode_2 = fromScene.secondaryMainNode {
         mainNode_2.removeAllActions()
         mainNode_2.runAction(SKAction.rotateToAngle(0, duration: 0))
-        scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.thirdOptionIndex].id)
-//        scene.mainNode_2 = mainNode_2.copy() as? SKSpriteNode
-//        scene.mainNode_2?.hidden = (gameScene.gameController.task == .Vocabulary)
-//        if !scene.mainNode_2!.hidden {
-//          scene.presentingObjects++
-//        }
+        scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.secondaryMainIndex].id)
       }
       
       
-    } else if let fromScene = skView.scene as? DragScene1 {
+    } else if let fromScene = skView.scene as? DragScene {
       fromScene.mainObjectNode.removeAllActions()
       fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
       fromScene.correctNode?.removeAllActions()
@@ -280,17 +289,68 @@ public class GameViewController: UIViewController {
         /* Dummy node is ignored */
         scene.addNode(correctNodeList[index+1].copy() as! SKSpriteNode, id: correctObjList[index].id)
       }
-    } else if let fromScene = skView.scene as? DragScene2 {
+    } else if let fromScene = skView.scene as? BucketScene {
       fromScene.mainObjectNode.removeAllActions()
       fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-      fromScene.correctNode?.removeAllActions()
-      fromScene.wrongNode?.removeAllActions()
       
       scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
       var correctObjList = gameController.getCorrectObjList()
       var correctNodeList = fromScene.correctNodeList
       for index in 0..<correctObjList.count {
         scene.addNode(correctNodeList[index].copy() as! SKSpriteNode, id: correctObjList[index].id)
+      }
+    } else if let fromScene = skView.scene as? SomeScene {
+      scene.objectName = gameController.getMainObj().material!
+      scene.mode = .Material
+      //      scene.mainId = gameController.getMainObj().id
+      //      scene.correctId = gameController.getCorrectObj().id
+      scene.timeToPlayLabel.text = fromScene.foundLabel.text
+      //
+      //
+      fromScene.mainObjectNode.removeAllActions()
+      fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
+      fromScene.correctNode.removeAllActions()
+      fromScene.correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
+      if gameController.task != .Vocabulary {
+        scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
+      }
+      scene.addNode(fromScene.correctNode.copy() as! SKSpriteNode, id: gameController.getCorrectObj().id)
+      
+      //      scene.mainNode = gameScene.mainObjectNode.copy() as SKSpriteNode
+      //      scene.mainNode.hidden = (gameScene.gameController.task == .Vocabulary)
+      //      if !scene.mainNode.hidden {
+      //        scene.presentingObjects++
+      //      }
+      //      scene.correctNode = gameScene.correctNode.copy() as SKSpriteNode
+      //      scene.presentingObjects++
+      //
+      if let mainNode_2 = fromScene.secondaryMainNode {
+        mainNode_2.removeAllActions()
+        mainNode_2.runAction(SKAction.rotateToAngle(0, duration: 0))
+        scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.secondaryMainIndex].id)
+        //        scene.mainNode_2 = mainNode_2.copy() as? SKSpriteNode
+        //        scene.mainNode_2?.hidden = (gameScene.gameController.task == .Vocabulary)
+        //        if !scene.mainNode_2!.hidden {
+        //          scene.presentingObjects++
+        //        }
+      }
+
+    } else if let fromScene = skView.scene as? AdjectiveScene {
+      scene.timeToPlayLabel.text = fromScene.foundLabel.text
+      
+      fromScene.mainObjectNode.removeAllActions()
+      fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
+      fromScene.correctNode.removeAllActions()
+      fromScene.correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
+      if gameController.task != .Vocabulary {
+        scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
+      }
+      scene.addNode(fromScene.correctNode.copy() as! SKSpriteNode, id: gameController.getCorrectObj().id)
+      
+      if let mainNode_2 = fromScene.secondaryMainNode {
+        mainNode_2.removeAllActions()
+        mainNode_2.runAction(SKAction.rotateToAngle(0, duration: 0))
+        scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.secondaryMainIndex].id)
       }
     }
     
@@ -344,6 +404,8 @@ public class GameViewController: UIViewController {
     self.rewardView.hidden = true
     self.homePanel.hidden = true
     
+    
+    
     /* make button alive */
     continueButton.imageView?.animationImages = [UIImage(named: "bearWaving1")!, UIImage(named: "bearWaving2")!]
     continueButton.imageView?.animationDuration = 0.4
@@ -368,6 +430,14 @@ public class GameViewController: UIViewController {
     longPressRecognizer.minimumPressDuration = 3
 //    self.homeButton.addGestureRecognizer(longPressRecognizer)
     
+//    self.skView.showsPhysics = true
+    
+  }
+  
+  public override func viewDidDisappear(animated: Bool) {
+    super.viewDidDisappear(animated)
+    ActionHelper.clearFrameCache()
+    GlobalConfiguration.removeGameController(gameController)
   }
   
   func setTimer () {

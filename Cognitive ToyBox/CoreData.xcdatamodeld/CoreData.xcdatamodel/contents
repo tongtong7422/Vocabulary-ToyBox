@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1510" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="CTBObject" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="material" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CTBObject_tutorial" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="material" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="NameFirstAppear" representedClassName="NameFirstAppear" syncable="YES">
+        <attribute name="date" attributeType="Date" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="appearances" toMany="YES" deletionRule="Cascade" destinationEntity="UserPerformance" inverseName="firstAppear" inverseEntity="UserPerformance" syncable="YES"/>
+    </entity>
+    <entity name="UserInfo" representedClassName="UserInfo" syncable="YES">
+        <attribute name="dateOfBirth" attributeType="Date" syncable="YES"/>
+        <attribute name="icon" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="lastLogin" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="UserPerformance" representedClassName="UserPerformance" syncable="YES">
+        <attribute name="correct" attributeType="Boolean" syncable="YES"/>
+        <attribute name="date" attributeType="Date" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="firstAppear" maxCount="1" deletionRule="Nullify" destinationEntity="NameFirstAppear" inverseName="appearances" inverseEntity="NameFirstAppear" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CTBObject" positionX="-27" positionY="18" width="128" height="120"/>
+        <element name="NameFirstAppear" positionX="-27" positionY="234" width="128" height="88"/>
+        <element name="UserInfo" positionX="54" positionY="117" width="128" height="120"/>
+        <element name="UserPerformance" positionX="-234" positionY="194" width="128" height="103"/>
+        <element name="CTBObject_tutorial" positionX="-81" positionY="162" width="128" height="118"/>
+    </elements>
+</model>
