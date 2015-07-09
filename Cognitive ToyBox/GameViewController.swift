@@ -219,10 +219,12 @@ public class GameViewController: UIViewController {
     var scene:SKScene
     gameController.startNewSession(updateTaskManager: newScene)
     switch gameController.task {
-    case .Match: fallthrough
-    case .Vocabulary:
+    case .Match:
       scene = TriadScene(size: skView.bounds.size)
       (scene as! TriadScene).gameViewController = self
+    case .Vocabulary:
+      scene = VocabularyScene(size: skView.bounds.size)
+      (scene as! VocabularyScene).gameViewController = self
     case .Drag:
       scene = DragScene(size: skView.bounds.size)
       (scene as! DragScene).gameViewController = self
@@ -335,7 +337,32 @@ public class GameViewController: UIViewController {
         //        }
       }
 
-    } else if let fromScene = skView.scene as? AdjectiveScene {
+    }else if let fromScene = skView.scene as? VocabularyScene {
+        scene.objectName = gameController.getMainObj().name
+        scene.mode = .Name
+        //      scene.mainId = gameController.getMainObj().id
+        //      scene.correctId = gameController.getCorrectObj().id
+        scene.timeToPlayLabel.text = fromScene.foundLabel.text
+        //
+        //
+        fromScene.correctNode.removeAllActions()
+        fromScene.correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
+
+        scene.addNode(fromScene.correctNode.copy() as! SKSpriteNode, id: gameController.getCorrectObj().id)
+        
+        if let mainNode_2 = fromScene.secondaryMainNode {
+            mainNode_2.removeAllActions()
+            mainNode_2.runAction(SKAction.rotateToAngle(0, duration: 0))
+            scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.secondaryMainIndex].id)
+            //        scene.mainNode_2 = mainNode_2.copy() as? SKSpriteNode
+            //        scene.mainNode_2?.hidden = (gameScene.gameController.task == .Vocabulary)
+            //        if !scene.mainNode_2!.hidden {
+            //          scene.presentingObjects++
+            //        }
+        }
+        
+    }
+    else if let fromScene = skView.scene as? AdjectiveScene {
       scene.timeToPlayLabel.text = fromScene.foundLabel.text
       
       fromScene.mainObjectNode.removeAllActions()

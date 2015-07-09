@@ -153,12 +153,12 @@ class TriadScene: SKScene, ConfigurableScene {
     let offset = self.frame.height/6
     
     self.mainFrame = CGRectOffset(CGRectInset(self.frame, 0, offset), 0, offset)
-    
-    if gameController.task == .Vocabulary {
-      self.optionsFrame = self.frame
-    } else {
+//    
+//    if gameController.task == .Vocabulary {
+//      self.optionsFrame = self.frame
+//    } else {
       self.optionsFrame = CGRectOffset(CGRectInset(self.frame, 0, offset), 0, -offset)
-    }
+//    }
     //    }
     
     self.initMain()
@@ -173,16 +173,16 @@ class TriadScene: SKScene, ConfigurableScene {
     // ActionHelper returns an SKAction object
     self.runAction(ActionHelper.displayMain()) {  // wait a short time before display main object
       [unowned self] () -> () in
-      if self.gameController.task == .Vocabulary {
-        self.displayOptions()
-        self.emphasizeOptions() {
-          [unowned self] () -> () in
-          self.showGlow()
-          self.allowTouching()
-        }
-      } else {
+//      if self.gameController.task == .Vocabulary {
+//        self.displayOptions()
+//        self.emphasizeOptions() {
+//          [unowned self] () -> () in
+//          self.showGlow()
+//          self.allowTouching()
+//        }
+//      } else {
         self.displayMain()
-      }
+//      }
     }
     // displayOptions runs after displayMain finishes
     
@@ -467,13 +467,13 @@ class TriadScene: SKScene, ConfigurableScene {
     statisticsTrack.setObject2(self.gameController.options[0].first!)
     statisticsTrack.setObject3(self.gameController.options[1].first!)
     
-    if gameController.task == .Vocabulary {
-      self.foundLabel.text = "1 \(objectName)!"
-      statisticsTrack.setTaskType("Vocabulary")
-    } else {
+//    if gameController.task == .Vocabulary {
+//      self.foundLabel.text = "1 \(objectName)!"
+//      statisticsTrack.setTaskType("Vocabulary")
+//    } else {
       self.foundLabel.text = "2 \(CognitiveToyBoxObject.getPluralName(objectName))!"
       statisticsTrack.setTaskType("Shape Bias")
-    }
+//    }
   }
   
   /* initialize labels */

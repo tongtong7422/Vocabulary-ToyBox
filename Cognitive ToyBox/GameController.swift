@@ -61,8 +61,9 @@ public class GameController: NSObject {
     
     
     static func updateTaskQueue (gameController: GameController) {
-//      taskQueue = [.Match, .Drag, .Bucket]
-      taskQueue = [.Material, .Color, .Length]
+      taskQueue = [.Match, .Drag, .Bucket, .Vocabulary]
+//      taskQueue = [.Material, .Color, .Length]
+//        taskQueue = [.Vocabulary]
     }
     
     static func nextSession (gameController: GameController) {
@@ -268,48 +269,93 @@ public class GameController: NSObject {
     let color = self._mainObject.color
     
     switch TaskManager.task {
-    case .Match: fallthrough
-    case .Vocabulary:
-      var sameNameObject:CognitiveToyBoxObject!
-      var diffNameObject:CognitiveToyBoxObject!
-      if mode == .Tutorial {
-        sameNameObject = self._mainObject
-        diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectTutorial(name: name, material: material, color: color)
+    case .Match:
+        var sameNameObject:CognitiveToyBoxObject!
+        var diffNameObject:CognitiveToyBoxObject!
+        if mode == .Tutorial {
+            sameNameObject = self._mainObject
+            diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectTutorial(name: name, material: material, color: color)
+            
+        } else {
+            sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
+            
+            if sameNameObject == nil {
+                sameNameObject = self._mainObject
+            }
+            
+            
+            /* if already get same material, get diff color, vise versa */
+            if sameNameObject.material == material && material != nil && sameNameObject.color != color {
+                
+                diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory)
+                
+            } else if sameNameObject.color == color && color != nil && sameNameObject.material != material {
+                
+                diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory)
+                
+            }
+            
+            if diffNameObject == nil {
+                diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObject(name: name, material: material, color: color, forNames: _stage.searchCategory)
+            }
+        }
         
-      } else {
+        /* make sure not crash */
+        if diffNameObject == nil {
+            self.startNewSession(updateTaskManager: false)
+            return
+        }
+        
+        self._options.append([sameNameObject])
+        self._options.append([diffNameObject])
+        
+
+    case .Vocabulary:
+//        if material == nil || color == nil {
+//            startNewSession(updateTaskManager: false)
+//            return
+//        }
+        
+        var sameNameObject:CognitiveToyBoxObject!
+//        var sameColorObject:CognitiveToyBoxObject!
+//        var sameMaterialObject:CognitiveToyBoxObject!
+
+        var object1:CognitiveToyBoxObject!
+        var object2:CognitiveToyBoxObject!
+        
         sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
         
-        if sameNameObject == nil {
-          sameNameObject = self._mainObject
+        if material == nil && color == nil {
+            startNewSession(updateTaskManager: false)
+            return
+        } else if material == nil {
+            object1 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
+            object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
+            while object1.id == object2.id {
+                object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
+            }
+        } else if color == nil {
+            object1 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
+            object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
+            while object1.id == object2.id {
+                object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
+            }
+        } else {
+            object1 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
+            object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
         }
         
-        
-        /* if already get same material, get diff color, vise versa */
-        if sameNameObject.material == material && material != nil && sameNameObject.color != color {
-          
-          diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory)
-          
-        } else if sameNameObject.color == color && color != nil && sameNameObject.material != material {
-          
-          diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory)
-          
+        if sameNameObject == nil || object1 == nil || object2 == nil {
+            startNewSession(updateTaskManager: false)
+            return
         }
         
-        if diffNameObject == nil {
-          diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObject(name: name, material: material, color: color, forNames: _stage.searchCategory)
-        }
-      }
-      
-      /* make sure not crash */
-      if diffNameObject == nil {
-        self.startNewSession(updateTaskManager: false)
-        return
-      }
-      
-      self._options.append([sameNameObject])
-      self._options.append([diffNameObject])
-      
-      
+        /* name is the correct choice */
+        self._options.append([sameNameObject])
+        self._options.append([object1])
+        self._options.append([object2])
+
+        
     case .Drag:
       fallthrough
     case .Bucket:

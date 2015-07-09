@@ -28,11 +28,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" id="V2J-pU-Ksw">
-                                        <rect key="frame" x="142" y="185" width="740" height="525"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HjY-Nc-qwV">
                                         <rect key="frame" x="73" y="22" width="879" height="147"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -50,6 +45,11 @@
                                             <action selector="playButtonTouched:" destination="jbZ-yj-uc8" eventType="touchUpInside" id="g6I-Li-5Qc"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" id="V2J-pU-Ksw">
+                                        <rect key="frame" x="115" y="191" width="740" height="525"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -1010,17 +1010,17 @@
                                 <rect key="frame" x="0.0" y="58" width="1024" height="690"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="MfH-Gz-rOf">
+                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="364"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
                                 <sections/>
                                 <connections>
                                     <outlet property="dataSource" destination="c8U-AQ-cW3" id="0FT-MU-kTF"/>
                                     <outlet property="delegate" destination="c8U-AQ-cW3" id="jxe-mM-Ji5"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" id="MfH-Gz-rOf">
-                                <rect key="frame" x="20" y="384" width="984" height="364"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1063,7 +1063,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="MPL-wf-Wi6"/>
         <segue reference="qgI-FX-cXz"/>
-        <segue reference="Lis-iI-Ki1"/>
     </inferredMetricsTieBreakers>
 </document>

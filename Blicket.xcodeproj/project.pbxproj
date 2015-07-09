@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FD013AC1B4CF77A00217F6B /* VocabularyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD013AB1B4CF77A00217F6B /* VocabularyScene.swift */; };
 		3568E5721A147CC9001CA426 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3568E5711A147CC9001CA426 /* Main.storyboard */; };
 		3568E57D1A147CF1001CA426 /* CTBObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3568E5731A147CF1001CA426 /* CTBObject.swift */; };
 		3568E57F1A147CF1001CA426 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3568E5761A147CF1001CA426 /* Images.xcassets */; };
@@ -494,6 +495,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2FD013AB1B4CF77A00217F6B /* VocabularyScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyScene.swift; sourceTree = "<group>"; };
 		3568E5711A147CC9001CA426 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3568E5731A147CF1001CA426 /* CTBObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTBObject.swift; sourceTree = "<group>"; };
 		3568E5751A147CF1001CA426 /* Test.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Test.playground; sourceTree = "<group>"; };
@@ -1019,6 +1021,7 @@
 				3568E5B31A147DAD001CA426 /* GameScene.sks */,
 				436CE2491ACD92280071BF06 /* TutorialScene.swift */,
 				437DF1A41B182EF500CEFFAF /* TriadScene.swift */,
+				2FD013AB1B4CF77A00217F6B /* VocabularyScene.swift */,
 				433FAC951B0DD57700997CCB /* SomeScene.swift */,
 				431221A01B2A00D700D13332 /* AdjectiveScene.swift */,
 				436CE2341ABBEA100071BF06 /* DragScene.swift */,
@@ -2173,6 +2176,7 @@
 				430D3F201AA652A2007279C4 /* CameraViewController.swift in Sources */,
 				43A570551AEACCDF00378B89 /* BucketScene.swift in Sources */,
 				436CE2351ABBEA100071BF06 /* DragScene.swift in Sources */,
+				2FD013AC1B4CF77A00217F6B /* VocabularyScene.swift in Sources */,
 				4394C24A1A946F8F00845C11 /* CenterFlowLayout.swift in Sources */,
 				3568E58E1A147D29001CA426 /* GameViewController.swift in Sources */,
 				3568E5931A147D29001CA426 /* UserViewController.swift in Sources */,
@@ -2347,7 +2351,7 @@
 					"$(PROJECT_DIR)/Flurry",
 				);
 				PRODUCT_NAME = Blicket;
-				PROVISIONING_PROFILE = "08f7b6b7-9483-402b-8f47-9a454e34e087";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_FORMAT = RGBA8888_COMPRESSED;
 				SPRITEKIT_TEXTURE_ATLAS_SIZE = 2048x2048;
 				SWIFT_OBJC_BRIDGING_HEADER = "Cognitive ToyBox/Cognitive ToyBox-Bridging-Header.h";
@@ -2375,7 +2379,7 @@
 					"$(PROJECT_DIR)/Flurry",
 				);
 				PRODUCT_NAME = Blicket;
-				PROVISIONING_PROFILE = "08f7b6b7-9483-402b-8f47-9a454e34e087";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_FORMAT = RGBA8888_COMPRESSED;
 				SPRITEKIT_TEXTURE_ATLAS_SIZE = 2048x2048;
 				SWIFT_OBJC_BRIDGING_HEADER = "Cognitive ToyBox/Cognitive ToyBox-Bridging-Header.h";
