@@ -55,7 +55,7 @@ class WelcomeScene: SKScene, ConfigurableScene {
     // displayOptions runs after displayMain finishes
     
     if bearHidden {
-      self.transitionToGameScene(view: view)
+      self.transitionToGameScene(view)
       return
     }
     
@@ -67,14 +67,14 @@ class WelcomeScene: SKScene, ConfigurableScene {
     if GlobalConfiguration.backgroundImageName == BackgroundImageNames.Space {
       var helmetAtlas = SKTextureAtlas(named: "bear_waving_helmet")
       helmetAtlas.preloadWithCompletionHandler({})
-      bearHelmet = SKSpriteNode(texture: helmetAtlas.textureNamed(helmetAtlas.textureNames.first as! String))
+      bearHelmet = SKSpriteNode(texture: helmetAtlas.textureNamed(helmetAtlas.textureNames.first!))
       bearHelmet.runAction(ActionHelper.bearWavingHelmet())
       self.bear.addChild(bearHelmet)
     }
     
   }
-  
-  override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+
+  override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
     super.touchesEnded(touches, withEvent: event)
     
     var location : CGPoint

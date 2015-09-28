@@ -10,23 +10,50 @@ import UIKit
 
 class AnalysisViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TKChartDelegate, TKChartDataSource {
   
+  class Word: NSObject {
+    let name: String
+    let accuracy: Float
+    
+    
+    init(name: String,accuracy: Float) {
+      self.name = name
+      self.accuracy = accuracy
+    }
+  }
+  
+  // custom type to represent table sections
+  class Section {
+    var words: [Word] = []
+
+    func addWord(word: Word) {
+      self.words.append(word)
+    }
+    
+  }
+  
   @IBOutlet var chartView: UIView!
   @IBOutlet var tableView: UITableView!
   
   var popoverController : UIPopoverController? = nil
+  var sourceViewController: UIViewController? = nil
   
   var names = [String]()
   var accuracy = [Float]()
+  var levelOfWord = [String]()
+  
   
   var performance : [String: PerformanceData]!
+  
+  var _sections: [Section]?
+
+  var levelNames = [String]()
+  var levelMasterPercentage = [Float]()
+
+  var isMaster :[String: Bool] = [:]
   
   var series = [TKChartSeries]()
   
   var chart : TKChart!
-//  var dateAxis = TKChartDateTimeAxis()
-  var catAxis = TKChartCategoryAxis()
-  var countAxis = TKChartNumericAxis(minimum: 0, andMaximum: 5, position: TKChartAxisPositionLeft)
-  var performanceAxis = TKChartNumericAxis(minimum:0, andMaximum:1, position: TKChartAxisPositionRight)
   
   
   @IBAction func clearButton(sender: AnyObject) {
@@ -34,6 +61,10 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     self.names = []
     self.accuracy = []
     self.performance = [:]
+    self._sections  = [Section]()
+    self.levelNames = []
+    self.levelMasterPercentage = []
+    self.isMaster = [:]
     self.tableView.reloadData()
     loadData()
     self.chart.reloadData()
@@ -43,21 +74,11 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     NSLog("Deinit AnalysisViewController")
   }
   
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
-//    countAxis.title = "Number of Questions Reviewed"
-    
-//    dateAxis.position = TKChartAxisPositionBottom
-    catAxis.position = TKChartAxisPositionBottom
-    
-//    dateAxis.plotMode = TKChartAxisPlotModeBetweenTicks
-    
-//    performanceAxis.labelDisplayMode = TKChartNumericAxisLabelDisplayModePercentage
-    let formatter = NSNumberFormatter()
-    formatter.numberStyle = .PercentStyle
-    performanceAxis.labelFormatter = formatter
-    
+
     loadData()
     
   }
@@ -66,7 +87,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     super.viewWillAppear(animated)
     
     
-    self.popoverController!.setPopoverContentSize(CGSize(width: 1024, height: 768), animated: false)
+    self.popoverController?.setPopoverContentSize(CGSize(width: 1024, height: 768), animated: false)
     
   }
   
@@ -76,33 +97,24 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     // init chart
     chart = TKChart(frame: self.chartView.frame)
     
-    // add axis
-//    chart.xAxis = dateAxis
-    chart.xAxis = catAxis
-    chart.addAxis(countAxis)
-    chart.addAxis(performanceAxis)
-    
     // init delegate
     chart.delegate = self
     
-    // init dataSourch
+    // init dataSource
     chart.dataSource = self
     
     // auto resizing
-    chart.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+    chart.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
     
-    // title
-    let categories = catAxis.categories() as! [NSDate]
-    var formatter = NSDateFormatter()
-    formatter.calendar = NSCalendar.currentCalendar()
-    formatter.dateFormat = "MMM dd"
-    
-    chart.title().text = "Vocabulary Reviewed: \(formatter.stringFromDate(categories[0])) - \(formatter.stringFromDate(categories[categories.endIndex-1]))"
+    chart.title().text = "Performance"
+
     chart.title().hidden = false
     
     chart.allowAnimations = true
-    chart.legend().hidden = false
-    
+    chart.legend().hidden = true
+    let formatter = NSNumberFormatter()
+    formatter.numberStyle = .PercentStyle
+    chart.yAxis.labelFormatter = formatter
     
     // add chart
     self.view.addSubview(chart)
@@ -119,26 +131,69 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     // Dispose of any resources that can be recreated.
   }
   
-  // UITableViewDataSource
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if names.count != accuracy.count {
-      var name = "DataNotMatch"
-      var message = "Data not match"
-      var e = NSException(name: name, reason: message, userInfo: nil)
-      Flurry.logError(name, message: message, exception: e)
-      e.raise()
+  func getSectionItems(section: Int) -> [Word] {
+    var sectionItems = [Word]()
+    
+    // loop through to get the items for this sections
+    for item in self._sections![section].words{
+      sectionItems.append(item)
+
     }
-    return names.count
+    return sectionItems
+  }
+ 
+  // UITableViewDataSource
+  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    return self._sections!.count
+  }
+  
+  func tableView(tableView: UITableView,
+    numberOfRowsInSection section: Int)
+    -> Int {
+      return self._sections![section].words.count
+  }
+  
+//  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//    if names.count != accuracy.count {
+//      var name = "DataNotMatch"
+//      var message = "Data not match"
+//      var e = NSException(name: name, reason: message, userInfo: nil)
+//      Flurry.logError(name, message: message, exception: e)
+//      e.raise()
+//    }
+//    return names.count
+//  }
+  
+  func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    var sectionName : String
+    if section == 0 {
+      sectionName = "EASY"
+    }else if section == 1 {
+      sectionName = "MIDDLE"
+    }else {
+      sectionName = "HARD"
+    }
+    return sectionName
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell : UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Default")
+    var label : UILabel
+    // get the items in this section
+    let sectionItems = self.getSectionItems(indexPath.section)
     
-    cell.textLabel!.text = self.names[indexPath.row]
+    // get the item for the row in this section
+    let wordItem = sectionItems[indexPath.row]
     
-    var accuracy = NSString(format: "%.0f", self.accuracy[indexPath.row]*100)
+    cell.textLabel!.text = wordItem.name
+    var accuracy = NSString(format: "%.0f", wordItem.accuracy*100)
     cell.detailTextLabel?.text = "\(accuracy)%"
-    
+
+
+//    cell.textLabel!.text = self.names[indexPath.row]
+//    var accuracy = NSString(format: "%.0f", self.accuracy[indexPath.row]*100)
+//    cell.detailTextLabel?.text = "\(accuracy)%"
+
     return cell
   }
   
@@ -149,23 +204,121 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
   func seriesForChart(chart: TKChart!, atIndex index: UInt) -> TKChartSeries! {
     return self.series[Int(index)]
   }
+  @IBAction func backToMain(sender: UIButton) {
+//    self.dismissViewControllerAnimated(false) {}
+    
+    let controller = self.sourceViewController as? GameViewController
+    if controller?.isFinished==true{
+      
+      self.dismissViewControllerAnimated(false) {
+        [unowned self] in
+        if let controller = self.sourceViewController as? GameViewController {
+          controller.dismissViewControllerAnimated(false) {}
+        }
+      }
+    }else {
+      self.dismissViewControllerAnimated(false) {}
+    }
+    
+//  back to home
+//    self.dismissViewControllerAnimated(false) {
+//      [unowned self] in
+//      if let controller = self.sourceViewController as? GameViewController {
+//        controller.dismissViewControllerAnimated(false) {}
+//      }
+//    }
+  }
   
   func loadData () {
     
     self.names = []
     self.accuracy = []
-    
+    self.levelOfWord = []
+    self.levelNames = []
     self.series = []
+    self.levelMasterPercentage = []
+    self._sections = [Section]()
+    var easyCorrectNum : Int = 0
+    var middleCorrectNum : Int = 0
+    var hardCorrectNum : Int = 0
+    var easyNum : Int = 0
+    var middleNum : Int = 0
+    var hardNum : Int = 0
     
-    
-    
-    // today
-    performance = UserPerformanceHelper.getPerformance(date: NSDate(timeIntervalSinceNow: 0))
+// today
+//    performance = UserPerformanceHelper.getPerformance(date: NSDate(timeIntervalSinceNow: 0))
+    var easySection = Section()
+    var middleSection = Section()
+    var hardSection = Section()
+
+    performance = UserPerformanceHelper.getPerformance()
     for (key, value) in performance {
       self.names.append(key)
       self.accuracy.append(value.accuracy)
+      
+      if value.accuracy < 0.8 {
+        self.isMaster[key] = false
+      }else {
+        self.isMaster[key] = true
+      }
+      
+      if CognitiveToyBoxObject.stage1Objects.contains(key)  {
+        var newWord = Word(name:key,accuracy:value.accuracy)
+        easySection.addWord(newWord)
+        
+        if self.isMaster[key] == true{
+          easyCorrectNum++
+        }
+        self.levelOfWord.append("easy")
+        easyNum++
+      }else if CognitiveToyBoxObject.stage2Objects.contains(key) {
+        var newWord = Word(name:key,accuracy:value.accuracy)
+        middleSection.addWord(newWord)
+        
+        if self.isMaster[key] == true {
+          middleCorrectNum++
+        }
+        self.levelOfWord.append("middle")
+        middleNum++
+      }else {
+        var newWord = Word(name:key,accuracy:value.accuracy)
+        hardSection.addWord(newWord)
+        
+        if self.isMaster[key] == true {
+          hardCorrectNum++
+        }
+        self.levelOfWord.append("hard")
+        hardNum++
+      }
     }
     
+    
+    if easyNum != 0 {
+      self.levelMasterPercentage.append(Float(easyCorrectNum)/Float(easyNum))
+      self.levelNames.append("easy")
+    }
+    if middleNum != 0 {
+      self.levelMasterPercentage.append(Float(middleCorrectNum)/Float(middleNum))
+      self.levelNames.append("middle")
+    }
+    if hardNum != 0 {
+      self.levelMasterPercentage.append(Float(hardCorrectNum)/Float(hardNum))
+      self.levelNames.append("hard")
+    }
+    
+    self._sections?.append(easySection)
+    self._sections?.append(middleSection)
+    self._sections?.append(hardSection)
+
+    var dataPoints = [TKChartDataPoint]()
+    for var i = 0; i < self.levelNames.count; ++i {
+      dataPoints.append(TKChartDataPoint(x: self.levelNames[i], y: self.levelMasterPercentage[i]))
+    }
+
+    self.series.append(TKChartColumnSeries(items: dataPoints))
+    
+    
+/**
     var datePair = DateHelper.getDayBoundary(NSDate(timeIntervalSinceNow: 0))
     let firstViewedNames = UserPerformanceHelper.getFirstViewedNames(dateFrom: datePair.0, dateTo: datePair.1)
     
@@ -273,7 +426,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     self.series.append(firstViewedSeries)
     self.series.append(totalViewedSeries)
     self.series.append(performanceSeries)
-    
+********/
   }
-  
+
 }

@@ -9,13 +9,13 @@
 import Foundation
 
 class ErrorLogger {
-  class func logError (error: NSErrorPointer, message: String) -> Bool {
-    if error != nil {
-      NSLog("error: \(message), \(error.memory)")
-      Flurry.logError("error", message: message, error: error.memory)
+  class func logError (error: NSError, message: String) -> Bool {
+//    if error != nil {
+      NSLog("error: \(message), \(error.localizedDescription)")
+      Flurry.logError("error", message: message, error: error)
       return true
-    }
+//    }
     
-    return false
+//    return false
   }
 }

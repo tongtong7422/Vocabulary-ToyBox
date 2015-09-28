@@ -21,34 +21,39 @@ return String consistent to file name, e.g. apple_x_green
 
 */
 public class CognitiveToyBoxObject : NSObject {
-  
+ 
   public class var allObjects: [String] {
     get {
-      return ["apple", "ball", "balloon", "bottle", "bowl", "bucket", "chair", "fork", "guitar", "hammer", "hat", "spoon", "mug", "kettle", "horn", "paddle", "plate", "pot", "rudder", "trophy", "table", "dax", "ibb", "lug", "pux", "veet", "wif", "yen", "zup"]
+      return ["ball", "basket","belt", "bench","bird","bowl","chair","dog","dress","flag","glasses","gloves","glue","hammer","hose","jar","keys","ladder","lamp","napkin","necklace","pig","pretzel","scarf","shovel","sled","sofa","stairs","tape","toast","tractor","tractor","tray","tricycle","zipper"]
     }
   }
   
   public class var stage1Objects: [String] {
     get {
-      return ["apple", "bottle", "ball", "balloon", "bowl", "bucket", "chair", "guitar", "hat", "spoon", "mug"]
+      return ["apple", "airplane", "ball", "balloon", "cat", "cookie", "dog", "shoe", "cup", "socks"]
     }
   }
   
   public class var stage2Objects: [String] {
     get {
-      return ["kettle", "horn", "paddle", "plate", "rudder", "trophy", "table"]
+      return ["bearteddy", "bed", "chair", "glasses", "grapes", "pen","rock","toothbrush","tree","turtle"]
     }
   }
   
   public class var stage3Objects: [String] {
     get {
-      return ["dax", "ibb", "lug", "pux", "veet", "wif", "yen", "zup"]
+      return ["basket", "flag", "hammer", "ladder", "motorcycle", "sofa", "shovel", "stove","tractor","tablesmall"]
     }
   }
   
   public class var tutorialObjects: [String] {
     get {
       return ["t_apple", "t_bowl", "t_bucket", "t_dax", "t_fork", "t_guitar", "t_hammer", "t_horn", "t_ibb", "t_kettle", "t_mug", "t_paddle", "t_pot", "t_pux", "t_rudder", "t_spoon", "t_trophy", "t_veet", "t_wif", "t_yen", "t_zup"]
+    }
+  }
+  public class var testObjects: [String] {
+    get {
+      return ["ball","belt","sofa","tape","zipper"]
     }
   }
   
@@ -67,65 +72,27 @@ public class CognitiveToyBoxObject : NSObject {
   /* private variables */
   private var _id : Int = -1
   private var _name : String = ""
-  private var _material : String? = nil
-  private var _color : String? = nil
-  private var _suffix: String? = nil
-  
+  private var _filename:String = ""
+    
   /* getters, no setters */
   public var id : Int { get { return _id } }
   public var name : String { get { return _name } }
-  public var material : String? { get { return _material } }
-  public var color : String? { get { return _color } }
-  public var suffix: String? { get { return _suffix }}
-  
-  /* auxiliary dictionary recording suffix of suplementary files */
-//  private let auxSuffix: [String: [String]] = [
-//    "apple_x_green": ["_leaf"],
-//    "apple_x_orange": ["_bite_leaf", "_bite", "_leaf"],
-//    "apple_x_red": ["_leaf"],
-//    "apple_x_yellow": ["_leaf"]
-//  ]
+  public var filename : String { get { return _filename } }
+
   
   override public var description : String {
   get {
-    var str = "\(self.name)_\(self.material == nil ? CognitiveToyBoxObject.unknownMaterial : self.material!)_\(self.color == nil ? CognitiveToyBoxObject.unknownColor : self.color!)"
-    return str
+//    var str = "\(self.name)_\(self.material == nil ? CognitiveToyBoxObject.unknownMaterial : self.material!)_\(self.color == nil ? CognitiveToyBoxObject.unknownColor : self.color!)"
+//    return str
+    return _filename;
   }
   }
   
   public func equals (theOtherObject:CognitiveToyBoxObject?) -> Bool {
     if let object = theOtherObject {
-      return self.id == object.id && self.name == object.name && self.material == object.material && self.color == object.color && self.suffix == object.suffix
+      return self.id == object.id && self.name == object.name && self.filename == object.filename
     }
     return false
-  }
-  
-  public var glowName: String {
-    get {
-      if name == "mug" {
-        if material == "copper" || material == "steel" {
-          return "glow_\(name)_metal"
-        }
-      }
-      
-      if name == "spoon" {
-        if material == "ceramic" || material == "wood" {
-          return "glow_\(name)_\(material!)"
-        }
-      }
-      
-      return "glow_\(name)"
-    }
-  }
-  
-  public var glowName2: String {
-    get {
-      let glowName = self.glowName
-      let index = advance(glowName.startIndex, 5)
-      let head = glowName.substringToIndex(index) // glow_
-      let tail = glowName.substringFromIndex(index) // the rest
-      return "\(head)2_\(tail)"
-    }
   }
   
   public var pluralName: String {
@@ -148,17 +115,7 @@ public class CognitiveToyBoxObject : NSObject {
   
   public var playtimeImageFileName: String {
     get {
-//      if let suffixArray = auxSuffix[self.description] {
-//        let suffix = suffixArray[Int(arc4random_uniform(UInt32(suffixArray.count)))]
-//        return self.description + suffix
-//      }
-//      
-//      return self.description
-      
-      if let suffix = self.suffix {
-        return self.description + suffix
-      }
-      
+    
       return self.description
     }
   }
@@ -244,9 +201,7 @@ public class CognitiveToyBoxObject : NSObject {
 public class CognitiveToyBoxObjectBuilder {
   private var _id : Int = -1
   private var _name : String = ""
-  private var _material : String? = nil
-  private var _color : String? = nil
-  private var _suffix: String? = nil
+  private var _filename : String = ""
   
   public var id: Int {
   get {
@@ -266,61 +221,37 @@ public class CognitiveToyBoxObjectBuilder {
   }
   }
   
-  public var material: String? {
-  get {
-    return _material
-  }
-  set {
-    _material = newValue
-  }
-  }
-  
-  public var color: String? {
-  get {
-    return _color
-  }
-  set {
-    _color = newValue
-  }
-  }
-  
-  public var suffix: String? {
+  public var filename: String {
     get {
-      return _suffix
+      return _filename
     }
     set {
-      _suffix = newValue
+      _filename = newValue
     }
   }
+
+
+  
   
   public init () {}
   
   public func build () -> CognitiveToyBoxObject {
-    self.prepare()
+    
     var object = CognitiveToyBoxObject()
     object._id = id
     object._name = name
-    object._material = material
-    object._color = color
-    object._suffix = suffix
+    object._filename = filename
     return object
   }
   
   public func buildFromNSManagedObject (nsmObject:NSManagedObject) -> CognitiveToyBoxObject {
     self.id = nsmObject.valueForKey("id") as! Int
     self.name = nsmObject.valueForKey("name") as! String
-    self.material = nsmObject.valueForKey("material") as? String
-    self.color = nsmObject.valueForKey("color") as? String
-    self.suffix = nsmObject.valueForKey("suffix") as? String
+    self.filename = nsmObject.valueForKey("filename") as! String
+
     
     return self.build()
   }
   
-  // convert material and color to consistent format
-  private func prepare () {
-    self.material = self.material == CognitiveToyBoxObject.unknownMaterial ? nil : self.material
-    self.color = self.color == CognitiveToyBoxObject.unknownColor ? nil : self.color
-    
-  }
   
 }

@@ -26,6 +26,7 @@ class StatisticsTrackHelper {
     case Object1 = "Object 1"
     case Object2 = "Object 2"
     case Object3 = "Object 3"
+    case Object4 = "Object 4"
     case DistractionType = "Distraction Type (Color, Texture)"
     case Correct = "Correct (Y, N, No Response)"
     case TaskType = "Task Type (Shape Bias, Vocabulary)"
@@ -90,6 +91,10 @@ class StatisticsTrackHelper {
   
   func setObject3 (object: CognitiveToyBoxObject) {
     data![Keys.Object3.rawValue] = object.description
+  }
+  
+  func setObject4 (object: CognitiveToyBoxObject) {
+    data![Keys.Object4.rawValue] = object.description
   }
   
 //  public func setDistractionType (type: String) {

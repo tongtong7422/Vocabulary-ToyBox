@@ -19,7 +19,7 @@ public class ImageSourceHelper {
   
   public class var imageExtension: String {
     get {
-      return "png"
+      return "jpg"
     }
   }
   
@@ -27,7 +27,7 @@ public class ImageSourceHelper {
   public class func getObjFromDir (isTutorial:Bool = false) -> [CognitiveToyBoxObject] {
 //    let objPaths = self.listFilesWithExt(ext: imageExtension) as String[]
     var objFileName:String
-    var objects:[CognitiveToyBoxObject] = [CognitiveToyBoxObject]()
+    var objects:[CognitiveToyBoxObject] = []
     
 //    let textureAtlas = SKTextureAtlas(named: "Objects")
 //    let atlasList = textureAtlas.textureNames as NSArray
@@ -39,59 +39,40 @@ public class ImageSourceHelper {
     } else {
       allObjects = CognitiveToyBoxObject.allObjects
     }
+    
+     var count : Int = 0
     for name in allObjects {
-      var textureNames = SKTextureAtlas(named: name).textureNames
+      let textureNames = SKTextureAtlas(named: name).textureNames
       
       /* get each texture once */
-      atlasList.addObjectsFromArray(textureNames.filter()
-        { (textureName) -> Bool in
-          return (textureName as! String).stringByDeletingPathExtension.hasSuffix("@2x")
+//      atlasList.addObjectsFromArray(textureNames.filter()
+//        { (textureName) -> Bool in
+//          return (textureName as! String).stringByDeletingPathExtension.hasSuffix("@2x")
+//        }
+//      )
+      
+        
+        for textureName in textureNames{
+//          let newPath = NSURL(fileURLWithPath: textureName)
+//          let fileName = newPath.URLByDeletingPathExtension.has
+          print(textureName)
+          
+          
+          
+//            if textureName.stringByDeletingPathExtension.hasSuffix("@2x"){
+//                
+//                var fileName :String
+//                var builder = CognitiveToyBoxObjectBuilder()
+//                
+//                builder.id = count++
+//                builder.name = name
+//                builder.filename = textureName
+//                objects.append(builder.build())
+//              
+//                
+//            }
         }
-      )
-    }
-    
-    var components : [String]
-    var name : String
-    var material : String
-    var color : String
-    var suffix: String?
-    
-    var builder = CognitiveToyBoxObjectBuilder()
-    
-    for count in 0..<atlasList.count {
-      
-      objFileName = ImageSourceHelper.getFileName(path: atlasList[count] as! String)
-      if !objectFileMatch(objFileName) {
-        continue
-      }
-    
-      components = objFileName.componentsSeparatedByString("_")
-      
-      
-      name = components[0]
-      material = components[1]
-      color = components[2]
-      suffix = nil
-      
-      if components.count > 3 {
-        suffix = ""
-        for i in 3..<components.count {
-          suffix! += "_\(components[i])"
-        }
-      }
-      
-      
-      builder.id = count
-      builder.name = name
-      builder.material = material
-      builder.color = color
-      builder.suffix = suffix
-      
-      
-      
-      objects.append(builder.build())
-      
-//      objects.append(CognitiveToyBoxObject(name: name, material: material, color: color))
+
     }
     
     return objects
@@ -107,26 +88,35 @@ public class ImageSourceHelper {
   //    }
   
   /* list all files in the path */
-  public class func listFileAtPath (#path:NSString) -> NSArray {
-//    NSLog("LISTING ALL FILES FOUND")
+  public class func listFileAtPath (path path:NSString) -> NSArray {
+    //    NSLog("LISTING ALL FILES FOUND")
     
     var count = 0
-    var error:NSErrorPointer = nil
-    
-    let directoryContent:NSArray = NSFileManager.defaultManager().contentsOfDirectoryAtPath(path as String, error: error)!
-    
-    if error != nil {
-//      
-//      for count in 0..directoryContent.count {
-//        NSLog("File \(count+1): \(directoryContent[count])")
-//      }
+    //    var error:NSErrorPointer = nil
+    let directoryContent:NSArray
+    do {
+      directoryContent =  try NSFileManager.defaultManager().contentsOfDirectoryAtPath(path as String)
+      return directoryContent;
       
-    }
-    else {
-      /* exception handling */
+      
+    }catch let error as NSError{
+      let message  = "imageSourceHelper function listFileAtPath"
+      ErrorLogger.logError(error, message:message)
+      return NSArray()
     }
     
-    return directoryContent;
+    //
+    //    if error != nil {
+    ////
+    ////      for count in 0..directoryContent.count {
+    ////        NSLog("File \(count+1): \(directoryContent[count])")
+    ////      }
+    //
+    //    }
+    //    else {
+    //      /* exception handling */
+    //    }
+    
   }
   
   /* list all files in the resource with ext=ext */
@@ -134,7 +124,7 @@ public class ImageSourceHelper {
     return listFilesWithExt(ext: self.imageExtension)
   }
   
-  public class func listFilesWithExt (#ext:String) -> NSArray {
+  public class func listFilesWithExt (ext ext:String) -> NSArray {
 //    NSLog("LISTING ALL \(ext) FILES")
     
     let resPath = NSBundle.mainBundle().resourcePath
@@ -158,18 +148,22 @@ public class ImageSourceHelper {
   }
   
   /* remove directory and extension from a path */
-  public class func getFileName (#path:String) -> String {
-    var fileName = path.stringByDeletingPathExtension.lastPathComponent
-    var components = fileName.componentsSeparatedByString("@")
+  public class func getFileName (path path:String) -> String {
+    let newPath = NSURL(fileURLWithPath: path)
+    let fileName = newPath.URLByDeletingPathExtension?.lastPathComponent
+    
+//    var fileName = path.stringByDeletingPathExtension.lastPathComponent
+    var components = fileName!.componentsSeparatedByString("@")
     return components[0]
   }
   
   /* match image files (without ext) */
   public class func objectFileMatch (fileName : String) -> Bool {
-    let pattern = "^(?!glow)[a-zA-Z]+_[a-zA-Z]+_[a-zA-Z]+(_[a-zA-Z]+)*$"
-    var regex = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!
-    var matches = regex.matchesInString(fileName, options: nil, range: NSMakeRange(0, count(fileName)))
-    return !(matches.isEmpty)
+//    let pattern = "^(?!glow)[a-zA-Z]+_[a-zA-Z]+_[a-zA-Z]+(_[a-zA-Z]+)*$"
+//    var regex = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!
+//    var matches = regex.matchesInString(fileName, options: nil, range: NSMakeRange(0, count(fileName)))
+//    return !(matches.isEmpty)
+    return true
   }
   
   

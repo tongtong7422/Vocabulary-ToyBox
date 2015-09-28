@@ -14,7 +14,7 @@ import MediaPlayer
 //let _globalConfigurationInstance = GlobalConfiguration()
 
 public enum Stages: Int {
-  case First = 0, Second, Third, All, Tutorial
+  case First = 0, Second, Third, All, Tutorial, Test
   static let allValues = [First, Second, Third]
 //  static let categoriesPerStage = 5
 //  
@@ -29,6 +29,9 @@ public enum Stages: Int {
       if self == Tutorial {
         return NSSet(array: Array(CognitiveToyBoxObject.tutorialObjects))
       }
+      if self == Test {
+        return NSSet(array: Array(CognitiveToyBoxObject.testObjects))
+      }
       
       if self != All {
         return Stages.difficultyLevels[self.rawValue]
@@ -39,6 +42,7 @@ public enum Stages: Int {
       for level in Stages.difficultyLevels {
         allCategories.unionSet(level as Set<NSObject>)
       }
+            
       return allCategories
     }
   }
@@ -54,7 +58,8 @@ public enum ObjectPresentMode: String {
   case Shake = "Shake"
   case ZoomInAndOut = "ZoomInAndOut"
   case Bounce = "Bounce"
-  static let allValues = [Shake, ZoomInAndOut, Bounce]
+  case DoNothing = "DoNothing"
+  static let allValues = [Shake, ZoomInAndOut, Bounce, DoNothing]
 }
 
 public enum BackgroundImageNames: String {
@@ -188,7 +193,7 @@ public enum PlaytimeSongName: String {
 }
 
 /* Observer pattern: Model */
-public class GlobalConfiguration: NSObject, NSCoding, Printable {
+public class GlobalConfiguration: NSObject, NSCoding {
   
   /* registered observers */
   private var gameControllers = NSMutableArray()
@@ -319,8 +324,8 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
     /* check interval since last update */
     if instance._lastStageUpdate != nil {
       let calendar = NSCalendar.currentCalendar()
-      let components = calendar.components(.CalendarUnitDay, fromDate: instance._lastStageUpdate, toDate: now, options: nil)
-      
+//      let components = calendar.components(.CalendarUnitDay, fromDate: instance._lastStageUpdate, toDate: now, options: nil)
+      let components = calendar.components(NSCalendarUnit.NSDayCalendarUnit, fromDate: instance._lastStageUpdate, toDate: now, options: NSCalendarOptions(rawValue: 0))
       if components.day <= instance._minDaysBeforeStageUpdate {
         return
       }
@@ -336,7 +341,8 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
       var dateTo = DateHelper.getSomeDaysEarlier(now, days: days)
       
       
-      performance = UserPerformanceHelper.getPerformanceBetween(dateFrom: dateFrom, dateTo: dateTo)
+//      performance = UserPerformanceHelper.getPerformanceBetween(dateFrom: dateFrom, dateTo: dateTo)
+      performance = UserPerformanceHelper.getPerformance()
       
       if performance.isEmpty {
         return
@@ -395,6 +401,7 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
   public class func restartSessionsCount () {
     self.sharedInstance._sessionsPassed = 0
   }
+  
   public class func passOneSession () {
     var instance = self.sharedInstance
     
@@ -403,10 +410,11 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
     }
     
     if ++instance._sessionsPassed > instance._backgroundAutoSwitch {
-      self.switchBackground(background: instance._backgroundImageName.succ())
+      self.switchBackground(instance._backgroundImageName.succ())
       instance._sessionsPassed = 1
     }
   }
+  
   public class var backgroundAutoSwitch: Int! {
     get {
     return self.sharedInstance._backgroundAutoSwitch
@@ -420,7 +428,7 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
   
   public class func switchBackground (background: BackgroundImageNames? = nil) {
     if background == nil {
-      switchBackground(background: BackgroundImageNames.allValues[0])
+      switchBackground(BackgroundImageNames.allValues[0])
     } else {
       self.backgroundImageName = background
     }
@@ -849,7 +857,7 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
   }
   
   public func resetGameControllers() {
-    self._stage = .All
+    self._stage = .Test
     self._numMatchingTasksBeforeFakeObjects = 5
     self._numFakeObjectsAfterMatchingTasks = 1
     self._numMatchingTasksBeforeVocabularyWords = 5
@@ -858,17 +866,17 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
     updateGameControllers(applySettings)
   }
   public func resetScenes() {
-    self._backgroundImageName = BackgroundImageNames.allValues.first!
-    self._backgroundAutoSwitch = 2
+    self._backgroundImageName = BackgroundImageNames.White
+    self._backgroundAutoSwitch = 0
     self._nextButtonHidden = false
-    self._bearHidden = false
+    self._bearHidden = true
     self._allowBackgroundAutoSwitch = true
     
     updateScenes(applySettings)
   }
   public func resetActionHelpers () {
     self._newSessionInterval = 120
-    self._objectPresentMode = .Shake
+    self._objectPresentMode = .DoNothing
     self._playtimeInterval = 30
     
     updateActionHelpers(applySettings)
@@ -888,12 +896,12 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
   private class func updateCoreData () {
     
     var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var context:NSManagedObjectContext = appDelegate.managedObjectContext!
+    var context:NSManagedObjectContext = appDelegate.managedObjectContext
     
     
     NSLog("Scanning resources...")
     let objs = ImageSourceHelper.getObjFromDir()
-    let objs_tutorial = ImageSourceHelper.getObjFromDir(isTutorial: true)
+    let objs_tutorial = ImageSourceHelper.getObjFromDir(true)
     NSLog("Done.")
     
     
@@ -910,14 +918,24 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
       
       newObj.setValue(obj.id, forKey: "id")
       newObj.setValue(obj.name, forKey: "name")
-      newObj.setValue(obj.material, forKey: "material")
-      newObj.setValue(obj.color, forKey: "color")
-      newObj.setValue(obj.suffix, forKey: "suffix")
+//      newObj.setValue(obj.material, forKey: "material")
+//      newObj.setValue(obj.color, forKey: "color")
+//      newObj.setValue(obj.suffix, forKey: "suffix")
+      newObj.setValue(obj.filename, forKey: "filename")
       categories.addObject(obj.name)
+      do {
+        try context.save()
+
+      } catch let error as NSError {
+        // failure
+        print("Fetch failed: \(error.localizedDescription)")
+        ErrorLogger.logError(error, message: "Error updating object data")
+      } catch {
+        print("catched")
+      }
+//      context.save(saveError)
       
-      context.save(saveError)
-      
-      ErrorLogger.logError(saveError, message: "Error updating object data")
+//      ErrorLogger.logError(saveError, message: "Error updating object data")
     }
     
     for obj in objs_tutorial {
@@ -926,14 +944,25 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
       
       newObj.setValue(obj.id, forKey: "id")
       newObj.setValue(obj.name, forKey: "name")
-      newObj.setValue(obj.material, forKey: "material")
-      newObj.setValue(obj.color, forKey: "color")
-      newObj.setValue(obj.suffix, forKey: "suffix")
+//      newObj.setValue(obj.material, forKey: "material")
+//      newObj.setValue(obj.color, forKey: "color")
+//      newObj.setValue(obj.suffix, forKey: "suffix")
+      newObj.setValue(obj.filename, forKey: "filename")
       categories.addObject(obj.name)
       
-      context.save(saveError)
+      do {
+        try context.save()
+        
+      } catch let error as NSError {
+        // failure
+        print("Fetch failed: \(error.localizedDescription)")
+        ErrorLogger.logError(error, message: "Error updating tutorial data")
+      }catch{
+        print("catched")
+      }
+//      context.save(saveError)
       
-      ErrorLogger.logError(saveError, message: "Error updating tutorial data")
+//      ErrorLogger.logError(saveError, message: "Error updating tutorial data")
     }
     
 //    GlobalConfiguration.categories = categories
@@ -944,7 +973,7 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
   private class func clearCoreData () {
     
     var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var context:NSManagedObjectContext = appDelegate.managedObjectContext!
+    var context:NSManagedObjectContext = appDelegate.managedObjectContext
     
     NSLog("Clearing Core Data...")
     var request = NSFetchRequest(entityName: "CTBObject")
@@ -953,36 +982,75 @@ public class GlobalConfiguration: NSObject, NSCoding, Printable {
     
     var error : NSErrorPointer = nil
     var saveError : NSErrorPointer = nil
-    var results : NSArray = context.executeFetchRequest(request, error: error)!
+//    var results : NSArray = context.executeFetchRequest(request, error: error)!
+    var results = NSArray()
+    do{
+      results = try context.executeFetchRequest(request)
+    }catch let error as NSError{
+      print("Fetch failed: \(error.localizedDescription)")
+      ErrorLogger.logError(error, message: "Error fetching object data")
+    }catch{
+      print("catched")
+    }
     
-    ErrorLogger.logError(error, message: "Error fetching object data")
+//    ErrorLogger.logError(error, message: "Error fetching object data")
     
     if results.count > 0 {
       for res : AnyObject in results {
         context.deleteObject(res as! NSManagedObject)
       }
     }
-    context.save(saveError)
     
-    ErrorLogger.logError(saveError, message: "Error clearing object data")
+    do {
+      try context.save()
+      
+    } catch let error as NSError {
+      // failure
+      print("Fetch failed: \(error.localizedDescription)")
+      ErrorLogger.logError(error, message: "Error clearing object data")
+    }catch{
+      print("catched")
+    }
+//    context.save(saveError)
+    
+//    ErrorLogger.logError(saveError, message: "Error clearing object data")
     
     /* clear tutorial data */
     request = NSFetchRequest(entityName: "CTBObject_tutorial")
     request.returnsObjectsAsFaults = false
     request.includesPropertyValues = false
     
-    results = context.executeFetchRequest(request, error: error)!
-    
-    ErrorLogger.logError(error, message: "Error fetching tutorial data")
+//    results = context.executeFetchRequest(request, error: error)!
+    do{
+      results = try context.executeFetchRequest(request)
+    }catch let error as NSError{
+      print("Fetch failed: \(error.localizedDescription)")
+      ErrorLogger.logError(error, message: "Error fetching tutorial data")
+
+    }catch{
+      print("catched")
+    }
+//    ErrorLogger.logError(error, message: "Error fetching tutorial data")
     
     if results.count > 0 {
       for res : AnyObject in results {
         context.deleteObject(res as! NSManagedObject)
       }
     }
-    context.save(saveError)
     
-    ErrorLogger.logError(saveError, message: "Error clearing tutorial data")
+    do {
+      try context.save()
+      
+    } catch let error as NSError {
+      // failure
+      print("Fetch failed: \(error.localizedDescription)")
+      ErrorLogger.logError(error, message: "Error clearing tutorial data")
+    } catch{
+      print("catched")
+    }
+//    context.save(saveError)
+    
+//    ErrorLogger.logError(saveError, message: "Error clearing tutorial data")
     NSLog("Done.")
     
   }

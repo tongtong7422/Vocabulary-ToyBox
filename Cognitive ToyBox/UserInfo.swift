@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 @objc(UserInfo)
-class UserInfo: NSManagedObject, Printable {
+class UserInfo: NSManagedObject {
   
   @NSManaged var id: String
   @NSManaged var name: String

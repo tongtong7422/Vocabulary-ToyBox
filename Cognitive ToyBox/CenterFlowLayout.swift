@@ -11,13 +11,13 @@ import UIKit
 
 class CenterFlowLayout: UICollectionViewFlowLayout {
   
-  override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
-    var superAttributes = super.layoutAttributesForElementsInRect(rect) as! [UICollectionViewLayoutAttributes]
+  override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    var superAttributes = super.layoutAttributesForElementsInRect(rect)
     
     var rowCollections:NSMutableDictionary = [:]
     
     // Collect attributes by their midY coordinate.. i.e. rows!
-    for itemAttributes in superAttributes
+    for itemAttributes in superAttributes!
     {
       var yCenter = CGRectGetMidY(itemAttributes.frame)
       

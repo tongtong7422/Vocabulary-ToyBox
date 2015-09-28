@@ -41,7 +41,7 @@ extension CGFloat {
 
 class ReviewScene: SKScene, ConfigurableScene {
   
-  let versionNum = UIDevice.currentDevice().systemVersion.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "."))[0].toInt()
+  let versionNum = Int(UIDevice.currentDevice().systemVersion.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "."))[0])
   
   weak var gameViewController: GameViewController? = nil
   
@@ -89,7 +89,7 @@ class ReviewScene: SKScene, ConfigurableScene {
   }
   
   enum Mode {
-    case Name, Material
+    case Name
   }
   var mode:Mode = .Name
   
@@ -112,7 +112,7 @@ class ReviewScene: SKScene, ConfigurableScene {
   }
   
   private var bearHidden = false
-  func bearDance(#hidden: Bool) {
+  func bearDance(hidden hidden: Bool) {
     bearHidden = hidden
     if bear != nil {
       if bear.parent != nil && bearHidden {
@@ -134,7 +134,7 @@ class ReviewScene: SKScene, ConfigurableScene {
     if GlobalConfiguration.backgroundImageName == BackgroundImageNames.Space {
       var helmetAtlas = SKTextureAtlas(named: "bear_dancing_helmet")
       helmetAtlas.preloadWithCompletionHandler({})
-      bearHelmet = SKSpriteNode(texture: helmetAtlas.textureNamed(helmetAtlas.textureNames.first as! String))
+      bearHelmet = SKSpriteNode(texture: helmetAtlas.textureNamed(helmetAtlas.textureNames.first as String!))
       bearHelmet.runAction(SKAction.repeatActionForever(ActionHelper.bearDancingHelmet()))
       self.bear.addChild(bearHelmet)
     }
@@ -158,6 +158,7 @@ class ReviewScene: SKScene, ConfigurableScene {
   
   override func didMoveToView(view: SKView) {
     super.didMoveToView(view)
+
     
     ActionHelper.preloadPlaytimeAction()
 //    self.backgroundColor = UIColor(white: 1, alpha: 1)
@@ -191,16 +192,18 @@ class ReviewScene: SKScene, ConfigurableScene {
     
     // masks
     var color = UIColor(red: 0, green: 1, blue: 0, alpha: 0.5)
-    if versionNum >= 8 {
-      self.colorMask = SKShapeNode(rect: self.frame)
-      var colorMask = self.colorMask as! SKShapeNode
-      colorMask.strokeColor = color
-      colorMask.fillColor = color
-    }
-    else {
-      self.colorMask = SKSpriteNode(color: color, size: self.frame.size)
-      self.colorMask.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
-    }
+
+      if #available(iOS 8.0, *) {
+          self.colorMask = SKShapeNode(rect: self.frame)
+          var colorMask = self.colorMask as! SKShapeNode
+          colorMask.strokeColor = color
+          colorMask.fillColor = color
+      } else {
+          self.colorMask = SKSpriteNode(color: color, size: self.frame.size)
+          self.colorMask.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
+      }
+      
+
     
     self.colorMask.hidden = true
     self.colorMask.zPosition = GameViewController.Layers.AboveBottom.rawValue
@@ -214,8 +217,9 @@ class ReviewScene: SKScene, ConfigurableScene {
     
     
   }
+
   
-  override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+  override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
     super.touchesEnded(touches, withEvent: event)
     
     let velocityScale : CGFloat = 600
@@ -285,15 +289,15 @@ class ReviewScene: SKScene, ConfigurableScene {
       
     }
     
-    if event.allTouches()?.count == touches.count {
+    if event!.allTouches()?.count == touches.count {
       self.resetDrag()
     }
     
     
     
   }
-  
-  override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+ 
+  override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     super.touchesBegan(touches, withEvent: event)
     
     var location : CGPoint
@@ -338,7 +342,8 @@ class ReviewScene: SKScene, ConfigurableScene {
     
   }
 
-  override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+
+  override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
     super.touchesMoved(touches, withEvent: event)
     
     var location : CGPoint
@@ -441,8 +446,8 @@ class ReviewScene: SKScene, ConfigurableScene {
       } else {
         self.timeToPlayLabel.text = "\(presentingObjects) \(CognitiveToyBoxObject.getPluralName(objectName))"
       }
-    case .Material:
-      self.timeToPlayLabel.text = "Some \(objectName)"
+//    case .Material:
+//      self.timeToPlayLabel.text = "Some \(objectName)"
     }
     
     self.timeToPlayLabel.fontSize = self.labelFontSize
@@ -488,8 +493,7 @@ class ReviewScene: SKScene, ConfigurableScene {
     case .Name:
       objectList = CognitiveToyBoxObjectSearchHelper.getSameNameAll(name: self.objectName, limit: limit)
       objectAtlas = SKTextureAtlas(named: self.objectName)
-    case .Material:
-      objectList = CognitiveToyBoxObjectSearchHelper.getSameMaterialAll(material: self.objectName, limit: limit)
+    
     }
     
     
@@ -615,7 +619,7 @@ class ReviewScene: SKScene, ConfigurableScene {
       if node === newNodeList.first {
         node.runAction(SKAction.sequence([delayActionBefore, preExplode])) {
           [unowned self] () -> () in
-          self.showObjects(oneByOne: false)
+          self.showObjects(false)
         }
       } else {
         node.runAction(SKAction.sequence([delayActionBefore, preExplode]))
@@ -646,7 +650,7 @@ class ReviewScene: SKScene, ConfigurableScene {
         self.showObjects()
       }
     } else {
-      self.showObjects(oneByOne: oneByOne)
+      self.showObjects(oneByOne)
     }
     
     
@@ -676,7 +680,7 @@ class ReviewScene: SKScene, ConfigurableScene {
     
 //    self.physicsWorld.contactDelegate = self
     
-    self.nodeList.extend(self.newNodeList)
+    self.nodeList.appendContentsOf(self.newNodeList)
 //    self.mainNode.hidden = false
 //    self.nodeList.append(self.mainNode)
 //    self.nodeList.append(self.correctNode)
@@ -694,7 +698,11 @@ class ReviewScene: SKScene, ConfigurableScene {
     for node in self.nodeList {
       
       // physics body
-      node.physicsBody = SKPhysicsBody(texture: node.texture, size: node.size)
+      if #available(iOS 8.0, *) {
+          node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
+      } else {
+          // Fallback on earlier versions
+      }
 //      node.physicsBody = SKPhysicsBody(rectangleOfSize: node.size)
 //      node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width/3)
 //      var path = CGPathCreateWithEllipseInRect(node.frame, nil)

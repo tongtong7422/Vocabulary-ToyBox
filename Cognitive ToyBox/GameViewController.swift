@@ -16,9 +16,14 @@ extension SKNode {
   class func unarchiveFromFile(file : NSString) -> SKNode? {
     
     let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks")
+    var sceneData = NSData()
+    do{
+      sceneData = try NSData(contentsOfFile: path!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+    }catch let error as NSError{
+      ErrorLogger.logError(error, message: "\(error.localizedDescription)")
+    }
     
-    var sceneData = NSData(contentsOfFile: path!, options: .DataReadingMappedIfSafe, error: nil)
-    var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
+    let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
     
     archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
     let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! TriadScene
@@ -35,6 +40,13 @@ public class GameViewController: UIViewController {
   @IBOutlet weak var homeButton: UIButton!
   @IBOutlet weak var skView: SKView!
   @IBOutlet weak var homePanel: UIView!
+  @IBOutlet weak var progressBar: UIProgressView!
+  @IBOutlet weak var progressNumber: UILabel!
+  
+  @IBAction func analysisButton(sender: AnyObject) {
+    self.performSegueWithIdentifier("finalAnalysis", sender: self)
+    return
+  }
   
   var gameController = GameController()
   
@@ -95,6 +107,10 @@ public class GameViewController: UIViewController {
     
   }
   
+  @IBAction func playSoundButton(sender: AnyObject) {
+    
+  }
+  
   func displayQuitPanel () {
     skView.paused = true
     GlobalConfiguration.releaseScene(self.skView.scene)
@@ -116,7 +132,17 @@ public class GameViewController: UIViewController {
     
     SoundSourceHelper.playTrophySound()
   }
-  
+
+  private var _isFinished = false
+  var isFinished:Bool {
+    get {
+      return _isFinished
+    }
+    set {
+      _isFinished = newValue
+    }
+  }
+
   
   let playInterval:NSTimeInterval = 1800
   
@@ -137,7 +163,7 @@ public class GameViewController: UIViewController {
     }
     set {
       _taskCount = newValue
-      self.taskCountLabel.setTitle(String(_taskCount), forState: UIControlState.allZeros)
+      self.taskCountLabel.setTitle(String(_taskCount), forState: UIControlState())
       self.taskCountLabelTrophy.text = String(_taskCount)
     }
   }
@@ -196,6 +222,9 @@ public class GameViewController: UIViewController {
   }
   
   public func presentWelcomeScene () {
+    // stop showing confetti panel
+    self.counted = false
+    
     if self.counted {
       if taskCount % 5 == 0 && !counterReset {
         counterReset = true
@@ -217,30 +246,33 @@ public class GameViewController: UIViewController {
   public func presentGameScene (newScene:Bool = true) {
     GlobalConfiguration.releaseScene(skView.scene)
     var scene:SKScene
-    gameController.startNewSession(updateTaskManager: newScene)
+    var success = gameController.startNewSession(newScene)
+    if !success  {
+      
+
+      self.isFinished = true
+      self.performSegueWithIdentifier("finalAnalysis", sender: self)
+      
+      return
+    }
     switch gameController.task {
-    case .Match:
-      scene = TriadScene(size: skView.bounds.size)
-      (scene as! TriadScene).gameViewController = self
+//    case .Match:
+//      scene = TriadScene(size: skView.bounds.size)
+//      (scene as! TriadScene).gameViewController = self
     case .Vocabulary:
       scene = VocabularyScene(size: skView.bounds.size)
       (scene as! VocabularyScene).gameViewController = self
-    case .Drag:
-      scene = DragScene(size: skView.bounds.size)
-      (scene as! DragScene).gameViewController = self
-    case .Bucket:
-      scene = BucketScene(size: skView.bounds.size)
-      (scene as! BucketScene).gameViewController = self
-    case .Some:
-      scene = SomeScene(size: skView.bounds.size)
-      (scene as! SomeScene).gameViewController = self
-    case .Material:
-      fallthrough
-    case .Color:
-      fallthrough
-    case .Length:
-      scene = AdjectiveScene(size: skView.bounds.size)
-      (scene as! AdjectiveScene).gameViewController = self
+//    case .Drag:
+//      scene = DragScene(size: skView.bounds.size)
+//      (scene as! DragScene).gameViewController = self
+//    case .Bucket:
+//      scene = BucketScene(size: skView.bounds.size)
+//      (scene as! BucketScene).gameViewController = self
+//    case .Material:
+//      fallthrough
+//    case .Color:
+//      fallthrough
+
     default:
       return
     }
@@ -259,126 +291,18 @@ public class GameViewController: UIViewController {
     
     /* transfer data */
     scene.objectName = gameController.getMainObj().name
-    if let fromScene = skView.scene as? TriadScene {
-      scene.timeToPlayLabel.text = fromScene.foundLabel.text
- 
-      fromScene.mainObjectNode.removeAllActions()
-      fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-      fromScene.correctNode.removeAllActions()
-      fromScene.correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-      if gameController.task != .Vocabulary {
-        scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
-      }
-      scene.addNode(fromScene.correctNode.copy() as! SKSpriteNode, id: gameController.getCorrectObj().id)
-      
-      if let mainNode_2 = fromScene.secondaryMainNode {
-        mainNode_2.removeAllActions()
-        mainNode_2.runAction(SKAction.rotateToAngle(0, duration: 0))
-        scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.secondaryMainIndex].id)
-      }
-      
-      
-    } else if let fromScene = skView.scene as? DragScene {
-      fromScene.mainObjectNode.removeAllActions()
-      fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-      fromScene.correctNode?.removeAllActions()
-      fromScene.wrongNode?.removeAllActions()
-      
-      scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
-      var correctObjList = gameController.getCorrectObjList()
-      var correctNodeList = fromScene.correctNodeList
-      for index in 0..<correctObjList.count {
-        /* Dummy node is ignored */
-        scene.addNode(correctNodeList[index+1].copy() as! SKSpriteNode, id: correctObjList[index].id)
-      }
-    } else if let fromScene = skView.scene as? BucketScene {
-      fromScene.mainObjectNode.removeAllActions()
-      fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-      
-      scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
-      var correctObjList = gameController.getCorrectObjList()
-      var correctNodeList = fromScene.correctNodeList
-      for index in 0..<correctObjList.count {
-        scene.addNode(correctNodeList[index].copy() as! SKSpriteNode, id: correctObjList[index].id)
-      }
-    } else if let fromScene = skView.scene as? SomeScene {
-      scene.objectName = gameController.getMainObj().material!
-      scene.mode = .Material
-      //      scene.mainId = gameController.getMainObj().id
-      //      scene.correctId = gameController.getCorrectObj().id
-      scene.timeToPlayLabel.text = fromScene.foundLabel.text
-      //
-      //
-      fromScene.mainObjectNode.removeAllActions()
-      fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-      fromScene.correctNode.removeAllActions()
-      fromScene.correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-      if gameController.task != .Vocabulary {
-        scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
-      }
-      scene.addNode(fromScene.correctNode.copy() as! SKSpriteNode, id: gameController.getCorrectObj().id)
-      
-      //      scene.mainNode = gameScene.mainObjectNode.copy() as SKSpriteNode
-      //      scene.mainNode.hidden = (gameScene.gameController.task == .Vocabulary)
-      //      if !scene.mainNode.hidden {
-      //        scene.presentingObjects++
-      //      }
-      //      scene.correctNode = gameScene.correctNode.copy() as SKSpriteNode
-      //      scene.presentingObjects++
-      //
-      if let mainNode_2 = fromScene.secondaryMainNode {
-        mainNode_2.removeAllActions()
-        mainNode_2.runAction(SKAction.rotateToAngle(0, duration: 0))
-        scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.secondaryMainIndex].id)
-        //        scene.mainNode_2 = mainNode_2.copy() as? SKSpriteNode
-        //        scene.mainNode_2?.hidden = (gameScene.gameController.task == .Vocabulary)
-        //        if !scene.mainNode_2!.hidden {
-        //          scene.presentingObjects++
-        //        }
-      }
-
-    }else if let fromScene = skView.scene as? VocabularyScene {
+    if let fromScene = skView.scene as? VocabularyScene {
         scene.objectName = gameController.getMainObj().name
         scene.mode = .Name
-        //      scene.mainId = gameController.getMainObj().id
-        //      scene.correctId = gameController.getCorrectObj().id
+
         scene.timeToPlayLabel.text = fromScene.foundLabel.text
-        //
-        //
+      
         fromScene.correctNode.removeAllActions()
         fromScene.correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
 
         scene.addNode(fromScene.correctNode.copy() as! SKSpriteNode, id: gameController.getCorrectObj().id)
         
-        if let mainNode_2 = fromScene.secondaryMainNode {
-            mainNode_2.removeAllActions()
-            mainNode_2.runAction(SKAction.rotateToAngle(0, duration: 0))
-            scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.secondaryMainIndex].id)
-            //        scene.mainNode_2 = mainNode_2.copy() as? SKSpriteNode
-            //        scene.mainNode_2?.hidden = (gameScene.gameController.task == .Vocabulary)
-            //        if !scene.mainNode_2!.hidden {
-            //          scene.presentingObjects++
-            //        }
-        }
-        
-    }
-    else if let fromScene = skView.scene as? AdjectiveScene {
-      scene.timeToPlayLabel.text = fromScene.foundLabel.text
       
-      fromScene.mainObjectNode.removeAllActions()
-      fromScene.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-      fromScene.correctNode.removeAllActions()
-      fromScene.correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-      if gameController.task != .Vocabulary {
-        scene.addNode(fromScene.mainObjectNode.copy() as! SKSpriteNode, id: gameController.getMainObj().id)
-      }
-      scene.addNode(fromScene.correctNode.copy() as! SKSpriteNode, id: gameController.getCorrectObj().id)
-      
-      if let mainNode_2 = fromScene.secondaryMainNode {
-        mainNode_2.removeAllActions()
-        mainNode_2.runAction(SKAction.rotateToAngle(0, duration: 0))
-        scene.addNode(mainNode_2.copy() as! SKSpriteNode, id: fromScene.objectList[fromScene.secondaryMainIndex].id)
-      }
     }
     
     skView.presentScene(scene)
@@ -400,7 +324,7 @@ public class GameViewController: UIViewController {
     super.viewDidLoad()
     
     /* auto stage */
-    GlobalConfiguration.checkStageUpdate()
+//    GlobalConfiguration.checkStageUpdate()
     
     /* assign user */
     UserInfoHelper.switchUser(UserInfoHelper.getUserInfo())
@@ -428,6 +352,7 @@ public class GameViewController: UIViewController {
     
 //    self.continueButton.hidden = true
 //    self.quitButton.hidden = true
+    
     self.rewardView.hidden = true
     self.homePanel.hidden = true
     
@@ -459,7 +384,31 @@ public class GameViewController: UIViewController {
     
 //    self.skView.showsPhysics = true
     
+    progressBar.setProgress(Float(UserPerformanceHelper.getTestNumber())/Float(GlobalConfiguration.stage.searchCategory.count * 5), animated: true)
+    progressNumber.text = "\(UserPerformanceHelper.getTestNumber())/\(GlobalConfiguration.stage.searchCategory.count * 5)"
+    
   }
+  
+//  func addControls() {
+//    // Create Progress View Control
+//    progressBar = UIProgressView(progressViewStyle: UIProgressViewStyle.Default)
+////    progressBar?.center = self.view.center
+//    view.addSubview(progressBar!)
+//    
+//    // Add Label
+//    progressNumber = UILabel()
+////    let frame = CGRectMake(view.center.x - 25, view.center.y - 100, 100, 50)
+////    progressLabel?.frame = frame
+//    view.addSubview(progressNumber!)
+//  }
+//  
+  
+  func updateProgressBar() {
+    progressBar?.progress += (1.0/Float(GlobalConfiguration.stage.searchCategory.count * 5))
+//    let progressValue = self.progressBar?.progress
+    progressNumber?.text = "\(UserPerformanceHelper.getTestNumber())/\(GlobalConfiguration.stage.searchCategory.count * 5)"
+  }
+
   
   public override func viewDidDisappear(animated: Bool) {
     super.viewDidDisappear(animated)
@@ -493,26 +442,37 @@ public class GameViewController: UIViewController {
 //    scene.gameViewController = self
     skView.presentScene(scene)
   }
+
   
   override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+
     if segue.identifier == "userSignUpSegue" {
       (segue.destinationViewController as! UserViewController).sourceViewController = self
     } else if segue.identifier == "settingsModal" {
 //      (segue.destinationViewController as SettingsViewController).gameViewController = self
+    } else if segue.identifier == "finalAnalysis"
+    {
+      (segue.destinationViewController as! AnalysisViewController).sourceViewController = self
     }
   }
   
   override public func shouldAutorotate() -> Bool {
     return true
   }
-  
-  override public func supportedInterfaceOrientations() -> Int {
-    if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-      return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
-    } else {
-      return Int(UIInterfaceOrientationMask.All.rawValue)
-    }
+  public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+       if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+          return UIInterfaceOrientationMask.AllButUpsideDown
+        } else {
+          return UIInterfaceOrientationMask.All
+        }
   }
+//  override public func supportedInterfaceOrientations() -> Int {
+//    if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+//      return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+//    } else {
+//      return Int(UIInterfaceOrientationMask.All.rawValue)
+//    }
+//  }
   
   override public func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()

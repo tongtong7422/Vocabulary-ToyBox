@@ -13,9 +13,11 @@ import CoreData
 class UserPerformance: NSManagedObject {
   
   @NSManaged var name: String
-  @NSManaged var date: NSDate
-  @NSManaged var correct: NSNumber
+//  @NSManaged var date: NSDate
+//  @NSManaged var correct: NSNumber
   @NSManaged var firstAppear: NameFirstAppear
+  @NSManaged var correcttimes: Int16
+  @NSManaged var appeartimes: Int16
   
   override func prepareForDeletion() {
     if self.firstAppear.appearances.count == 1 {

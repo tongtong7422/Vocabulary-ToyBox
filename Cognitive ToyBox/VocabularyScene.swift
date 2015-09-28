@@ -24,7 +24,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
     }
     private var state = State.Initial
     
-    let versionNum = UIDevice.currentDevice().systemVersion.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "."))[0].toInt()
+    let versionNum = Int(UIDevice.currentDevice().systemVersion.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "."))[0])
     
     var selectionRegistered = false
     var labelFontSize = CGFloat(72)
@@ -44,19 +44,25 @@ class VocabularyScene: SKScene, ConfigurableScene {
     }
     
     var objectName = ""
+    var cacheObjectName = ""
     
     var background : SKSpriteNode! = nil
     let isBlurred = true
     
-    let mainScaleBefore:CGFloat = 2
-    let mainScaleAfter:CGFloat = 0.7
-    let normalScale:CGFloat = 1
+    let mainScaleBefore :CGFloat = 2
+    let mainScaleAfter  :CGFloat = 0.7
+    let normalScale     :CGFloat = 0.85
     
-    let descriptionLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
-    let questionLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
-    let wrongLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
-    let foundLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
-    
+    let descriptionLabel  = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+    let questionLabel     = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+    let wrongLabel        = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+    let foundLabel        = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+  
+//    let cacheDescriptionLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+//    let cacheQuestionLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+//    let cacheWrongLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+//    let cacheFoundLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+    var border : SKSpriteNode! = nil
     var mainObjectNode: SKSpriteNode! = nil
     var secondaryMainNode: SKSpriteNode! = nil
     var objectList: [CognitiveToyBoxObject] = []
@@ -64,7 +70,10 @@ class VocabularyScene: SKScene, ConfigurableScene {
     
     var optionNodeList: [SKSpriteNode] = []
     var optionGlowList: [SKSpriteNode] = []
-    
+  
+    var cacheMainObjectNode: SKSpriteNode! = nil
+    var cacheOptionNodeList: [SKSpriteNode] = []
+  
     //  var firstOptionNode: SKSpriteNode! = nil
     //  var secondOptionNode: SKSpriteNode! = nil
     //  var thirdOptionNode: SKSpriteNode! = nil
@@ -136,7 +145,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
         
         SoundSourceHelper.stopBGM()
         
-        
+      
         
         
         self.initScene()
@@ -145,17 +154,20 @@ class VocabularyScene: SKScene, ConfigurableScene {
         
         
         // masks
-        if versionNum >= 8 {
-            self.topMask = SKShapeNode(rect: self.frame)  // iOS 8 only
-            self.colorMask = SKShapeNode(rect: self.frame)
-        }
-        else {
-            self.topMask = SKSpriteNode(color: UIColor(white: 0, alpha: 1), size: self.frame.size)
-            self.topMask.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
-            
-            self.colorMask = SKSpriteNode(color: UIColor(white: 0.5, alpha: 0.5), size: self.frame.size)
-            self.colorMask.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
-        }
+
+            if #available(iOS 8.0, *) {
+                self.topMask = SKShapeNode(rect: self.frame)
+                self.colorMask = SKShapeNode(rect: self.frame)
+            } else {
+              self.topMask = SKSpriteNode(color: UIColor(white: 0, alpha: 1), size: self.frame.size)
+              self.topMask.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
+              
+              self.colorMask = SKSpriteNode(color: UIColor(white: 0.5, alpha: 0.5), size: self.frame.size)
+              self.colorMask.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
+
+            }  // iOS 8 only
+
+
         
         self.topMask.hidden = true
         
@@ -231,11 +243,12 @@ class VocabularyScene: SKScene, ConfigurableScene {
             
             wrongSelection()
             toddlerLock = true
-            
+          
         } else if touchedCorrectObject {
             
             
             correctSelection()
+          toddlerLock = true
         }
         
         touchedWrongObject = false
@@ -296,8 +309,9 @@ class VocabularyScene: SKScene, ConfigurableScene {
             }
         }
     }
+
     
-    override func touchesBegan (touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan (touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         handleTouch(touches, withEvent: event)
         
@@ -323,7 +337,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
                 continue
             }
             
-            spriteNode = (node === mainObjectNode || node === correctNode || contains(optionNodeList, node as! SKSpriteNode)) ? (node as! SKSpriteNode) : nil
+            spriteNode = (node === mainObjectNode || node === correctNode || optionNodeList.contains(node as! SKSpriteNode)) ? (node as! SKSpriteNode) : nil
             
             if spriteNode == nil {
                 continue
@@ -349,8 +363,8 @@ class VocabularyScene: SKScene, ConfigurableScene {
         }
         
     }
-    
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         //    handleTouch(touches, withEvent: event)
         
         var location : CGPoint
@@ -388,8 +402,8 @@ class VocabularyScene: SKScene, ConfigurableScene {
             
         }
     }
-    
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let velocityScale : CGFloat = 600
         let maxSpeed : CGFloat = 10000
         
@@ -426,7 +440,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
             
         }
         
-        if event.allTouches()?.count == touches.count {
+        if event!.allTouches()?.count == touches.count {
             self.resetDrag()
         }
         
@@ -447,7 +461,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
         
         var index = 0
         for node in optionNodeList {
-            node.position = SomeScene.optionLocation(frame: optionsFrame, index: index)
+            node.position = VocabularyScene.optionLocation(frame: optionsFrame, index: index)
             index++
         }
         
@@ -470,9 +484,10 @@ class VocabularyScene: SKScene, ConfigurableScene {
         
         self.objectList = self.gameController.getListWithSameName().filter() {
             [unowned self] (object:CognitiveToyBoxObject) -> Bool in
-            !object.equals(self.gameController.getMainObj()) && !object.equals(self.gameController.getCorrectObj()) && object.suffix == nil
+            !object.equals(self.gameController.getMainObj()) && !object.equals(self.gameController.getCorrectObj()) 
         }
-        
+      
+      
         if self.objectList.isEmpty {
             objectList.append(self.gameController.mainObject)
         }
@@ -481,8 +496,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
         self.objectName = self.gameController.getMainObj().name
         self.descriptionLabel.text = "\(objectName)"
         self.questionLabel.text = "\(objectName)"
-        
-        
+      
         
         self.wrongLabel.text = "That's not \(objectName)!"
         
@@ -503,6 +517,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
         statisticsTrack.setObject1(self.gameController.mainObject)
         statisticsTrack.setObject2(self.gameController.options[0].first!)
         statisticsTrack.setObject3(self.gameController.options[1].first!)
+        statisticsTrack.setObject4(self.gameController.options[2].first!)
         
 //        if gameController.task == .Vocabulary {
             self.foundLabel.text = "\(objectName)!"
@@ -512,7 +527,38 @@ class VocabularyScene: SKScene, ConfigurableScene {
 //            statisticsTrack.setTaskType("Shape Bias")
 //        }
     }
+  
+  //prepare the next group of objects
+  func loadNextGroup(){
     
+    var success = self.gameController.startNewSession(true)
+    
+    if success {
+      // change label text
+      
+      self.objectName = self.gameController.getMainObj().name
+      self.descriptionLabel.text = "\(objectName)"
+      self.questionLabel.text = "\(objectName)"
+
+      
+      self.initCache()
+      self.playFlipAnimation()
+    }else {
+      self.gameViewController?.isFinished = true
+      self.gameViewController!.performSegueWithIdentifier("finalAnalysis", sender: self)
+
+    }
+    
+//    // refresh main
+//    self.cacheObjectName = self.gameController.getMainObj().name
+//    self.cacheDescriptionLabel.text = "\(objectName)"
+//    self.cacheQuestionLabel.text = "\(objectName)"
+//    
+//    self.cacheWrongLabel.text = "That's not \(objectName)!"
+//    
+
+  }
+  
     /* initialize labels */
     func initLabels () {
         self.descriptionLabel.fontSize = self.labelFontSize
@@ -609,7 +655,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
             [unowned self] () -> () in
             if self.state.rawValue < State.MainInTransfer.rawValue {
                 self.addChild(self.mainGlow)
-                self.mainGlow.runAction(ActionHelper.beaconGlow(scale:self.mainScaleBefore))
+                self.mainGlow.runAction(ActionHelper.beaconGlow(self.mainScaleBefore))
             }
             
             self.mainObjectNode.runAction(ActionHelper.waitForMain()) {
@@ -634,8 +680,6 @@ class VocabularyScene: SKScene, ConfigurableScene {
         } else {
             self.emphasizeOptions()
         }
-        
-        
     }
     
     /* transition main */
@@ -680,9 +724,8 @@ class VocabularyScene: SKScene, ConfigurableScene {
                 self.resetReminder()
             }
             if let thirdNode = self.secondaryMainNode {
-                thirdNode.runAction(ActionHelper.presentObject(reverseOrder: true))
+                thirdNode.runAction(ActionHelper.presentObject(true))
             }
-            
             
         }
     }
@@ -699,7 +742,9 @@ class VocabularyScene: SKScene, ConfigurableScene {
             var object = option.first!
             //      var atlas = SKTextureAtlas(named: object.name)
             var node = SKSpriteNode(texture: SKTexture(imageNamed: object.description))
-            node.position = SomeScene.optionLocation(frame: optionsFrame, index: index)
+            node.position = VocabularyScene.optionLocation(frame: optionsFrame, index: index)
+            node.xScale = normalScale
+            node.yScale = normalScale
             
             var glow = SKSpriteNode(imageNamed: "glow")
             glow.position = node.position
@@ -732,7 +777,51 @@ class VocabularyScene: SKScene, ConfigurableScene {
         }
         
     }
+  
+  func initCache () {
+    let frame = self.initFrame
+    var index = 0
     
+    
+    
+    for option in self.gameController.options {
+      var object = option.first!
+      //      var atlas = SKTextureAtlas(named: object.name)
+      var node = SKSpriteNode(texture: SKTexture(imageNamed: object.description))
+      node.position = VocabularyScene.optionLocation(frame: optionsFrame, index: index)
+      node.xScale = normalScale
+      node.yScale = normalScale
+      
+      var glow = SKSpriteNode(imageNamed: "glow")
+      glow.position = node.position
+      glow.hidden = true
+      
+      cacheOptionNodeList.append(node)
+      
+      index++
+    }
+    
+    for node in cacheOptionNodeList {
+      node.zPosition = GameViewController.Layers.AboveMask.rawValue
+    }
+    
+    adjustOptionsPosition()
+    
+    correctFrame = CGRect(origin: CGPointApplyAffineTransform(cacheOptionNodeList[gameController.correctIndex].position, CGAffineTransformMakeTranslation(-touchAreaLength/2, -touchAreaLength/2)) , size: CGSize(width: touchAreaLength, height: touchAreaLength))
+    
+    for i in 0..<cacheOptionNodeList.count {
+      if i == gameController.correctIndex {
+        continue
+      }
+      
+      var wrongFrame = CGRect(origin: CGPointApplyAffineTransform(cacheOptionNodeList[i].position, CGAffineTransformMakeTranslation(-touchAreaLength/2, -touchAreaLength/2)) , size: CGSize(width: touchAreaLength, height: touchAreaLength))
+      wrongFrameList.append(wrongFrame)
+    }
+    
+  }
+  
+  
+  
     /* make sure objects look comfortable.  */
     func adjustOptionsPosition () {
         //    var position1 = firstOptionNode.position
@@ -766,16 +855,18 @@ class VocabularyScene: SKScene, ConfigurableScene {
         self.addChild(self.colorMask)
         //    self.addChild(self.firstOptionNode)
         //    self.addChild(self.secondOptionNode)
-        //
+
         //    self.addChild(self.firstOptionGlow)
         //    self.addChild(self.secondOptionGlow)
+      
         for node in optionNodeList {
             self.addChild(node)
         }
-        for glow in optionGlowList {
-            self.addChild(glow)
-        }
-        
+      
+//        for glow in optionGlowList {
+//            self.addChild(glow)
+//        }
+      
         
         self.allowTouching()
         // play sound effect
@@ -790,7 +881,36 @@ class VocabularyScene: SKScene, ConfigurableScene {
         
         self.state = .OptionsDisplayed
     }
+  
+  func displayCache () {
+    self.colorMask.hidden = false
+    self.questionLabel.hidden = false
     
+    self.addChild(self.colorMask)
+ 
+    
+    for node in cacheOptionNodeList {
+      self.addChild(node)
+    }
+    
+    //        for glow in optionGlowList {
+    //            self.addChild(glow)
+    //        }
+    
+    self.allowTouching()
+    // play sound effect
+    self.runAction(SoundSourceHelper.soundFind(name: objectName))
+    self.emphasizeOptions() {
+      [unowned self] () -> () in
+      
+      self.resetReminder()
+      self.showGlow()
+      
+    }
+    
+    self.state = .OptionsDisplayed
+  }
+  
     func iterateOptions () {
         /* Is it this one? */
         self.optionNodeList[0].runAction(ActionHelper.presentObject()) {
@@ -827,260 +947,113 @@ class VocabularyScene: SKScene, ConfigurableScene {
     }
     
     
-    /* performance on user selection */
-    func correctSelection () {
-        
-        self.removeAllActions()
-        self.resetReminder()
-        self.mainObjectNode.removeAllActions()
-        
-        for node in optionNodeList {
-            node.removeAllActions()
-        }
-        
-        var correctNode = optionNodeList[gameController.correctIndex]
-        //    self.firstOptionNode.removeAllActions()
-        //    self.secondOptionNode.removeAllActions()
-        //    self.firstOptionGlow.removeAllActions()
-        //    self.secondOptionGlow.removeAllActions()
-        
-        self.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-        correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-        //    if self.gameController.firstObject.name == self.objectName {
-        //      self.firstOptionGlow.runAction(SKAction.rotateToAngle(0, duration: 0))
-        //    } else {
-        //      self.secondOptionGlow.runAction(SKAction.rotateToAngle(0, duration: 0))
-        //    }
-        self.reminder.removeAllActions()
-        
-        self.mainObjectNode.runAction(SKAction.repeatActionForever(ActionHelper.presentObject()))
-        correctNode.runAction(SKAction.repeatActionForever(ActionHelper.presentObject()))
-        
-        self.preventTouching()
-        
-        if !self.selectionRegistered && statisticsTrack.validate {
-            self.selectionRegistered = true
-            UserPerformanceHelper.update(name: objectName, correct: true)
-            
-            statisticsTrack.setTimeEnd(NSDate(timeIntervalSinceNow: 0))
-            statisticsTrack.setCorrect(true)
-            statisticsTrack.logEvent()
-        }
-        
-        self.changeMaskColor(UIColor(red: 0, green: 1, blue: 0, alpha: 0.5))
-        self.mainObjectNode.zPosition = GameViewController.Layers.AboveMask.rawValue
-        
-        for glow in optionGlowList {
-            glow.hidden = true
-        }
-        //    self.firstOptionGlow.hidden = true
-        //    self.secondOptionGlow.hidden = true
-        
-        self.questionLabel.hidden = true
-        
-        if self.secondaryMainNode != nil {
-            self.secondaryMainNode.runAction(SKAction.repeatActionForever(ActionHelper.presentObject()))
-            self.secondaryMainNode.zPosition = GameViewController.Layers.AboveMask.rawValue
-        }
-        
-        self.objectFound()
+
+  func correctSelection () {
+    
+    self.preventTouching()
+    
+    if !self.selectionRegistered && statisticsTrack.validate {
+      self.selectionRegistered = true
+      UserPerformanceHelper.update(name: objectName, correct: true)
+      
+      statisticsTrack.setTimeEnd(NSDate(timeIntervalSinceNow: 0))
+      statisticsTrack.setCorrect(true)
+      statisticsTrack.logEvent()
     }
     
-    func wrongSelection () {
-        
-        self.removeAllActions()
-        self.resetReminder()
-        for node in optionNodeList {
-            node.removeAllActions()
-            node.runAction(SKAction.rotateToAngle(0, duration: 0))
-        }
-        self.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-        
-        self.preventTouching()
-        
-        wrongCounter++
-        
-        if !self.selectionRegistered && statisticsTrack.validate {
-            self.selectionRegistered = true
-            UserPerformanceHelper.update(name: objectName, correct: false)
-            
-            statisticsTrack.setTimeEnd(NSDate(timeIntervalSinceNow: 0))
-            statisticsTrack.setCorrect(false)
-            statisticsTrack.logEvent()
-        }
-        
-        if self.state == .WaitingForTap {
-            /* that's not right */
-            self.runAction(SoundSourceHelper.soundTryAgain(2)) {
-                [unowned self] in
-                /* tap on the xxx */
-                self.runAction(SoundSourceHelper.soundTap(name: self.objectName))
-                self.optionNodeList[self.gameController.correctIndex].runAction(ActionHelper.presentObject())
-                self.allowTouching()
-            }
-            
-        } else {
-            
-            /* That's not a zif */
-            self.runAction(SKAction.sequence([SoundSourceHelper.soundError()])) {
-                [unowned self] in
-                
-                for glow in self.optionGlowList {
-                    glow.hidden = false
-                }
-                //        self.firstOptionGlow.hidden = false
-                //        self.secondOptionGlow.hidden = false
-                if self.wrongCounter > 1 {
-                    /* hide wrong glow */
-                    for i in 0..<self.optionGlowList.count {
-                        if i == self.gameController.correctIndex {
-                            continue
-                        }
-                        
-                        self.optionGlowList[i].hidden = true
-                    }
-                    //          if self.gameController.correctIndex == 1 {
-                    //            self.firstOptionGlow.hidden = true
-                    //          } else {
-                    //            self.secondOptionGlow.hidden = true
-                    //          }
-                }
-                
-                self.allowTouching()
-                let index = Int(arc4random_uniform(UInt32(self.objectList.count)))
-                var filename = self.objectList[index].description
-                switch self.wrongCounter {
-                case 1:
-                    /* That’s not it. Try again! */
-                    self.runAction(SoundSourceHelper.soundTryAgain(1)) {
-                        [unowned self] () -> () in
-                        /* Can you find the other apple? */
-                        self.runAction(SoundSourceHelper.soundFind(name: self.objectName))
-                    }
-                case 2:
-                    
-                    /* That’s not right.*/
-                    self.runAction(SoundSourceHelper.soundTryAgain(2)) {
-                        /* Remember, this is an apple. */
-                        self.mainObjectNode.runAction(ActionHelper.presentObject()) {
-                            [unowned self] () -> () in
-                            /* These are apples. */
-                            self.secondaryMainNode = SKSpriteNode(texture: SKTexture(imageNamed: filename))
-                            self.secondaryMainIndex = index
-                            self.mainObjectNode.runAction(SKAction.moveByX(-100, y: 0, duration: 0.2))
-                            self.secondaryMainNode.position = CGPointMake(self.mainObjectNode.position.x + 100, self.mainObjectNode.position.y)
-                            self.secondaryMainNode.zPosition = GameViewController.Layers.AboveMask.rawValue
-                            self.secondaryMainNode.xScale = self.mainScaleAfter
-                            self.secondaryMainNode.yScale = self.mainScaleAfter
-                            self.addChild(self.secondaryMainNode)
-                            
-                            self.mainFrame = self.mainObjectNode.frame
-                            self.secondaryMainFrame = self.secondaryMainNode.frame
-                            
-                            self.mainObjectNode.runAction(ActionHelper.presentObject())
-                            self.secondaryMainNode.runAction(ActionHelper.presentObject(reverseOrder: true))
-                            self.runAction(SoundSourceHelper.soundMultiple(name: self.objectName)) {
-                                [unowned self] () -> () in
-                                /* Can you find the other apple */
-                                self.emphasizeOptions()
-                                self.runAction(SoundSourceHelper.soundFind(name: self.objectName))
-                                self.resetReminder()
-                                
-                            }
-                        }
-                        self.runAction(SoundSourceHelper.soundReminder(name: self.objectName))
-                    }
-                    
-                case 3:
-                    self.preventTouching()
-                    /* That’s not right.*/
-                    self.runAction(SoundSourceHelper.soundTryAgain(2)) {
-                        [unowned self] () -> () in
-                        /* Can you find the other apple? */
-                        self.runAction(SoundSourceHelper.soundFind(name: self.objectName)) {
-                            [unowned self] () -> () in
-                            self.runAction(SoundSourceHelper.soundTap(name: self.objectName))
-                            self.mainObjectNode.runAction(ActionHelper.fadeHalfAway())
-                            self.secondaryMainNode?.runAction(ActionHelper.fadeHalfAway())
-                            
-                            //              self.wrongNode.runAction(ActionHelper.fadeHalfAway())
-                            for i in 0..<self.optionNodeList.count {
-                                if i == self.gameController.correctIndex {
-                                    continue
-                                }
-                                
-                                self.optionNodeList[i].runAction(ActionHelper.fadeHalfAway())
-                            }
-                            
-                            self.allowTouching()
-                            self.state = .WaitingForTap
-                            var node = SKNode()
-                            self.addChild(node)
-                            node.runAction(SKAction.waitForDuration(30)) {
-                                [unowned self] in
-                                self.gameViewController?.presentGameScene(newScene: true)
-                            }
-                        }
-                    }
-                    
-                default:
-                    break
-                }
-            }
-        }
-        
-        
-        self.changeMaskColor(UIColor(red: 1, green: 1, blue: 0, alpha: 0.5))
-        self.mainObjectNode.zPosition = GameViewController.Layers.BelowMask.rawValue
-        if let thirdOption = self.secondaryMainNode {
-            thirdOption.zPosition = GameViewController.Layers.BelowMask.rawValue
-        }
-        
-        //    self.firstOptionGlow.hidden = true
-        //    self.secondOptionGlow.hidden = true
-        for glow in optionGlowList {
-            glow.hidden = true
-        }
-        
-        self.runAction(ActionHelper.maskDelay()) {
-            [unowned self] () -> () in
-            self.resetMask(allowTouching: false)
-            self.toddlerLock = false
-        }
-        
-        self.resetReminder()
+//    self.changeMaskColor(UIColor(red: 0, green: 1, blue: 0, alpha: 0.5))
+    self.mainObjectNode.zPosition = GameViewController.Layers.AboveMask.rawValue
+    
+//    for glow in optionGlowList {
+//      glow.hidden = true
+//    }
+
+    
+//    self.questionLabel.hidden = true
+    
+//    if self.secondaryMainNode != nil {
+//      self.secondaryMainNode.runAction(SKAction.repeatActionForever(ActionHelper.presentObject()))
+//      self.secondaryMainNode.zPosition = GameViewController.Layers.AboveMask.rawValue
+//    }
+    
+    self.objectFound()
+  }
+
+  
+  func wrongSelection () {
+    
+    self.preventTouching()
+    
+    if !self.selectionRegistered && statisticsTrack.validate {
+      self.selectionRegistered = true
+      UserPerformanceHelper.update(name: objectName, correct: false)
+      
+      statisticsTrack.setTimeEnd(NSDate(timeIntervalSinceNow: 0))
+      statisticsTrack.setCorrect(false)
+      statisticsTrack.logEvent()
     }
     
+//    self.changeMaskColor(UIColor(red: 1, green: 1, blue: 0, alpha: 0.5))
+//    let the main object float on top of the green mask
+    self.mainObjectNode.zPosition = GameViewController.Layers.AboveMask.rawValue
+    
+//    for glow in optionGlowList {
+//      glow.hidden = true
+//    }
+    
+    //    self.firstOptionGlow.hidden = true
+    //    self.secondOptionGlow.hidden = true
+    
+    self.questionLabel.hidden = true
+    
+//    if self.secondaryMainNode != nil {
+//      self.secondaryMainNode.runAction(SKAction.repeatActionForever(ActionHelper.presentObject()))
+//      self.secondaryMainNode.zPosition = GameViewController.Layers.AboveMask.rawValue
+//    }
+    
+    self.objectFound()
+  }
+  
     func objectFound () {
         
-        for i in 0..<self.optionNodeList.count {
-            if i == self.gameController.correctIndex {
-                continue
-            }
-            
-            self.optionNodeList[i].runAction(ActionHelper.appearAndFadeAway())
-        }
-        //    self.wrongNode.runAction(ActionHelper.appearAndFadeAway())
-        self.runAction(SoundSourceHelper.soundReward()) {
+//        for i in 0..<self.optionNodeList.count {
+//            if i == self.gameController.correctIndex {
+//                continue
+//            }
+//            
+//            self.optionNodeList[i].runAction(ActionHelper.appearAndFadeAway())
+//        }
+//            self.wrongNode.runAction(ActionHelper.appearAndFadeAway())
+        self.selectionRegistered = false
+        self.runAction(SoundSourceHelper.soundBlop()) {
             [unowned self] () -> () in
-            self.transitionToReviewScene()
+//            self.transitionToReviewScene()
+          self.gameViewController?.updateProgressBar()
+//          self.transitionToWelcomeScene ()
+          
+          self.loadNextGroup()
+
         }
-        
+      
     }
-    
+  
     func transitionToReviewScene () {
-        
-        
-        self.gameViewController?.presentReviewScene()
+      
+      self.gameViewController?.presentReviewScene()
     }
-    
+  
+    func transitionToWelcomeScene () {
+
+      self.gameViewController?.presentWelcomeScene()
+    }
+  
     func restartScene () {
         
         statisticsTrack.setTimeEnd(NSDate(timeIntervalSinceNow: 0))
         statisticsTrack.setCorrect(nil)
         statisticsTrack.logEvent()
         
-        self.gameViewController?.presentGameScene(newScene: false)
+        self.gameViewController?.presentGameScene(false)
     }
     
     
@@ -1138,17 +1111,272 @@ class VocabularyScene: SKScene, ConfigurableScene {
             self.allowTouching()
         }
     }
+
+  func playFlipAnimation(){
+    let firstHalfFlip = SKAction.scaleXTo(0.0, duration: 0.4)
+    let secondHalfFlip = SKAction.scaleXTo(1.0, duration: 0.4)
     
+    for index in 0..<self.optionNodeList.count {
+      var node = self.optionNodeList[index]
+      var newNode = self.cacheOptionNodeList[index]
+      
+      node.runAction(firstHalfFlip) {
+        [unowned self] in
+        node.removeFromParent()
+        newNode.xScale = 0
+        self.addChild(newNode)
+        
+        newNode.runAction(secondHalfFlip) {
+          [unowned self] in
+          self.allowTouching()
+          self.toddlerLock = false
+        }
+      }
+      
+    }
+    
+    self.optionNodeList.removeAll(keepCapacity: true)
+    self.optionNodeList.appendContentsOf(self.cacheOptionNodeList)
+    self.cacheOptionNodeList.removeAll(keepCapacity: true)
+    
+    
+  }
+  
+  /* performance on user selection */
+  //    func correctSelection () {
+  //
+  //        self.removeAllActions()
+  //        self.resetReminder()
+  //        self.mainObjectNode.removeAllActions()
+  //
+  //        for node in optionNodeList {
+  //            node.removeAllActions()
+  //        }
+  //
+  //        var correctNode = optionNodeList[gameController.correctIndex]
+  //        //    self.firstOptionNode.removeAllActions()
+  //        //    self.secondOptionNode.removeAllActions()
+  //        //    self.firstOptionGlow.removeAllActions()
+  //        //    self.secondOptionGlow.removeAllActions()
+  //
+  //        self.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
+  //        correctNode.runAction(SKAction.rotateToAngle(0, duration: 0))
+  //        //    if self.gameController.firstObject.name == self.objectName {
+  //        //      self.firstOptionGlow.runAction(SKAction.rotateToAngle(0, duration: 0))
+  //        //    } else {
+  //        //      self.secondOptionGlow.runAction(SKAction.rotateToAngle(0, duration: 0))
+  //        //    }
+  //        self.reminder.removeAllActions()
+  //
+  //        self.mainObjectNode.runAction(SKAction.repeatActionForever(ActionHelper.presentObject()))
+  //        correctNode.runAction(SKAction.repeatActionForever(ActionHelper.presentObject()))
+  //
+  //        self.preventTouching()
+  //
+  //        if !self.selectionRegistered && statisticsTrack.validate {
+  //            self.selectionRegistered = true
+  //            UserPerformanceHelper.update(name: objectName, correct: true)
+  //
+  //            statisticsTrack.setTimeEnd(NSDate(timeIntervalSinceNow: 0))
+  //            statisticsTrack.setCorrect(true)
+  //            statisticsTrack.logEvent()
+  //        }
+  //
+  //        self.changeMaskColor(UIColor(red: 0, green: 1, blue: 0, alpha: 0.5))
+  //        self.mainObjectNode.zPosition = GameViewController.Layers.AboveMask.rawValue
+  //
+  //        for glow in optionGlowList {
+  //            glow.hidden = true
+  //        }
+  //        //    self.firstOptionGlow.hidden = true
+  //        //    self.secondOptionGlow.hidden = true
+  //
+  //        self.questionLabel.hidden = true
+  //
+  //        if self.secondaryMainNode != nil {
+  //            self.secondaryMainNode.runAction(SKAction.repeatActionForever(ActionHelper.presentObject()))
+  //            self.secondaryMainNode.zPosition = GameViewController.Layers.AboveMask.rawValue
+  //        }
+  //        
+  //        self.objectFound()
+  //    }
+  
+  //    func wrongSelection () {
+  //
+  //        self.removeAllActions()
+  //        self.resetReminder()
+  //        for node in optionNodeList {
+  //            node.removeAllActions()
+  //            node.runAction(SKAction.rotateToAngle(0, duration: 0))
+  //        }
+  //        self.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
+  //
+  //        self.preventTouching()
+  //
+  //        wrongCounter++
+  //
+  //        if !self.selectionRegistered && statisticsTrack.validate {
+  //            self.selectionRegistered = true
+  //            UserPerformanceHelper.update(name: objectName, correct: false)
+  //
+  //            statisticsTrack.setTimeEnd(NSDate(timeIntervalSinceNow: 0))
+  //            statisticsTrack.setCorrect(false)
+  //            statisticsTrack.logEvent()
+  //        }
+  //
+  //        if self.state == .WaitingForTap {
+  //            /* that's not right */
+  //            self.runAction(SoundSourceHelper.soundTryAgain(2)) {
+  //                [unowned self] in
+  //                /* tap on the xxx */
+  //                self.runAction(SoundSourceHelper.soundTap(name: self.objectName))
+  //                self.optionNodeList[self.gameController.correctIndex].runAction(ActionHelper.presentObject())
+  //                self.allowTouching()
+  //            }
+  //
+  //        } else {
+  //
+  //            /* That's not a zif */
+  //            self.runAction(SKAction.sequence([SoundSourceHelper.soundError()])) {
+  //                [unowned self] in
+  //
+  //                for glow in self.optionGlowList {
+  //                    glow.hidden = false
+  //                }
+  //                //        self.firstOptionGlow.hidden = false
+  //                //        self.secondOptionGlow.hidden = false
+  //                if self.wrongCounter > 1 {
+  //                    /* hide wrong glow */
+  //                    for i in 0..<self.optionGlowList.count {
+  //                        if i == self.gameController.correctIndex {
+  //                            continue
+  //                        }
+  //
+  //                        self.optionGlowList[i].hidden = true
+  //                    }
+  //                    //          if self.gameController.correctIndex == 1 {
+  //                    //            self.firstOptionGlow.hidden = true
+  //                    //          } else {
+  //                    //            self.secondOptionGlow.hidden = true
+  //                    //          }
+  //                }
+  //
+  //                self.allowTouching()
+  //                let index = Int(arc4random_uniform(UInt32(self.objectList.count)))
+  //                var filename = self.objectList[index].description
+  //                switch self.wrongCounter {
+  //                case 1:
+  //                    /* That’s not it. Try again! */
+  //                    self.runAction(SoundSourceHelper.soundTryAgain(1)) {
+  //                        [unowned self] () -> () in
+  //                        /* Can you find the other apple? */
+  //                        self.runAction(SoundSourceHelper.soundFind(name: self.objectName))
+  //                    }
+  //                case 2:
+  //
+  //                    /* That’s not right.*/
+  //                    self.runAction(SoundSourceHelper.soundTryAgain(2)) {
+  //                        /* Remember, this is an apple. */
+  //                        self.mainObjectNode.runAction(ActionHelper.presentObject()) {
+  //                            [unowned self] () -> () in
+  //                            /* These are apples. */
+  //                            self.secondaryMainNode = SKSpriteNode(texture: SKTexture(imageNamed: filename))
+  //                            self.secondaryMainIndex = index
+  //                            self.mainObjectNode.runAction(SKAction.moveByX(-100, y: 0, duration: 0.2))
+  //                            self.secondaryMainNode.position = CGPointMake(self.mainObjectNode.position.x + 100, self.mainObjectNode.position.y)
+  //                            self.secondaryMainNode.zPosition = GameViewController.Layers.AboveMask.rawValue
+  //                            self.secondaryMainNode.xScale = self.mainScaleAfter
+  //                            self.secondaryMainNode.yScale = self.mainScaleAfter
+  //                            self.addChild(self.secondaryMainNode)
+  //
+  //                            self.mainFrame = self.mainObjectNode.frame
+  //                            self.secondaryMainFrame = self.secondaryMainNode.frame
+  //
+  //                            self.mainObjectNode.runAction(ActionHelper.presentObject())
+  //                            self.secondaryMainNode.runAction(ActionHelper.presentObject(reverseOrder: true))
+  //                            self.runAction(SoundSourceHelper.soundMultiple(name: self.objectName)) {
+  //                                [unowned self] () -> () in
+  //                                /* Can you find the other apple */
+  //                                self.emphasizeOptions()
+  //                                self.runAction(SoundSourceHelper.soundFind(name: self.objectName))
+  //                                self.resetReminder()
+  //
+  //                            }
+  //                        }
+  //                        self.runAction(SoundSourceHelper.soundReminder(name: self.objectName))
+  //                    }
+  //
+  //                case 3:
+  //                    self.preventTouching()
+  //                    /* That’s not right.*/
+  //                    self.runAction(SoundSourceHelper.soundTryAgain(2)) {
+  //                        [unowned self] () -> () in
+  //                        /* Can you find the other apple? */
+  //                        self.runAction(SoundSourceHelper.soundFind(name: self.objectName)) {
+  //                            [unowned self] () -> () in
+  //                            self.runAction(SoundSourceHelper.soundTap(name: self.objectName))
+  //                            self.mainObjectNode.runAction(ActionHelper.fadeHalfAway())
+  //                            self.secondaryMainNode?.runAction(ActionHelper.fadeHalfAway())
+  //
+  //                            //              self.wrongNode.runAction(ActionHelper.fadeHalfAway())
+  //                            for i in 0..<self.optionNodeList.count {
+  //                                if i == self.gameController.correctIndex {
+  //                                    continue
+  //                                }
+  //
+  //                                self.optionNodeList[i].runAction(ActionHelper.fadeHalfAway())
+  //                            }
+  //
+  //                            self.allowTouching()
+  //                            self.state = .WaitingForTap
+  //                            var node = SKNode()
+  //                            self.addChild(node)
+  //                            node.runAction(SKAction.waitForDuration(30)) {
+  //                                [unowned self] in
+  //                                self.gameViewController?.presentGameScene(newScene: true)
+  //                            }
+  //                        }
+  //                    }
+  //
+  //                default:
+  //                    break
+  //                }
+  //            }
+  //        }
+  //
+  //
+  //        self.changeMaskColor(UIColor(red: 1, green: 1, blue: 0, alpha: 0.5))
+  //        self.mainObjectNode.zPosition = GameViewController.Layers.BelowMask.rawValue
+  //        if let thirdOption = self.secondaryMainNode {
+  //            thirdOption.zPosition = GameViewController.Layers.BelowMask.rawValue
+  //        }
+  //
+  //        //    self.firstOptionGlow.hidden = true
+  //        //    self.secondOptionGlow.hidden = true
+  //        for glow in optionGlowList {
+  //            glow.hidden = true
+  //        }
+  //        
+  //        self.runAction(ActionHelper.maskDelay()) {
+  //            [unowned self] () -> () in
+  //            self.resetMask(allowTouching: false)
+  //            self.toddlerLock = false
+  //        }
+  //        
+  //        self.resetReminder()
+  //    }
     
     /* initialize bear */
     func initScene () {
-        
+      self.background = SKSpriteNode(imageNamed: "border")
+      
         self.background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         
         self.background.zPosition = GameViewController.Layers.Bottom.rawValue
-        
+      
         
         self.addChild(self.background)
+      
         //    self.addChild(self.bear)
     }
     
@@ -1172,18 +1400,29 @@ class VocabularyScene: SKScene, ConfigurableScene {
     func zoomOut (duration: NSTimeInterval = 0) {
         self.background.runAction(SKAction.scaleTo(1, duration: duration))
     }
-    
-    class func optionLocation (#frame : CGRect, index:Int) -> CGPoint {
+  
+    class func optionLocation (frame frame : CGRect, index:Int) -> CGPoint {
         var orientation = UIApplication.sharedApplication().statusBarOrientation
         
         if orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown {
             
-            return CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height * CGFloat(1-index) / 4)
+            return CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height * CGFloat(1-index) / 3)
         }
         else {
-            return CGPointMake(CGRectGetMidX(frame) + frame.width * CGFloat(index-1) / 4, CGRectGetMidY(frame))
+          
+//            return CGPointMake(CGRectGetMidX(frame) + frame.width * CGFloat(index-1) / 3, CGRectGetMidY(frame))
+          if index%2 == 0{
+            
+            return CGPointMake(CGRectGetMidX(frame) - frame.width/6 , CGRectGetMidY(frame) + frame.height * CGFloat(index-1)/6 - frame.height/8)
+//            return CGPointMake(CGRectGetMidX(frame) - frame.width/6 , CGRectGetMidY(frame) + frame.height * CGFloat(index-1)/6 )
+          }else {
+            return CGPointMake(CGRectGetMidX(frame) + frame.width/6 , CGRectGetMidY(frame) + frame.height * CGFloat(index-2)/6 - frame.height/8)
+//            return CGPointMake(CGRectGetMidX(frame) + frame.width/6 , CGRectGetMidY(frame) + frame.height * CGFloat(index-2)/6 )
+          }
+          
         }
         
     }
+  
 }
 

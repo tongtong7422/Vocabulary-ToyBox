@@ -29,28 +29,32 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
       _taskCount = newValue
       if newValue > 2 {
         _taskCount = 1
-        displayTutorialOptions()
+//        displayTutorialOptions()
       }
     }
   }
-  func displayTutorialOptions () {
-    tutorialPlayButton.hidden = false
-    tutorialAnotherButton.hidden = false
-    tutorialView.paused = true
-  }
-  func hideTutorialOptions() {
-    tutorialPlayButton.hidden = true
-    tutorialAnotherButton.hidden = true
-    tutorialView.paused = false
-  }
-  @IBAction func doMoreTutorial(sender: UIButton) {
-    hideTutorialOptions()
-  }
+//  func displayTutorialOptions () {
+//    tutorialPlayButton.hidden = false
+//    tutorialAnotherButton.hidden = false
+//    tutorialView.paused = true
+//  }
+//  func hideTutorialOptions() {
+//    tutorialPlayButton.hidden = true
+//    tutorialAnotherButton.hidden = true
+//    tutorialView.paused = false
+//  }
   
+//  @IBAction func doMoreTutorial(sender: UIButton) {
+//    hideTutorialOptions()
+//  }
+  
+
   @IBOutlet weak var userCollectionView: UICollectionView!
   let reuseIdentifier = "userCell"
   
   private var loginPanelHidden:Bool = true
+  
+  @IBOutlet weak var birthdayTextField: UITextField!
   
   @IBOutlet weak var loginPanel: UIView!
   @IBOutlet weak var nameTextField: UITextField!
@@ -60,10 +64,10 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   @IBOutlet weak var freeButton: UIButton!
   @IBOutlet weak var timedButton: UIButton!
   @IBOutlet weak var cameraButton: UIButton!
-  @IBOutlet weak var tutorialOverlay: UIView!
-  @IBOutlet weak var tutorialView: SKView!
-  @IBOutlet weak var tutorialPlayButton: UIButton!
-  @IBOutlet weak var tutorialAnotherButton: UIButton!
+//  @IBOutlet weak var tutorialOverlay: UIView!
+//  @IBOutlet weak var tutorialView: SKView!
+//  @IBOutlet weak var tutorialPlayButton: UIButton!
+//  @IBOutlet weak var tutorialAnotherButton: UIButton!
   
   var userIcon:UIImage! = nil
   
@@ -112,13 +116,14 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
 //    }
 //  }
   @IBAction func startTutorial(sender: UIButton) {
-    tutorialOverlay.hidden = false
+//    tutorialOverlay.hidden = false
 //    tutorialView.presentScene(TutorialScene(size: tutorialView.frame.size))
-    presentTutorialScene()
+//    presentTutorialScene()
   }
   @IBAction func freeGame(sender: UIButton) {
 //    UserInfoHelper.clearUser()
-    self.performSegueWithIdentifier("gameViewSegueFree", sender: sender)
+    self.performSegueWithIdentifier("tutorialSegue", sender: sender)
+//    self.performSegueWithIdentifier("gameViewSegueFree", sender: sender)
   }
   @IBAction func timedGame(sender: UIButton) {
 //    UserInfoHelper.clearUser()
@@ -262,7 +267,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   }
   
   /* find the new user button */
-  private func isNewUserIcon(#indexPath: NSIndexPath) -> Bool {
+  private func isNewUserIcon(indexPath indexPath: NSIndexPath) -> Bool {
     return indexPath.row == findNewUserIcon()
   }
   
@@ -279,8 +284,13 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   }
   
   /* display date in text field */
+//  func displayDate (date: NSDate) {
+//    dateOfBirthTextField.text = UserInfoHelper.birthDateToString(date)
+//    dateOfBirth = date
+//  }
+  
   func displayDate (date: NSDate) {
-    dateOfBirthTextField.text = UserInfoHelper.birthDateToString(date)
+    birthdayTextField.text = UserInfoHelper.birthDateToString(date)
     dateOfBirth = date
   }
   
@@ -295,7 +305,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
     var success = true
     
     /* name must not be empty */
-    if nameTextField.text.isEmpty {
+    if nameTextField.text!.isEmpty {
       nameTextField.backgroundColor = UIColor.redColor()
       success = false
     } else {
@@ -316,7 +326,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
     }
     
     if success {
-      UserInfoHelper.signUp(name: nameTextField.text, dateOfBirth: dateOfBirth, icon: userIcon)
+      UserInfoHelper.signUp(name: nameTextField.text!, dateOfBirth: dateOfBirth, icon: userIcon)
       userList = UserInfoHelper.getUserList()
       self.userCollectionView.reloadData()
     }
@@ -325,16 +335,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
     
   }
   
-  func presentTutorialScene () {
-    var scene = TutorialScene(size: tutorialView.frame.size)
-    scene.scaleMode = .ResizeFill
-    scene.userViewController = self
-    
-    tutorialView.presentScene(scene)
-    
-    self.taskCount++
-  }
-  
+   
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -350,11 +351,15 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
     self.userCollectionView.allowsSelection = true
     self.userCollectionView.allowsMultipleSelection = false
     
-    self.tutorialOverlay.hidden = true
-    self.tutorialPlayButton.hidden = true
-    self.tutorialAnotherButton.hidden = true
+//    self.tutorialOverlay.hidden = true
+//    self.tutorialPlayButton.hidden = true
+//    self.tutorialAnotherButton.hidden = true
     
     userList = UserInfoHelper.getUserList()
+
+    self.birthdayTextField.text = ""
+    self.birthdayTextField.backgroundColor = UIColor.whiteColor()
+    
 //    dateOfBirthTextField.inputView = datePicker
 //    // Do any additional setup after loading the view.
 //    
@@ -376,8 +381,8 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   
   override func viewWillDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
-    tutorialOverlay.hidden = true
-    tutorialView.presentScene(nil)
+//    tutorialOverlay.hidden = true
+//    tutorialView.presentScene(nil)
   }
   
   override func didReceiveMemoryWarning() {
@@ -390,19 +395,31 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
 //    self.view.endEditing(true)
 //  }
   
+
+  
   func textFieldShouldReturn(textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
   }
   
+//  func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+//    if textField == self.dateOfBirthTextField {
+//      self.view.endEditing(true)
+//      self.performSegueWithIdentifier("datePickerSegue", sender: textField)
+//      return false
+//    }
+//    return true
+//  }
+  
   func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-    if textField == self.dateOfBirthTextField {
+    if textField == self.birthdayTextField {
       self.view.endEditing(true)
       self.performSegueWithIdentifier("datePickerSegue", sender: textField)
       return false
     }
     return true
   }
+
   
   override func disablesAutomaticKeyboardDismissal() -> Bool {
     return false

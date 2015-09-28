@@ -84,7 +84,7 @@ public class UserInfoHelper {
     _UserInfo.user = nil
   }
   
-  class func signUp (#name: String, dateOfBirth: NSDate, icon:UIImage) {
+  class func signUp (name name: String, dateOfBirth: NSDate, icon:UIImage) {
     
     /* generate user id */
     let cfuuid = CFUUIDCreate(kCFAllocatorDefault)
@@ -93,14 +93,26 @@ public class UserInfoHelper {
     /* access core data */
     NSLog("Setting user info...")
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let context:NSManagedObjectContext = appDelegate.managedObjectContext!
+    let context:NSManagedObjectContext = appDelegate.managedObjectContext
     var error : NSErrorPointer = nil
     
     /* fetch earlier records */
     var request = NSFetchRequest(entityName: "UserInfo")
     request.propertiesToFetch = NSArray(objects: "id") as [AnyObject]
-    var result: NSArray = context.executeFetchRequest(request, error: error)!
-    ErrorLogger.logError(error, message: "Error fetching earlier user info")
+    
+    /** change the commented line in try block **/
+//    var result: NSArray = context.executeFetchRequest(request, error: error)!
+    var result = NSArray()
+    do {
+      result = try context.executeFetchRequest(request)
+      // success ...
+    } catch let error as NSError {
+      // failure
+      print("Fetch failed: \(error.localizedDescription)")
+      ErrorLogger.logError(error, message: "Error fetching earlier user info")
+    }
+    
+//    ErrorLogger.logError(error, message: "Error fetching earlier user info")
     
     /* retrieve user id */
     if result.count > 0 {
@@ -124,10 +136,15 @@ public class UserInfoHelper {
     newUser.name = name
     newUser.dateOfBirth = dateOfBirth
     newUser.lastLogin = NSDate(timeIntervalSinceNow: 0)
-    newUser.icon = UIImagePNGRepresentation(icon)
-    
-    context.save(error)
-    ErrorLogger.logError(error, message: "Error signing up user")
+    newUser.icon = UIImagePNGRepresentation(icon)!
+    do{
+      try context.save()
+    }catch let error as NSError{
+      print("Fetch failed: \(error.localizedDescription)")
+      ErrorLogger.logError(error, message: "Error signing up user")
+    }
+//    context.save(error)
+//    ErrorLogger.logError(error, message: "Error signing up user")
     
     /* update global variable */
 //    switchUser(UserInfo(id: userId, name: name, dateOfBirth: dateOfBirth))
@@ -185,16 +202,23 @@ public class UserInfoHelper {
   /* get all registered users */
   class func getUserList () -> [UserInfo] {
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let context:NSManagedObjectContext = appDelegate.managedObjectContext!
+    let context:NSManagedObjectContext = appDelegate.managedObjectContext
     var error : NSErrorPointer = nil
     
     NSLog("Fetching user info...")
     var request = NSFetchRequest(entityName: "UserInfo")
     let sortDescriptor = NSSortDescriptor(key: "lastLogin", ascending: false)
     request.sortDescriptors = [sortDescriptor]
-    var results = context.executeFetchRequest(request, error: error) as! [UserInfo]
+//    var results = context.executeFetchRequest(request, error: error) as! [UserInfo]
+    var results:[UserInfo]!
+    do{
+      results = try context.executeFetchRequest(request) as! [UserInfo]
+    }catch let error as NSError{
+      print("Fetch failed: \(error.localizedDescription)")
+      ErrorLogger.logError(error, message: "Error fething user info")
+    }
     
-    ErrorLogger.logError(error, message: "Error fething user info")
+//    ErrorLogger.logError(error, message: "Error fething user info")
     NSLog("Done.")
     
     return results.filter({ (user:UserInfo) -> Bool in

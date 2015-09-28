@@ -26,7 +26,7 @@
       "idiom" : "ipad",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "start screen_nobuttons.png",
+      "filename" : "startScreen.png",
       "scale" : "2x"
     }
   ],

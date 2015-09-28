@@ -311,11 +311,13 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
     switch ObjectPresentMode(rawValue: self.sharedInstance.objectPresentMode)! {
     case .Shake:
 //      return slightShake(reverseOrder: reverseOrder)
-      return wiggle(times: 5, reverseOrder: reverseOrder)
+      return wiggle(5, reverseOrder: reverseOrder)
     case .ZoomInAndOut:
       return zoomInAndOut()
     case .Bounce:
       return bounce()
+    case .DoNothing:
+      return doNothing()
     default:
       var name = NSInvalidArgumentException
       var message = "Invalid present mode."
@@ -365,11 +367,18 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
     
     var sequence:[SKAction] = []
     for i in 0..<times {
-      sequence.extend([leftRotate, rightRotate])
+      sequence.appendContentsOf([leftRotate, rightRotate])
     }
     sequence.append(reset)
     
     var actions = SKAction.sequence(sequence)
+    return actions
+  }
+  
+  public class func doNothing()-> SKAction{
+    
+//    var sequence:[SKAction] = []
+    var actions = SKAction()
     return actions
   }
   
@@ -457,12 +466,12 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   }
   
   /* play one-time sound */
-  public class func playSound (#soundFile : String) -> SKAction {
+  public class func playSound (soundFile soundFile : String) -> SKAction {
     return SKAction.playSoundFileNamed(soundFile, waitForCompletion: true)
   }
   
   /* transition and rescale (wait for a while when finished) */
-  public class func transitionMain (#location : CGPoint, scaleBy : CGFloat, duration : NSTimeInterval = 0.2) -> SKAction {
+  public class func transitionMain (location location : CGPoint, scaleBy : CGFloat, duration : NSTimeInterval = 0.2) -> SKAction {
     
     var transition = SKAction.moveTo(location, duration: duration)
     var rescale = SKAction.scaleBy(scaleBy, duration: duration)
@@ -472,7 +481,7 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   }
   
   /* transition and rescale */
-  public class func transitionTo (#location : CGPoint, scale : CGFloat, duration : NSTimeInterval = 1) -> SKAction {
+  public class func transitionTo (location location : CGPoint, scale : CGFloat, duration : NSTimeInterval = 1) -> SKAction {
     
     var transition = SKAction.moveTo(location, duration: duration)
     var rescale = SKAction.scaleTo(scale, duration: duration)
@@ -482,7 +491,7 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   }
   
   /* shake before explode */
-  public class func preExplode (#scale: CGFloat, duration: NSTimeInterval = 1) -> SKAction {
+  public class func preExplode (scale scale: CGFloat, duration: NSTimeInterval = 1) -> SKAction {
 //    let shakeInterval = 0.05
 //    var shake: [SKAction] = []
 //    
@@ -530,7 +539,7 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   }
   
   // Live actions
-  public class func playFrames (textureAtlas : SKTextureAtlas, repeat : Bool) -> SKAction {
+  public class func playFrames (textureAtlas : SKTextureAtlas, repeatTime : Bool) -> SKAction {
     var textureNames = textureAtlas.textureNames as! [String]
     textureNames.sort(<)
     
@@ -545,7 +554,7 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
     
     var action = SKAction.animateWithTextures(textures, timePerFrame: timePerFrame, resize: true, restore: false)
     
-    if repeat {
+    if repeatTime {
       return SKAction.repeatActionForever(action)
     }
     
@@ -566,7 +575,7 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   }
   
   /* extend texture sequence by adding customized frames */
-  private class func playframes (#atlasName: String, frameRange: Range<Int>, repeat: Int) -> SKAction {
+  private class func playframes (atlasName atlasName: String, frameRange: Range<Int>, repeatTime: Int) -> SKAction {
     
     let atlas = self.getAtlasByName(atlasName)
 //    atlas.preloadWithCompletionHandler() {
@@ -582,7 +591,7 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
     let duration = self.sharedInstance.timePerFrame * NSTimeInterval(textureSeq.count)
     var action = SKAction.animateWithTextures(textureSeq, timePerFrame: self.sharedInstance.timePerFrame, resize: true, restore: false)
     
-    return SKAction.repeatAction(SKAction.group([action, SKAction.waitForDuration(duration)]), count: repeat)
+    return SKAction.repeatAction(SKAction.group([action, SKAction.waitForDuration(duration)]), count: repeatTime)
   }
   
   public class func clearFrameCache () {
@@ -654,19 +663,19 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
       var actionSeq = [SKAction]()
       
       /* 0: 8 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 0...0, repeat: 8))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 0...0, repeatTime: 8))
       
       /* 8-29: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 8...29, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 8...29, repeatTime: 1))
       
       /* 30-36: 2 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 30...36, repeat: 2))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 30...36, repeatTime: 2))
       
       /* 45: 13 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 45...45, repeat: 13))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 45...45, repeatTime: 13))
       
       /* 58-59: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 58...59, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 58...59, repeatTime: 1))
       
       
       BearWaving.instance = SKAction.sequence(actionSeq)
@@ -680,19 +689,19 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
     var actionSeq:[SKAction] = []
     
     /* 0: 8 times */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 0...0, repeat: 8))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 0...0, repeatTime: 8))
     
     /* 8-29: 1 time */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 2...23, repeat: 1))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 2...23, repeatTime: 1))
     
     /* 30-36: 2 times */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 24...30, repeat: 2))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 24...30, repeatTime: 2))
     
     /* 45: 13 times */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 31...31, repeat: 13))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 31...31, repeatTime: 13))
     
     /* 58-59: 1 time */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 32...33, repeat: 1))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 32...33, repeatTime: 1))
     
     
     return SKAction.sequence(actionSeq)
@@ -712,32 +721,32 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
       
       /* jumping */
       /* 607: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 607...607, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 607...607, repeatTime: 1))
       
       /* 608: 5 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 608...608, repeat: 5))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 608...608, repeatTime: 5))
       
       /* 613: 4 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 613...613, repeat: 4))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 613...613, repeatTime: 4))
       
       /* 617: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 617...617, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 617...617, repeatTime: 1))
       
       /* 618-633: 5 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 618...633, repeat: 5))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 618...633, repeatTime: 5))
       
       /* 613: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 613...613, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 613...613, repeatTime: 1))
       
       /* 699: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 699...699, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 699...699, repeatTime: 1))
       
       /* twisting */
       /* 700-757: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 700...757, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 700...757, repeatTime: 1))
       
       /* 607: 2 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 607...607, repeat: 2))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 607...607, repeatTime: 2))
       
       
       BearDancing.instance = SKAction.sequence(actionSeq)
@@ -753,32 +762,32 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
     
     /* jumping */
     /* 607: 1 time */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 0...0, repeat: 1))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 0...0, repeatTime: 1))
     
     /* 608: 5 times */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 1...1, repeat: 5))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 1...1, repeatTime: 5))
     
     /* 613: 4 times */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 2...2, repeat: 4))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 2...2, repeatTime: 4))
     
     /* 617: 1 time */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 3...3, repeat: 1))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 3...3, repeatTime: 1))
     
     /* 618-633: 5 times */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 4...19, repeat: 5))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 4...19, repeatTime: 5))
     
     /* 613: 1 time */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 2...2, repeat: 1))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 2...2, repeatTime: 1))
     
     /* 699: 1 time */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 21...21, repeat: 1))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 21...21, repeatTime: 1))
     
     /* twisting */
     /* 700-757: 1 time */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 22...79, repeat: 1))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 22...79, repeatTime: 1))
     
     /* 607: 2 times */
-    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 0...0, repeat: 2))
+    actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 0...0, repeatTime: 2))
     
     
     return SKAction.sequence(actionSeq)
@@ -798,16 +807,16 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
       
       /* jumping */
       /* 24: 2 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 24...24, repeat: 2))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 24...24, repeatTime: 2))
       
       /* 36-47: 2 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 36...47, repeat: 2))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 36...47, repeatTime: 2))
       
       /* 60-61: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 60...61, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 60...61, repeatTime: 1))
       
       /* 24: 2 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 24...24, repeat: 2))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 24...24, repeatTime: 2))
       
       
       BearDancing2.instance = SKAction.sequence(actionSeq)
@@ -830,16 +839,16 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
       
       /* jumping */
       /* 86-97: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 86...97, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 86...97, repeatTime: 1))
       
       /* 98-108: 2 times (no 104) */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 98...103, repeat: 1))
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 105...108, repeat: 1))
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 98...103, repeat: 1))
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 105...108, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 98...103, repeatTime: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 105...108, repeatTime: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 98...103, repeatTime: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 105...108, repeatTime: 1))
       
       /* 86: 3 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 86...86, repeat: 3))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 86...86, repeatTime: 3))
       
       
       BearHighfive.instance = SKAction.sequence(actionSeq)
@@ -862,16 +871,16 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
       
       /* jumping */
       /* 302: 3 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 302...302, repeat: 3))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 302...302, repeatTime: 3))
       
       /* 313-322: 3 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 313...322, repeat: 3))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 313...322, repeatTime: 3))
       
       /* 340: 2 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 340...340, repeat: 2))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 340...340, repeatTime: 2))
       
       /* 360: 3 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 360...360, repeat: 3))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 360...360, repeatTime: 3))
       
       
       BearScratching.instance = SKAction.sequence(actionSeq)
@@ -894,19 +903,19 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
       
       /* jumping */
       /* 137: 3 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 137...137, repeat: 3))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 137...137, repeatTime: 3))
       
       /* 139-140: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 139...140, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 139...140, repeatTime: 1))
       
       /* 141-152: 2 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 141...152, repeat: 2))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 141...152, repeatTime: 2))
       
       /* 179: 1 time */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 179...179, repeat: 1))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 179...179, repeatTime: 1))
       
       /* 180: 7 times */
-      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 180...180, repeat: 7))
+      actionSeq.append(self.playframes(atlasName: atlasName, frameRange: 180...180, repeatTime: 7))
       
       
       BearTwisting.instance = SKAction.sequence(actionSeq)
@@ -922,4 +931,7 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   public class func repeatNameTimerInterval () -> SKAction {
     return SKAction.waitForDuration(10)
   }
+  
+  
+  
 }

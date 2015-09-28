@@ -40,7 +40,7 @@ return all objects with the same name as picked
 */
 
 enum Mode {
-  case Tutorial, Game
+  case Game
 }
 
 public class GameController: NSObject {
@@ -61,17 +61,12 @@ public class GameController: NSObject {
     
     
     static func updateTaskQueue (gameController: GameController) {
-      taskQueue = [.Match, .Drag, .Bucket, .Vocabulary]
+//      taskQueue = [.Match, .Drag, .Bucket, .Vocabulary]
 //      taskQueue = [.Material, .Color, .Length]
-//        taskQueue = [.Vocabulary]
+      taskQueue = [.Vocabulary]
     }
     
     static func nextSession (gameController: GameController) {
-      if gameController.mode == .Tutorial {
-        taskQueueIndex = 0
-        task = taskQueue[0]
-        return
-      }
       if taskQueue.isEmpty {
         return
       }
@@ -88,12 +83,10 @@ public class GameController: NSObject {
     }
     set {
       _mode = newValue
-      if _mode == .Tutorial {
-        _stage = .Tutorial
-      } else {
-        _stage = GlobalConfiguration.stage
-      }
-      startNewSession(updateTaskManager: false)
+
+      _stage = GlobalConfiguration.stage
+      
+      startNewSession(false)
 //      if let main = _mainObject {
 //        self._sameNameObject = main
 //        self._diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectEasy(name: main.name, material: main.material, color: main.color, forNames: _stage.searchCategory)
@@ -239,7 +232,7 @@ public class GameController: NSObject {
   
   
   /* pick and store a random object. */
-  public func startNewSession (updateTaskManager: Bool = true) {
+  public func startNewSession (updateTaskManager: Bool = true) -> Bool {
     
     if !firstStageInitialized {
       firstStage()
@@ -248,14 +241,22 @@ public class GameController: NSObject {
     if updateTaskManager {
       TaskManager.nextSession(self)
     }
-    
-    while self._mainObject == nil || self._mainObject.name == TaskManager.lastName {
-      if mode == .Tutorial {
-        self._mainObject = CognitiveToyBoxObjectSearchHelper.getRandomObject(entityName:"CTBObject_tutorial")
-      } else {
-        self._mainObject = CognitiveToyBoxObjectSearchHelper.getRandomObject(forNames: _stage.searchCategory)
+
+    while self._mainObject == nil || self._mainObject.name == TaskManager.lastName{
+      var category: Set<String> = _stage.searchCategory as! Set<String>
+      var categoryNew = category.subtract(UserPerformanceHelper.getDeadVocabularySet())
+      if categoryNew.count == 1 {
+        self._mainObject = CognitiveToyBoxObjectSearchHelper.getRandomObject(forNames: categoryNew as NSSet)
+        break
       }
+      if categoryNew.isEmpty {
+        return false
+      }
+      
+     self._mainObject = CognitiveToyBoxObjectSearchHelper.getRandomObject(forNames: categoryNew as NSSet)
+    
     }
+    
     TaskManager.lastName = self._mainObject.name
     
 //    self._sameNameObject = nil
@@ -265,209 +266,56 @@ public class GameController: NSObject {
     
     let exceptId = self._mainObject.id
     let name = self._mainObject.name
-    let material = self._mainObject.material
-    let color = self._mainObject.color
+    let filename = self._mainObject.filename
     
     switch TaskManager.task {
-    case .Match:
-        var sameNameObject:CognitiveToyBoxObject!
-        var diffNameObject:CognitiveToyBoxObject!
-        if mode == .Tutorial {
-            sameNameObject = self._mainObject
-            diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectTutorial(name: name, material: material, color: color)
-            
-        } else {
-            sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
-            
-            if sameNameObject == nil {
-                sameNameObject = self._mainObject
-            }
-            
-            
-            /* if already get same material, get diff color, vise versa */
-            if sameNameObject.material == material && material != nil && sameNameObject.color != color {
-                
-                diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory)
-                
-            } else if sameNameObject.color == color && color != nil && sameNameObject.material != material {
-                
-                diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory)
-                
-            }
-            
-            if diffNameObject == nil {
-                diffNameObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObject(name: name, material: material, color: color, forNames: _stage.searchCategory)
-            }
-        }
-        
-        /* make sure not crash */
-        if diffNameObject == nil {
-            self.startNewSession(updateTaskManager: false)
-            return
-        }
-        
-        self._options.append([sameNameObject])
-        self._options.append([diffNameObject])
-        
 
     case .Vocabulary:
-//        if material == nil || color == nil {
-//            startNewSession(updateTaskManager: false)
-//            return
-//        }
-        
+      
         var sameNameObject:CognitiveToyBoxObject!
-//        var sameColorObject:CognitiveToyBoxObject!
-//        var sameMaterialObject:CognitiveToyBoxObject!
 
         var object1:CognitiveToyBoxObject!
         var object2:CognitiveToyBoxObject!
+        var object3:CognitiveToyBoxObject!
+        var differentNameList:[CognitiveToyBoxObject]
         
         sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
         
-        if material == nil && color == nil {
-            startNewSession(updateTaskManager: false)
-            return
-        } else if material == nil {
-            object1 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
-            object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
-            while object1.id == object2.id {
-                object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
-            }
-        } else if color == nil {
-            object1 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
-            object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
-            while object1.id == object2.id {
-                object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
-            }
-        } else {
-            object1 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
-            object2 = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
-        }
+//        get 3 different name objects
+        differentNameList = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectList(name:name, forNames:_stage.searchCategory)
+        var objectNum1 = Int(arc4random_uniform(UInt32(differentNameList.count)))
+        object1 = differentNameList[objectNum1]
         
-        if sameNameObject == nil || object1 == nil || object2 == nil {
-            startNewSession(updateTaskManager: false)
-            return
+        var objectNum2 = Int(arc4random_uniform(UInt32(differentNameList.count)))
+        while object1.name == differentNameList[objectNum2].name{
+            objectNum2 = Int(arc4random_uniform(UInt32(differentNameList.count)))
+        }
+        object2 = differentNameList[objectNum2]
+        
+        var objectNum3 = Int(arc4random_uniform(UInt32(differentNameList.count)))
+        while object1.name == differentNameList[objectNum3].name || object2.name == differentNameList[objectNum3].name{
+          objectNum3 = Int(arc4random_uniform(UInt32(differentNameList.count)))
+        }
+        object3 = differentNameList[objectNum3]
+        
+        if sameNameObject == nil || object1 == nil || object2 == nil || object3 == nil{
+            print("Again start a new session???")
+            return startNewSession(false)
         }
         
         /* name is the correct choice */
         self._options.append([sameNameObject])
         self._options.append([object1])
         self._options.append([object2])
-
-        
-    case .Drag:
-      fallthrough
-    case .Bucket:
-      var sameNameObjectList:[CognitiveToyBoxObject]
-      var diffNameObjectList:[CognitiveToyBoxObject]
-      
-      var listCount:Int = 1
-      if self.task == .Drag {
-        listCount = 2
-      } else if self.task == .Bucket {
-        listCount = 5
-      }
-      sameNameObjectList = getRandomListWithSameName(listCount)
-      diffNameObjectList = getRandomListWithDiffName(listCount)
-      if sameNameObjectList.count != listCount || diffNameObjectList.count != listCount {
-        startNewSession(updateTaskManager: false)
-        return
-      }
-      
-      self._options.append(sameNameObjectList)
-      self._options.append(diffNameObjectList)
-    case .Some:
-      if material == nil || color == nil {
-        startNewSession(updateTaskManager: false)
-        return
-      }
-      
-      var sameNameObject:CognitiveToyBoxObject!
-      var sameColorObject:CognitiveToyBoxObject!
-      var sameMaterialObject:CognitiveToyBoxObject!
-      
-      sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
-      sameColorObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnColor(name: name, color: color, forNames: _stage.searchCategory, material: material)
-      sameMaterialObject = CognitiveToyBoxObjectSearchHelper.getDiffNameObjectOnMaterial(name: name, material: material, forNames: _stage.searchCategory, color: color)
-      
-      
-      if sameNameObject == nil || sameColorObject == nil || sameMaterialObject == nil {
-        startNewSession(updateTaskManager: false)
-        return
-      }
-      
-      /* material is the correct choice */
-      self._options.append([sameMaterialObject])
-      self._options.append([sameNameObject])
-      self._options.append([sameColorObject])
-      
-    case .Material:
-      if material == nil || color == nil {
-        startNewSession(updateTaskManager: false)
-        return
-      }
-      
-      /* same material diff color */
-      var sameMaterialObject:CognitiveToyBoxObject! = nil
-      
-      /* same color diff material */
-      var sameColorObject:CognitiveToyBoxObject! = nil
-      
-      sameMaterialObject = CognitiveToyBoxObjectSearchHelper.getSameNameObjectOnMaterial(name: name, exceptId: exceptId, material: material!, color: color!)
-      sameColorObject = CognitiveToyBoxObjectSearchHelper.getSameNameObjectOnColor(name: name, exceptId: exceptId, material: material!, color: color!)
-      
-      if sameColorObject == nil || sameMaterialObject == nil {
-        startNewSession(updateTaskManager: false)
-        return
-      }
-      
-      /* Material is special. Different material is correct answer */
-      self._options.append([sameColorObject])
-      self._options.append([sameMaterialObject])
-      
-    case .Color:
-      if material == nil || color == nil {
-        startNewSession(updateTaskManager: false)
-        return
-      }
-      
-      /* same material diff color */
-      var sameMaterialObject:CognitiveToyBoxObject! = nil
-      
-      /* same color diff material */
-      var sameColorObject:CognitiveToyBoxObject! = nil
-      
-      sameMaterialObject = CognitiveToyBoxObjectSearchHelper.getSameNameObjectOnMaterial(name: name, exceptId: exceptId, material: material!, color: color!)
-      sameColorObject = CognitiveToyBoxObjectSearchHelper.getSameNameObjectOnColor(name: name, exceptId: exceptId, material: material!, color: color!)
-      
-      if sameColorObject == nil || sameMaterialObject == nil {
-        startNewSession(updateTaskManager: false)
-        return
-      }
-      
-      /* Color is special. Different color is correct answer */
-      self._options.append([sameMaterialObject])
-      self._options.append([sameColorObject])
-      
-    case .Length:
-      var sameNameObject = CognitiveToyBoxObjectSearchHelper.getSameNameObject (name:name, exceptId:exceptId)
-      if sameNameObject == nil {
-        startNewSession(updateTaskManager: false)
-        return
-      }
-      
-      /* Same attribute is correct answer */
-      self._options.append([mainObject])
-      self._options.append([sameNameObject!])
-      
+        self._options.append([object3])
+    default:
+      break
     }
-    
     
     
     /* reshuffle */
     self.reshuffle()
-    
+    return true
   }
   
   /* return the picked object. Must be called AFTER the session starts. */
@@ -497,11 +345,6 @@ public class GameController: NSObject {
     return CognitiveToyBoxObjectSearchHelper.getSameNameAll(name: self._mainObject.name, limit: 10)
   }
   
-  /* return all objects with the same material as picked */
-  public func getListWithSameMaterial () -> [CognitiveToyBoxObject] {
-    return CognitiveToyBoxObjectSearchHelper.getSameMaterialAll(material: self._mainObject.material!, limit: 10)
-  }
-  
   /* return random objects with the same name */
   public func getRandomListWithSameName(count:Int) -> [CognitiveToyBoxObject] {
     var list = NSMutableArray(array: CognitiveToyBoxObjectSearchHelper.getSameNameObjectList(name: self._mainObject.name, exceptId:self._mainObject.id))
@@ -522,33 +365,32 @@ public class GameController: NSObject {
   }
   
   /* return random objects with the different name */
-  public func getRandomListWithDiffName(count:Int) -> [CognitiveToyBoxObject] {
-    var list:NSMutableArray
-    
-    var name = self._mainObject.name
-    var material = self._mainObject.material
-    var color = self._mainObject.color
-    
-    if material != nil && color != nil {
-      if arc4random_uniform(2) == 0 {
-        material = nil
-      } else {
-        color = nil
-      }
-    }
-    
-    list = NSMutableArray(array: CognitiveToyBoxObjectSearchHelper.getDiffNameObjectList(name: name, material: material, color: color, forNames: _stage.searchCategory))
-    
-    
-    var randomList:[CognitiveToyBoxObject] = []
-    while randomList.count < count && list.count > 0 {
-      var index = Int(arc4random_uniform(UInt32(list.count)))
-      randomList.append(list.objectAtIndex(index) as! CognitiveToyBoxObject)
-      list.removeObjectAtIndex(index)
-    }
-    
-    return randomList
-  }
+//  public func getRandomListWithDiffName(count:Int) -> [CognitiveToyBoxObject] {
+//    var list:NSMutableArray
+//    
+//    var name = self._mainObject.name
+//
+//    
+//    if material != nil && color != nil {
+//      if arc4random_uniform(2) == 0 {
+//        material = nil
+//      } else {
+//        color = nil
+//      }
+//    }
+//    
+//    list = NSMutableArray(array: CognitiveToyBoxObjectSearchHelper.getDiffNameObjectList(name: name, material: material, color: color, forNames: _stage.searchCategory))
+//    
+//    
+//    var randomList:[CognitiveToyBoxObject] = []
+//    while randomList.count < count && list.count > 0 {
+//      var index = Int(arc4random_uniform(UInt32(list.count)))
+//      randomList.append(list.objectAtIndex(index) as! CognitiveToyBoxObject)
+//      list.removeObjectAtIndex(index)
+//    }
+//    
+//    return randomList
+//  }
   
   /* reshuffle. PRIVATE! */
   private func reshuffle () {

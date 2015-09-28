@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="5cM-B6-6yH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="5cM-B6-6yH">
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="znuscriptheavy-webfont.ttf">
@@ -15,7 +15,7 @@
         <!--Info View Controller-->
         <scene sceneID="3eN-gL-olM">
             <objects>
-                <viewController storyboardIdentifier="infoViewController" id="jbZ-yj-uc8" customClass="InfoViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="infoViewController" id="jbZ-yj-uc8" customClass="InfoViewController" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="26Q-nV-YGP">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -92,7 +92,7 @@
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController restorationIdentifier="GameViewController" id="BV1-FR-VrT" customClass="GameViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="GameViewController" id="BV1-FR-VrT" customClass="GameViewController" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="Game View" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,7 +105,7 @@
                                     <action selector="homeTouched:" destination="BV1-FR-VrT" eventType="touchUpInside" id="4jA-Ye-1N4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" id="C1c-6a-nkK">
+                            <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" id="C1c-6a-nkK">
                                 <rect key="frame" x="956" y="20" width="52" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
@@ -206,9 +206,42 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ruh-yL-JFh">
+                                        <rect key="frame" x="486" y="55" width="53" height="57"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playSoundButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="rJ6-aZ-7nD"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" id="2Er-1n-b4F">
+                                <rect key="frame" x="798" y="47" width="150" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </progressView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oQ5-kp-B4S" userLabel="seeResultButton">
+                                <rect key="frame" x="692" y="36" width="57" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Analysis">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="analysisButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="CMG-Wr-I7W"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="150/150" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ELG-hO-UpZ">
+                                <rect key="frame" x="852" y="69" width="63" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -218,12 +251,15 @@
                         <outlet property="continueButtonBorder" destination="JWf-Ii-oVY" id="qCq-no-y7N"/>
                         <outlet property="homeButton" destination="yxh-cb-HXj" id="XqA-d1-BDp"/>
                         <outlet property="homePanel" destination="moZ-wi-tME" id="wp9-Aw-mPh"/>
+                        <outlet property="progressBar" destination="2Er-1n-b4F" id="kei-P6-Qpe"/>
+                        <outlet property="progressNumber" destination="ELG-hO-UpZ" id="urb-88-I2G"/>
                         <outlet property="quitButton" destination="E6f-Qy-4yf" id="JDC-pD-Jdq"/>
                         <outlet property="quitButtonBorder" destination="1dr-Of-kNM" id="Y4T-Nq-HS9"/>
                         <outlet property="rewardView" destination="INf-wa-eAc" id="N5w-p5-eLU"/>
                         <outlet property="skView" destination="3se-qz-xqx" id="eq8-9j-ATC"/>
                         <outlet property="taskCountLabel" destination="C1c-6a-nkK" id="NTB-xe-aIy"/>
                         <outlet property="taskCountLabelTrophy" destination="ew8-V8-Wbq" id="sF8-cu-25c"/>
+                        <segue destination="c8U-AQ-cW3" kind="modal" identifier="finalAnalysis" id="9B3-8P-6Xe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -233,7 +269,7 @@
         <!--Date Picker View Controller-->
         <scene sceneID="hun-Fr-CkJ">
             <objects>
-                <viewController modalPresentationStyle="currentContext" id="ThW-Bz-6nB" customClass="DatePickerViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="currentContext" id="ThW-Bz-6nB" customClass="DatePickerViewController" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vta-9d-yew">
                         <rect key="frame" x="0.0" y="0.0" width="540" height="216"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -261,7 +297,7 @@
         <!--Camera View Controller-->
         <scene sceneID="90P-zz-4wX">
             <objects>
-                <viewController id="zU9-D2-aI9" customClass="CameraViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zU9-D2-aI9" customClass="CameraViewController" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sgM-2K-DVc">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -275,7 +311,7 @@
         <!--User View Controller-->
         <scene sceneID="ZwR-sc-bek">
             <objects>
-                <viewController id="5cM-B6-6yH" customClass="UserViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5cM-B6-6yH" customClass="UserViewController" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="olr-Ha-2D7" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -330,7 +366,7 @@
                                     <action selector="switchSoundMode:" destination="5cM-B6-6yH" eventType="touchUpInside" id="7Ul-hx-ue8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dlm-VM-xhf">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dlm-VM-xhf">
                                 <rect key="frame" x="16" y="20" width="204" height="85"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="aboutButton">
@@ -342,18 +378,18 @@
                                     </segue>
                                 </connections>
                             </button>
-                            <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="BlT-3B-ZeK">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="BlT-3B-ZeK">
                                 <rect key="frame" x="307" y="549" width="410" height="155"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="15" minimumInteritemSpacing="15" id="4II-3R-1Zr" customClass="CenterFlowLayout" customModule="Blicket" customModuleProvider="target">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="15" minimumInteritemSpacing="15" id="4II-3R-1Zr" customClass="CenterFlowLayout" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target">
                                     <size key="itemSize" width="70" height="70"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="userCell" id="PDA-DT-Ojk" customClass="UserCollectionViewCell" customModule="Blicket" customModuleProvider="target">
+                                    <collectionViewCell hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="userCell" id="PDA-DT-Ojk" customClass="UserCollectionViewCell" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -369,7 +405,7 @@
                                     <outlet property="delegate" destination="5cM-B6-6yH" id="lQp-Bj-W4W"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" id="kJE-It-TGD">
+                            <view hidden="YES" contentMode="scaleToFill" id="kJE-It-TGD">
                                 <rect key="frame" x="304" y="255" width="417" height="258"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -418,7 +454,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.49411764705882355" green="0.80392156862745101" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="F4A-8Y-SZF">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="F4A-8Y-SZF">
                                 <rect key="frame" x="405" y="549" width="215" height="99"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="addUserButton">
@@ -429,53 +465,27 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Cg1-V1-2QO">
-                                <rect key="frame" x="409" y="555" width="207" height="88"/>
+                                <rect key="frame" x="558" y="520" width="393" height="184"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="0.94999999999999996" height="1"/>
+                                <size key="titleShadowOffset" width="3" height="3"/>
                                 <state key="normal" image="playButton">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="freeGame:" destination="5cM-B6-6yH" eventType="touchUpInside" id="xcq-xZ-oBa"/>
+                                    <segue destination="P21-Xz-FVb" kind="modal" modalTransitionStyle="crossDissolve" id="8xD-ru-FGk"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" id="o9V-1e-ohV">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorialOverlay" id="nsH-Bs-2kC">
-                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </imageView>
-                                    <view contentMode="scaleToFill" id="wL0-b7-X6u" customClass="SKView">
-                                        <rect key="frame" x="53" y="144" width="915" height="575"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mgS-gd-rfK">
-                                                <rect key="frame" x="102" y="343" width="285" height="120"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <state key="normal" image="playButton_large">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="freeGame:" destination="5cM-B6-6yH" eventType="touchUpInside" id="gYb-hg-VlN"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="QMa-z9-zDj">
-                                                <rect key="frame" x="528" y="343" width="285" height="120"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                <state key="normal" image="showAnotherButton">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="doMoreTutorial:" destination="5cM-B6-6yH" eventType="touchUpInside" id="ZIk-Z7-c68"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Date of Birthday" placeholder="click to choose " minimumFontSize="24" id="sIq-8z-Yee">
+                                <rect key="frame" x="85" y="406" width="200" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" red="0.0" green="0.40000000000000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="5cM-B6-6yH" id="6Hk-3D-E0M"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
@@ -484,6 +494,7 @@
                     </view>
                     <connections>
                         <outlet property="addUserButton" destination="F4A-8Y-SZF" id="64w-H9-CLf"/>
+                        <outlet property="birthdayTextField" destination="sIq-8z-Yee" id="pPZ-j7-qw5"/>
                         <outlet property="cameraButton" destination="9oL-42-yaT" id="sos-HT-yOy"/>
                         <outlet property="dateOfBirthTextField" destination="rkk-jc-xIf" id="lvf-IK-iPP"/>
                         <outlet property="freeButton" destination="2ZY-2q-881" id="unq-G3-Jms"/>
@@ -491,15 +502,11 @@
                         <outlet property="loginPanel" destination="kJE-It-TGD" id="sNB-82-2MX"/>
                         <outlet property="nameTextField" destination="BNN-6G-Kmo" id="arq-Md-nWy"/>
                         <outlet property="timedButton" destination="br1-de-dle" id="Uie-Jy-jBR"/>
-                        <outlet property="tutorialAnotherButton" destination="QMa-z9-zDj" id="Z0Q-5N-45Y"/>
-                        <outlet property="tutorialOverlay" destination="o9V-1e-ohV" id="sZ4-7H-tt6"/>
-                        <outlet property="tutorialPlayButton" destination="mgS-gd-rfK" id="z7k-80-xcN"/>
-                        <outlet property="tutorialView" destination="wL0-b7-X6u" id="MNU-EU-WCN"/>
                         <outlet property="userCollectionView" destination="BlT-3B-ZeK" id="gln-qz-Y3D"/>
                         <segue destination="BV1-FR-VrT" kind="modal" identifier="gameViewSegueFree" modalTransitionStyle="crossDissolve" id="qgI-FX-cXz"/>
                         <segue destination="6Ln-pq-8Nx" kind="modal" identifier="settingsSegue" modalTransitionStyle="crossDissolve" id="KnM-fI-uzh"/>
                         <segue destination="BV1-FR-VrT" kind="modal" identifier="gameViewSegueTimed" modalTransitionStyle="crossDissolve" id="ITo-d9-Tss"/>
-                        <segue destination="ThW-Bz-6nB" kind="popover" identifier="datePickerSegue" popoverAnchorView="rkk-jc-xIf" id="2w3-2x-Wy0">
+                        <segue destination="ThW-Bz-6nB" kind="popover" identifier="datePickerSegue" popoverAnchorView="sIq-8z-Yee" id="2w3-2x-Wy0">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
                         <segue destination="zU9-D2-aI9" kind="modal" identifier="cameraSegue" id="Ih4-h9-mZG"/>
@@ -512,7 +519,7 @@
         <!--Settings View Controller-->
         <scene sceneID="bO1-1I-0hK">
             <objects>
-                <viewController id="6Ln-pq-8Nx" customClass="SettingsViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6Ln-pq-8Nx" customClass="SettingsViewController" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="QKo-Hd-0CE" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -987,10 +994,28 @@
             </objects>
             <point key="canvasLocation" x="-897" y="153"/>
         </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="sCk-rJ-v1h">
+            <objects>
+                <viewController id="P21-Xz-FVb" customClass="TutorialViewController" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3mc-Sh-PsL" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="skView" destination="3mc-Sh-PsL" id="rPp-FL-39K"/>
+                        <segue destination="BV1-FR-VrT" kind="modal" identifier="startGameSegue" modalTransitionStyle="crossDissolve" id="aLM-KX-TCH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qWe-Sq-X1U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1381" y="1007"/>
+        </scene>
         <!--Analysis View Controller-->
         <scene sceneID="fS9-wD-Qff">
             <objects>
-                <viewController id="c8U-AQ-cW3" customClass="AnalysisViewController" customModule="Blicket" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="c8U-AQ-cW3" customClass="AnalysisViewController" customModule="Vocabulary_Assessment_Tool" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HNr-Ox-wXI">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1007,20 +1032,30 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ogr-kK-xq6">
-                                <rect key="frame" x="0.0" y="58" width="1024" height="690"/>
+                                <rect key="frame" x="53" y="357" width="914" height="391"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="MfH-Gz-rOf">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="364"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </view>
                                 <sections/>
                                 <connections>
                                     <outlet property="dataSource" destination="c8U-AQ-cW3" id="0FT-MU-kTF"/>
                                     <outlet property="delegate" destination="c8U-AQ-cW3" id="jxe-mM-Ji5"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gQ9-42-60g">
+                                <rect key="frame" x="44" y="20" width="42" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="BACK">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backToMain:" destination="c8U-AQ-cW3" eventType="touchUpInside" id="dBE-wN-Xkb"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="MfH-Gz-rOf">
+                                <rect key="frame" x="0.0" y="58" width="1024" height="291"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1031,7 +1066,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prG-AE-4nj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="319" y="153"/>
+            <point key="canvasLocation" x="-808" y="2023"/>
         </scene>
     </scenes>
     <resources>
@@ -1047,15 +1082,12 @@
         <image name="homeButton" width="51" height="56"/>
         <image name="howToPlayButton" width="208" height="88"/>
         <image name="infoCard" width="1024" height="768"/>
-        <image name="playButton" width="204" height="86"/>
+        <image name="playButton" width="393" height="184"/>
         <image name="playButton_info" width="139" height="143"/>
-        <image name="playButton_large" width="285" height="120"/>
         <image name="rewardTrophy" width="1024" height="768"/>
         <image name="settingButton" width="51" height="56"/>
-        <image name="showAnotherButton" width="285" height="120"/>
         <image name="soundButton" width="53" height="57"/>
         <image name="timedButton" width="156" height="70"/>
-        <image name="tutorialOverlay" width="1024" height="768"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -1064,6 +1096,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="MPL-wf-Wi6"/>
-        <segue reference="qgI-FX-cXz"/>
+        <segue reference="NSY-gD-fFj"/>
+        <segue reference="aLM-KX-TCH"/>
     </inferredMetricsTieBreakers>
 </document>

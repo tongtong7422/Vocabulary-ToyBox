@@ -16,7 +16,7 @@ class TriadScene: SKScene, ConfigurableScene {
   }
   private var state = State.Initial
   
-  let versionNum = UIDevice.currentDevice().systemVersion.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "."))[0].toInt()
+  let versionNum = Int(UIDevice.currentDevice().systemVersion.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "."))[0])
   
   var selectionRegistered = false
   var labelFontSize = CGFloat(72)
@@ -124,17 +124,19 @@ class TriadScene: SKScene, ConfigurableScene {
     
     
     // masks
-    if versionNum >= 8 {
-      self.topMask = SKShapeNode(rect: self.frame)  // iOS 8 only
+    
+    if #available(iOS 8.0, *) {
+      self.topMask = SKShapeNode(rect: self.frame)
       self.colorMask = SKShapeNode(rect: self.frame)
-    }
-    else {
+    } else {
       self.topMask = SKSpriteNode(color: UIColor(white: 0, alpha: 1), size: self.frame.size)
       self.topMask.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
       
       self.colorMask = SKSpriteNode(color: UIColor(white: 0.5, alpha: 0.5), size: self.frame.size)
       self.colorMask.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
-    }
+      
+    }  // iOS 8 only
+
     
     self.topMask.hidden = true
     
@@ -267,8 +269,9 @@ class TriadScene: SKScene, ConfigurableScene {
       }
     }
   }
+
   
-  override func touchesBegan (touches: Set<NSObject>, withEvent event: UIEvent) {
+  override func touchesBegan (touches: Set<UITouch>, withEvent event: UIEvent?) {
     
     handleTouch(touches, withEvent: event)
     
@@ -316,8 +319,8 @@ class TriadScene: SKScene, ConfigurableScene {
     }
     
   }
-  
-  override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+
+  override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
 //    handleTouch(touches, withEvent: event)
     
     var location : CGPoint
@@ -355,8 +358,8 @@ class TriadScene: SKScene, ConfigurableScene {
       
     }
   }
-  
-  override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+
+  override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
     let velocityScale : CGFloat = 600
     let maxSpeed : CGFloat = 10000
     
@@ -392,7 +395,7 @@ class TriadScene: SKScene, ConfigurableScene {
       
     }
     
-    if event.allTouches()?.count == touches.count {
+    if event!.allTouches()?.count == touches.count {
       self.resetDrag()
     }
     
@@ -437,7 +440,7 @@ class TriadScene: SKScene, ConfigurableScene {
     self.preventTouching()
     
     self.objectList = self.gameController.getListWithSameName().filter() { [unowned self] (object:CognitiveToyBoxObject) -> Bool in
-      !object.equals(self.gameController.getMainObj()) && !object.equals(self.gameController.getCorrectObj()) && object.suffix == nil
+      !object.equals(self.gameController.getMainObj()) && !object.equals(self.gameController.getCorrectObj()) 
     }
     
     // refresh main
@@ -565,7 +568,7 @@ class TriadScene: SKScene, ConfigurableScene {
       [unowned self] () -> () in
       if self.state.rawValue < State.MainInTransfer.rawValue {
         self.addChild(self.mainGlow)
-        self.mainGlow.runAction(ActionHelper.beaconGlow(scale:self.mainScaleBefore))
+        self.mainGlow.runAction(ActionHelper.beaconGlow(self.mainScaleBefore))
       }
       
       self.mainObjectNode.runAction(ActionHelper.waitForMain()) {
@@ -637,7 +640,7 @@ class TriadScene: SKScene, ConfigurableScene {
         self.resetReminder()
       }
       if let thirdNode = self.secondaryMainNode {
-        thirdNode.runAction(ActionHelper.presentObject(reverseOrder: true))
+        thirdNode.runAction(ActionHelper.presentObject(true))
       }
       
       
@@ -774,7 +777,7 @@ class TriadScene: SKScene, ConfigurableScene {
       //      self.allowTouching()
       completion()
     }
-    self.secondOptionNode.runAction(ActionHelper.presentObject(reverseOrder: true))
+    self.secondOptionNode.runAction(ActionHelper.presentObject(true))
     
     //    self.firstOptionGlow.runAction(ActionHelper.presentObject())
     //    self.secondOptionGlow.runAction(ActionHelper.presentObject(reverseOrder: true))
@@ -925,7 +928,7 @@ class TriadScene: SKScene, ConfigurableScene {
               self.secondaryMainFrame = self.secondaryMainNode.frame
               
               self.mainObjectNode.runAction(ActionHelper.presentObject())
-              self.secondaryMainNode.runAction(ActionHelper.presentObject(reverseOrder: true))
+              self.secondaryMainNode.runAction(ActionHelper.presentObject(true))
               self.runAction(SoundSourceHelper.soundMultiple(name: self.objectName)) {
                 [unowned self] () -> () in
                 /* Can you find the other apple */
@@ -956,7 +959,7 @@ class TriadScene: SKScene, ConfigurableScene {
               self.addChild(node)
               node.runAction(SKAction.waitForDuration(30)) {
                 [unowned self] in
-                self.gameViewController?.presentGameScene(newScene: true)
+                self.gameViewController?.presentGameScene(true)
               }
             }
           }
@@ -979,7 +982,7 @@ class TriadScene: SKScene, ConfigurableScene {
     
     self.runAction(ActionHelper.maskDelay()) {
       [unowned self] () -> () in
-      self.resetMask(allowTouching: false)
+      self.resetMask(false)
       self.toddlerLock = false
     }
     
@@ -1008,7 +1011,7 @@ class TriadScene: SKScene, ConfigurableScene {
     statisticsTrack.setCorrect(nil)
     statisticsTrack.logEvent()
     
-    self.gameViewController?.presentGameScene(newScene: false)
+    self.gameViewController?.presentGameScene(false)
   }
   
   
@@ -1097,7 +1100,7 @@ class TriadScene: SKScene, ConfigurableScene {
     self.background.runAction(SKAction.scaleTo(1, duration: duration))
   }
   
-  class func firstLocation (#frame : CGRect) -> CGPoint {
+  class func firstLocation (frame frame : CGRect) -> CGPoint {
     var orientation = UIApplication.sharedApplication().statusBarOrientation
     
     if orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown {
@@ -1110,7 +1113,7 @@ class TriadScene: SKScene, ConfigurableScene {
     
   }
   
-  class func secondLocation (#frame : CGRect) -> CGPoint {
+  class func secondLocation (frame frame : CGRect) -> CGPoint {
     var orientation = UIApplication.sharedApplication().statusBarOrientation
     
     if orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown {

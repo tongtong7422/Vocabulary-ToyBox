@@ -27,7 +27,7 @@ public class DateHelper {
     
     for dayOffset in 0..<days {
       components.day = -dayOffset
-      dates.append(calendar.dateByAddingComponents(components, toDate: date, options: nil)!)
+      dates.append(calendar.dateByAddingComponents(components, toDate: date, options: NSCalendarOptions(rawValue: 0))!)
 //      dates.append(calendar.dateByAddingUnit(.CalendarUnitDay, value: -dayOffset, toDate: date, options: nil))
     }
     
@@ -42,11 +42,11 @@ public class DateHelper {
     var days = [NSDate]()
     var beginningOfWeek: NSDate?
     
-    var ok = calendar.rangeOfUnit(NSCalendarUnit.WeekCalendarUnit, startDate: &beginningOfWeek, interval: nil, forDate: date)
-    
+//    var ok = calendar.rangeOfUnit(NSCalendarUnit.WeekCalendarUnit, startDate: &beginningOfWeek, interval: nil, forDate: date)
+    var ok = calendar.rangeOfUnit(NSCalendarUnit.NSWeekCalendarUnit, startDate: &beginningOfWeek, interval: nil, forDate: date)
     for offset in 0..<7 {
       components.day = offset
-      days.append(calendar.dateByAddingComponents(components, toDate: beginningOfWeek!, options: nil)!)
+      days.append(calendar.dateByAddingComponents(components, toDate: beginningOfWeek!, options:  NSCalendarOptions(rawValue: 0))!)
     }
     
     return days
@@ -55,7 +55,9 @@ public class DateHelper {
   /* return the boundary of that day (12am in the morning, 12am at night) */
   public class func getDayBoundary (date: NSDate) -> (NSDate, NSDate) {
     var calendar = NSCalendar.currentCalendar()
-    var components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: date)
+
+//    var components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: date)
+    var components = calendar.components([NSCalendarUnit.NSYearCalendarUnit , NSCalendarUnit.NSMonthCalendarUnit , NSCalendarUnit.NSDayCalendarUnit], fromDate: date)
     var dateFrom = calendar.dateFromComponents(components)
     components.day += 1
     var dateTo = calendar.dateFromComponents(components)
@@ -65,7 +67,8 @@ public class DateHelper {
   
   public class func getSomeDaysEarlier (date: NSDate, days: Int = 2) -> NSDate {
     let calendar = NSCalendar.currentCalendar()
-    var components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: date)
+//    var components = calendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: date)
+    var components = calendar.components([NSCalendarUnit.NSYearCalendarUnit , NSCalendarUnit.NSMonthCalendarUnit , NSCalendarUnit.NSDayCalendarUnit], fromDate: date)
     components.day -= days
     return calendar.dateFromComponents(components)!
   }
