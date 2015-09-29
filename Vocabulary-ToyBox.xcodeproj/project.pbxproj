@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F7E37141B4ED8A10094A16B /* GlobalConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7E37131B4ED8A10094A16B /* GlobalConfiguration.swift */; };
 		2FCA171B1B4ED24200056CA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA171A1B4ED24200056CA2 /* AppDelegate.swift */; };
 		2FCA171D1B4ED24200056CA2 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2FCA171C1B4ED24200056CA2 /* GameScene.sks */; };
 		2FCA171F1B4ED24200056CA2 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA171E1B4ED24200056CA2 /* GameScene.swift */; };
@@ -15,6 +16,7 @@
 		2FCA17261B4ED24200056CA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCA17251B4ED24200056CA2 /* Images.xcassets */; };
 		2FCA17291B4ED24200056CA2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FCA17271B4ED24200056CA2 /* LaunchScreen.xib */; };
 		2FCA17351B4ED24200056CA2 /* Vocabulary_ToyBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA17341B4ED24200056CA2 /* Vocabulary_ToyBoxTests.swift */; };
+		2FCA173F1B4ED27400056CA2 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA173E1B4ED27400056CA2 /* GameController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F7E37131B4ED8A10094A16B /* GlobalConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalConfiguration.swift; sourceTree = "<group>"; };
 		2FCA17151B4ED24200056CA2 /* Vocabulary-ToyBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vocabulary-ToyBox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FCA17191B4ED24200056CA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FCA171A1B4ED24200056CA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +43,7 @@
 		2FCA172E1B4ED24200056CA2 /* Vocabulary-ToyBoxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Vocabulary-ToyBoxTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FCA17331B4ED24200056CA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FCA17341B4ED24200056CA2 /* Vocabulary_ToyBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabulary_ToyBoxTests.swift; sourceTree = "<group>"; };
+		2FCA173E1B4ED27400056CA2 /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F7E37111B4ED82F0094A16B /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
+		2F7E37121B4ED84D0094A16B /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				2F7E37131B4ED8A10094A16B /* GlobalConfiguration.swift */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 		2FCA170C1B4ED24200056CA2 = {
 			isa = PBXGroup;
 			children = (
@@ -81,10 +100,13 @@
 		2FCA17171B4ED24200056CA2 /* Vocabulary-ToyBox */ = {
 			isa = PBXGroup;
 			children = (
+				2F7E37121B4ED84D0094A16B /* Util */,
+				2F7E37111B4ED82F0094A16B /* Scene */,
 				2FCA171A1B4ED24200056CA2 /* AppDelegate.swift */,
 				2FCA171C1B4ED24200056CA2 /* GameScene.sks */,
 				2FCA171E1B4ED24200056CA2 /* GameScene.swift */,
 				2FCA17201B4ED24200056CA2 /* GameViewController.swift */,
+				2FCA173E1B4ED27400056CA2 /* GameController.swift */,
 				2FCA17221B4ED24200056CA2 /* Main.storyboard */,
 				2FCA17251B4ED24200056CA2 /* Images.xcassets */,
 				2FCA17271B4ED24200056CA2 /* LaunchScreen.xib */,
@@ -220,8 +242,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FCA171F1B4ED24200056CA2 /* GameScene.swift in Sources */,
+				2FCA173F1B4ED27400056CA2 /* GameController.swift in Sources */,
 				2FCA17211B4ED24200056CA2 /* GameViewController.swift in Sources */,
 				2FCA171B1B4ED24200056CA2 /* AppDelegate.swift in Sources */,
+				2F7E37141B4ED8A10094A16B /* GlobalConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +443,7 @@
 				2FCA173A1B4ED24200056CA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2FCA173B1B4ED24200056CA2 /* Build configuration list for PBXNativeTarget "Vocabulary-ToyBoxTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +452,7 @@
 				2FCA173D1B4ED24200056CA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
