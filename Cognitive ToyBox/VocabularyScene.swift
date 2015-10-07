@@ -54,9 +54,12 @@ class VocabularyScene: SKScene, ConfigurableScene {
     let normalScale     :CGFloat = 0.85
     
     let descriptionLabel  = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
-    let questionLabel     = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+//    let questionLabel     = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
     let wrongLabel        = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
     let foundLabel        = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+  
+    var soundPlayButton :SKSpriteNode! = nil
+ 
   
 //    let cacheDescriptionLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
 //    let cacheQuestionLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
@@ -198,9 +201,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
         self.initOptions()
         
         self.initLayers()
-        
-        
-        
+
         
         // show scene
         // ActionHelper returns an SKAction object
@@ -328,6 +329,11 @@ class VocabularyScene: SKScene, ConfigurableScene {
         for touch : AnyObject in touches {
             location = (touch as! UITouch).locationInNode(self)
             node = self.nodeAtPoint(location)
+          if CGRectContainsPoint(soundPlayButton.frame, location){
+
+            self.runAction(SoundSourceHelper.soundFindObject(name: gameController.getMainObj().name))
+          }
+          
             
             if node.alpha != 1 {
                 continue
@@ -342,7 +348,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
             if spriteNode == nil {
                 continue
             }
-            
+          
             for (location, draggingNode) in draggingList {
                 if draggingNode == spriteNode {
                     continue
@@ -476,36 +482,46 @@ class VocabularyScene: SKScene, ConfigurableScene {
     }
     
     /* refresh GameController */
-    func nextSession () {
-        
-        self.wrongCounter = 0
-        
-        self.preventTouching()
-        
-        self.objectList = self.gameController.getListWithSameName().filter() {
-            [unowned self] (object:CognitiveToyBoxObject) -> Bool in
-            !object.equals(self.gameController.getMainObj()) && !object.equals(self.gameController.getCorrectObj()) 
-        }
-      
-      
-        if self.objectList.isEmpty {
-            objectList.append(self.gameController.mainObject)
-        }
-        
-        // refresh main
-        self.objectName = self.gameController.getMainObj().name
-        self.descriptionLabel.text = "\(objectName)"
-        self.questionLabel.text = "\(objectName)"
-      
-        
-        self.wrongLabel.text = "That's not \(objectName)!"
-        
-        self.runAction(ActionHelper.delayNextSession()) {
-            [unowned self] () -> () in
-            self.restartScene()
-        }
-        
-        
+  func nextSession () {
+    
+    self.wrongCounter = 0
+    
+    self.preventTouching()
+    
+    self.objectList = self.gameController.getListWithSameName().filter() {
+      [unowned self] (object:CognitiveToyBoxObject) -> Bool in
+      !object.equals(self.gameController.getMainObj()) && !object.equals(self.gameController.getCorrectObj())
+    }
+    
+    
+    if self.objectList.isEmpty {
+      objectList.append(self.gameController.mainObject)
+    }
+    
+    // refresh main
+    self.objectName = self.gameController.getMainObj().name
+    self.descriptionLabel.text = "\(objectName)"
+    //        self.questionLabel.text = "\(objectName)"
+    
+    let labelWidth = self.descriptionLabel.frame.width
+    var labelHeight =  self.descriptionLabel.frame.height
+//    var size = self.soundPlayButton.size
+    
+    self.soundPlayButton.size.width = 1.2*labelWidth
+    self.soundPlayButton.yScale = 1.2
+
+    
+    self.wrongLabel.text = "That's not \(objectName)!"
+    self.runAction(ActionHelper.waitForMainObjectSound ()){
+        self.runAction(SoundSourceHelper.soundFindObject(name: self.gameController.getMainObj().name))
+    }
+    
+    self.runAction(ActionHelper.delayNextSession()) {
+      [unowned self] () -> () in
+      self.restartScene()
+    }
+    
+    
         /* update statisticsTrack */
         if let userInfo = UserInfoHelper.getUserInfo() {
             statisticsTrack.validate = true
@@ -538,11 +554,33 @@ class VocabularyScene: SKScene, ConfigurableScene {
       
       self.objectName = self.gameController.getMainObj().name
       self.descriptionLabel.text = "\(objectName)"
-      self.questionLabel.text = "\(objectName)"
-
+//      self.questionLabel.text = "\(objectName)"
+      
+      var labelWidth = self.descriptionLabel.frame.width
+      var labelHeight =  self.descriptionLabel.frame.height
+//      var size = self.soundPlayButton.size
+      
+      self.soundPlayButton.size.width = 1.2*labelWidth
+      self.soundPlayButton.yScale = 1.2
+      
+//      if #available(iOS 8.0, *) {
+//        self.soundPlayButton = SKShapeNode(rect: CGRect(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame)+frame.height/3, width: labelWidth, height:labelHeight), cornerRadius: 10.0)
+//        
+//        self.addChild(self.soundPlayButton)
+//        
+//      } else {
+//        // Fallback on earlier versions
+//        self.soundPlayButton = SKShapeNode(rect: CGRect(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame)+frame.height/3, width: labelWidth, height:labelHeight), cornerRadius: 10.0)
+//        
+//        self.addChild(self.soundPlayButton)
+//      }
       
       self.initCache()
       self.playFlipAnimation()
+      self.runAction(ActionHelper.waitForMainObjectFlipSound ()){
+        self.runAction(SoundSourceHelper.soundFindObject(name: self.gameController.getMainObj().name))
+      }
+      
     }else {
       self.gameViewController?.isFinished = true
       self.gameViewController!.performSegueWithIdentifier("finalAnalysis", sender: self)
@@ -563,11 +601,11 @@ class VocabularyScene: SKScene, ConfigurableScene {
     func initLabels () {
         self.descriptionLabel.fontSize = self.labelFontSize
         self.descriptionLabel.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
-        
-        
-        self.questionLabel.fontSize = self.labelFontSize
-        self.questionLabel.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
-        
+        self.soundPlayButton = SKSpriteNode(texture: SKTexture(imageNamed:"soundPlayButton"))
+        self.soundPlayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + self.size.height*0.35)
+//        self.questionLabel.fontSize = self.labelFontSize
+//        self.questionLabel.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
+      
         self.wrongLabel.fontSize = self.labelFontSize
         self.wrongLabel.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
         self.wrongLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - self.size.height/3)
@@ -580,20 +618,22 @@ class VocabularyScene: SKScene, ConfigurableScene {
         self.foundLabel.hidden = true
         
         self.addChild(self.descriptionLabel)
-        self.addChild(self.questionLabel)
+//        self.addChild(self.questionLabel)
         self.addChild(self.foundLabel)
         self.addChild(self.wrongLabel)
+        self.addChild(self.soundPlayButton)
     }
     
     /* initialize GameViewController.Layers */
     func initLayers () {
         self.descriptionLabel.zPosition = GameViewController.Layers.Label.rawValue
-        self.questionLabel.zPosition = GameViewController.Layers.Label.rawValue
+//        self.questionLabel.zPosition = GameViewController.Layers.Label.rawValue
         self.wrongLabel.zPosition = GameViewController.Layers.Label.rawValue
         self.foundLabel.zPosition = GameViewController.Layers.Label.rawValue
         self.colorMask.zPosition = GameViewController.Layers.Mask.rawValue
         self.topMask.zPosition = GameViewController.Layers.Top.rawValue
         self.mainObjectNode.zPosition = GameViewController.Layers.AboveMask.rawValue
+        self.soundPlayButton.zPosition = GameViewController.Layers.BelowLabel.rawValue
         
         //    self.firstOptionNode.zPosition = GameViewController.Layers.AboveMask.rawValue
         //    self.secondOptionNode.zPosition = GameViewController.Layers.AboveMask.rawValue
@@ -634,14 +674,14 @@ class VocabularyScene: SKScene, ConfigurableScene {
         
         
         // wait for display
-        self.descriptionLabel.hidden = true
+//        self.descriptionLabel.hidden = true
     }
     
     /* display main object and label */
     func displayMain () {
-        self.descriptionLabel.hidden = false
-        
-        var mainBaseNode = SKNode()
+//        self.descriptionLabel.hidden = false
+      
+        _ = SKNode()
         
         self.addChild(self.mainObjectNode)
         
@@ -669,8 +709,8 @@ class VocabularyScene: SKScene, ConfigurableScene {
     func mainTouched () {
         self.mainObjectNode.removeAllActions()
         self.mainObjectNode.runAction(SKAction.rotateToAngle(0, duration: 0))
-        self.descriptionLabel.hidden = true
-        
+//        self.descriptionLabel.hidden = true
+      
         if self.state.rawValue < State.OptionsDisplayed.rawValue {
             self.preventTouching()
             self.translateMain()
@@ -684,7 +724,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
     
     /* transition main */
     func translateMain () {
-        self.descriptionLabel.hidden = true
+//        self.descriptionLabel.hidden = true
         self.state = .MainInTransfer
         
         self.mainObjectNode.runAction(ActionHelper.transitionMain(location: CGPointMake(CGRectGetMidX(self.mainFrame), CGRectGetMidY(self.mainFrame)), scaleBy: self.mainScaleAfter/self.mainScaleBefore)) {
@@ -709,14 +749,14 @@ class VocabularyScene: SKScene, ConfigurableScene {
             }
             
             /* wiggle main */
-            self.descriptionLabel.hidden = false
-            self.questionLabel.hidden = true
+//            self.descriptionLabel.hidden = false
+//            self.questionLabel.hidden = true
             self.runAction(SoundSourceHelper.soundIdentify(name: self.objectName))
             self.mainObjectNode.runAction(ActionHelper.presentObject()) {
                 [unowned self] () -> () in
                 self.runAction(SoundSourceHelper.soundFind(name: self.objectName))
-                self.descriptionLabel.hidden = true
-                self.questionLabel.hidden = false
+//                self.descriptionLabel.hidden = true
+//                self.questionLabel.hidden = false
                 self.emphasizeOptions() {
                     [unowned self] () -> () in
                     self.iterateOptions()
@@ -736,8 +776,9 @@ class VocabularyScene: SKScene, ConfigurableScene {
         var index = 0
         
         // draw label
-        self.questionLabel.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
-        
+      self.descriptionLabel.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
+//        self.questionLabel.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
+      
         for option in self.gameController.options {
             var object = option.first!
             //      var atlas = SKTextureAtlas(named: object.name)
@@ -761,8 +802,8 @@ class VocabularyScene: SKScene, ConfigurableScene {
         }
         
         // wait for display
-        self.questionLabel.hidden = true
-        
+//        self.questionLabel.hidden = true
+      
         adjustOptionsPosition()
         
         correctFrame = CGRect(origin: CGPointApplyAffineTransform(optionNodeList[gameController.correctIndex].position, CGAffineTransformMakeTranslation(-touchAreaLength/2, -touchAreaLength/2)) , size: CGSize(width: touchAreaLength, height: touchAreaLength))
@@ -850,8 +891,8 @@ class VocabularyScene: SKScene, ConfigurableScene {
     /* display options and label */
     func displayOptions () {
         self.colorMask.hidden = false
-        self.questionLabel.hidden = false
-        
+//        self.questionLabel.hidden = false
+      
         self.addChild(self.colorMask)
         //    self.addChild(self.firstOptionNode)
         //    self.addChild(self.secondOptionNode)
@@ -884,7 +925,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
   
   func displayCache () {
     self.colorMask.hidden = false
-    self.questionLabel.hidden = false
+//    self.questionLabel.hidden = false
     
     self.addChild(self.colorMask)
  
@@ -1004,7 +1045,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
     //    self.firstOptionGlow.hidden = true
     //    self.secondOptionGlow.hidden = true
     
-    self.questionLabel.hidden = true
+//    self.questionLabel.hidden = true
     
 //    if self.secondaryMainNode != nil {
 //      self.secondaryMainNode.runAction(SKAction.repeatActionForever(ActionHelper.presentObject()))

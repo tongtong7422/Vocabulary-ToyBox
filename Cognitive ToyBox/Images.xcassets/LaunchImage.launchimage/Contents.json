@@ -24,9 +24,9 @@
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
+      "filename" : "launch_screen.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "startScreen.png",
       "scale" : "2x"
     }
   ],

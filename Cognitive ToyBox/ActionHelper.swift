@@ -319,9 +319,9 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
     case .DoNothing:
       return doNothing()
     default:
-      var name = NSInvalidArgumentException
-      var message = "Invalid present mode."
-      var e = NSException(name: name, reason: message, userInfo: nil)
+      let name = NSInvalidArgumentException
+      let message = "Invalid present mode."
+      let e = NSException(name: name, reason: message, userInfo: nil)
       Flurry.logError(name, message: message, exception: e)
       e.raise()
     }
@@ -338,32 +338,32 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   
   /* slightly shake */
   public class func slightShake (reverseOrder : Bool = false) -> SKAction {
-    var duration = 0.1
+    let duration = 0.1
     var angle = M_PI/9
     
     if reverseOrder {
       angle = -angle
     }
     
-    var leftRotate = SKAction.rotateToAngle(CGFloat(angle), duration: duration)
-    var rightRotate = SKAction.rotateToAngle(CGFloat(-angle), duration: duration)
-    var reset = SKAction.rotateToAngle(0, duration: duration)
+    let leftRotate = SKAction.rotateToAngle(CGFloat(angle), duration: duration)
+    let rightRotate = SKAction.rotateToAngle(CGFloat(-angle), duration: duration)
+    let reset = SKAction.rotateToAngle(0, duration: duration)
     
-    var actions = SKAction.sequence([leftRotate, rightRotate, leftRotate, rightRotate, reset])
+    let actions = SKAction.sequence([leftRotate, rightRotate, leftRotate, rightRotate, reset])
     return actions
   }
   
   public class func wiggle (times:Int = 1, reverseOrder:Bool = false) -> SKAction {
-    var duration = 0.25
+    let duration = 0.25
     var angle = M_PI/9
     
     if reverseOrder {
       angle = -angle
     }
     
-    var leftRotate = SKAction.rotateToAngle(CGFloat(angle), duration: duration)
-    var rightRotate = SKAction.rotateToAngle(CGFloat(-angle), duration: duration)
-    var reset = SKAction.rotateToAngle(0, duration: duration)
+    let leftRotate = SKAction.rotateToAngle(CGFloat(angle), duration: duration)
+    let rightRotate = SKAction.rotateToAngle(CGFloat(-angle), duration: duration)
+    let reset = SKAction.rotateToAngle(0, duration: duration)
     
     var sequence:[SKAction] = []
     for i in 0..<times {
@@ -371,14 +371,14 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
     }
     sequence.append(reset)
     
-    var actions = SKAction.sequence(sequence)
+    let actions = SKAction.sequence(sequence)
     return actions
   }
   
   public class func doNothing()-> SKAction{
     
 //    var sequence:[SKAction] = []
-    var actions = SKAction()
+    let actions = SKAction()
     return actions
   }
   
@@ -407,22 +407,22 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   
   public class func jostle () -> SKAction {
     let duration:NSTimeInterval = 0.6
-    var narrowAction = SKAction.scaleXBy(0.6, y: 1, duration: duration)
-    var wideAction = SKAction.reversedAction(narrowAction)
+    let narrowAction = SKAction.scaleXBy(0.6, y: 1, duration: duration)
+    let wideAction = SKAction.reversedAction(narrowAction)
     return SKAction.sequence([narrowAction, wideAction()])
   }
   
   public class func rotateByRandomAngle () -> SKAction {
     let radians:CGFloat = CGFloat(M_PI/8) * CGFloat(arc4random_uniform(16)+1) * (arc4random_uniform(2)==0 ? 1:-1)
-    var action = SKAction.rotateByAngle(radians, duration: 1)
+    let action = SKAction.rotateByAngle(radians, duration: 1)
     action.timingMode = .EaseOut
     return action
   }
   
   /* fade away */
   public class func appearAndFadeAway () -> SKAction {
-    var appear = SKAction.fadeInWithDuration(0)
-    var fadeAway = SKAction.fadeOutWithDuration(2)
+    let appear = SKAction.fadeInWithDuration(0)
+    let fadeAway = SKAction.fadeOutWithDuration(2)
     return SKAction.sequence([appear, fadeAway])
   }
   
@@ -449,6 +449,14 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   public class func waitForMain () -> SKAction {
     return SKAction.waitForDuration(5)
   }
+  /* wait for playing sound of main Object */
+  public class func waitForMainObjectSound () -> SKAction {
+    return SKAction.waitForDuration(1)
+  }
+  public class func waitForMainObjectFlipSound () -> SKAction {
+    return SKAction.waitForDuration(2)
+  }
+
   
   /* delay when the mask changes back */
   public class func maskDelay () -> SKAction {
@@ -473,20 +481,20 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   /* transition and rescale (wait for a while when finished) */
   public class func transitionMain (location location : CGPoint, scaleBy : CGFloat, duration : NSTimeInterval = 0.2) -> SKAction {
     
-    var transition = SKAction.moveTo(location, duration: duration)
-    var rescale = SKAction.scaleBy(scaleBy, duration: duration)
+    let transition = SKAction.moveTo(location, duration: duration)
+    let rescale = SKAction.scaleBy(scaleBy, duration: duration)
     
-    var group = SKAction.group([transition, rescale])
+    let group = SKAction.group([transition, rescale])
     return SKAction.sequence([group, SKAction.waitForDuration(duration/10)])
   }
   
   /* transition and rescale */
   public class func transitionTo (location location : CGPoint, scale : CGFloat, duration : NSTimeInterval = 1) -> SKAction {
     
-    var transition = SKAction.moveTo(location, duration: duration)
-    var rescale = SKAction.scaleTo(scale, duration: duration)
+    let transition = SKAction.moveTo(location, duration: duration)
+    let rescale = SKAction.scaleTo(scale, duration: duration)
     
-    var group = SKAction.group([transition, rescale])
+    let group = SKAction.group([transition, rescale])
     return group
   }
   
@@ -541,7 +549,7 @@ public class ActionHelper: NSObject, ConfigurableActionHelper {
   // Live actions
   public class func playFrames (textureAtlas : SKTextureAtlas, repeatTime : Bool) -> SKAction {
     var textureNames = textureAtlas.textureNames as! [String]
-    textureNames.sort(<)
+    textureNames.sortInPlace(<)
     
     var textures = textureNames.map() {
       (name : String) -> SKTexture in

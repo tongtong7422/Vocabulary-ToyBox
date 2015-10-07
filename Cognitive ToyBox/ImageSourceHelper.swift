@@ -53,11 +53,20 @@ public class ImageSourceHelper {
       
         
         for textureName in textureNames{
+          //textureName = "ABALL@2x.jpg"
 //          let newPath = NSURL(fileURLWithPath: textureName)
-//          let fileName = newPath.URLByDeletingPathExtension.has
-          print(textureName)
+//          let fileName = newPath.URLByDeletingPathExtension?.
+
           
-          
+            var fileName :String
+            let builder = CognitiveToyBoxObjectBuilder()
+            
+            builder.id = count++
+            builder.name = name
+            builder.filename = textureName
+            objects.append(builder.build())
+            
+                      
           
 //            if textureName.stringByDeletingPathExtension.hasSuffix("@2x"){
 //                

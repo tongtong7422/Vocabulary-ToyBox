@@ -53,7 +53,7 @@ public class CognitiveToyBoxObject : NSObject {
   }
   public class var testObjects: [String] {
     get {
-      return ["ball","belt","sofa","tape","zipper"]
+      return ["zipper","glasses","hammer","sofa","chair","belt"]
     }
   }
   

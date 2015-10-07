@@ -343,7 +343,7 @@ class TutorialScene: SKScene, ConfigurableScene {
   /* display options and label */
   func displayOptions () {
     descriptionLabel1.text = "In this game, I’m going to tell you to pick one."
-    descriptionLabel2.text = "Put your finger on the dog "
+    descriptionLabel2.text = "Put your finger on the chair "
     for node in optionNodeList {
       self.addChild(node)
     }
@@ -431,16 +431,20 @@ class TutorialScene: SKScene, ConfigurableScene {
     
     if (round >= h_correctIndex.count)
     {
-      
+      self.tutorialViewController?.isFinished = true
       self.tutorialViewController?.performSegueWithIdentifier("startGameSegue", sender: self)
+
 //      self.tutorialViewController?.dismissViewControllerAnimated(false) {
 //        
 //      }
       self.removeFromParent()
-      return
+      
+    } else {
+      self.resetScene()
+      
     }
     
-    self.resetScene()
+    
   }
   
   func resetScene()
@@ -474,8 +478,8 @@ class TutorialScene: SKScene, ConfigurableScene {
     let secondHalfFlip = SKAction.scaleXTo(1.0, duration: 0.4)
     
     for index in 0..<self.optionNodeList.count {
-      var node = self.optionNodeList[index]
-      var newNode = self.cacheOptionNodeList[index]
+      let node = self.optionNodeList[index]
+      let newNode = self.cacheOptionNodeList[index]
       
       node.runAction(firstHalfFlip) {
         [unowned self] in
@@ -522,7 +526,7 @@ class TutorialScene: SKScene, ConfigurableScene {
   }
   
   class func optionLocation (frame frame : CGRect, index:Int) -> CGPoint {
-    var orientation = UIApplication.sharedApplication().statusBarOrientation
+    let orientation = UIApplication.sharedApplication().statusBarOrientation
     
     if orientation == UIInterfaceOrientation.Portrait || orientation == UIInterfaceOrientation.PortraitUpsideDown {
       

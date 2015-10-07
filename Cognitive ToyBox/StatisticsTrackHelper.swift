@@ -64,19 +64,19 @@ class StatisticsTrackHelper {
   }
   
   func setDate (date: NSDate) {
-    var formatter = NSDateFormatter()
+    let formatter = NSDateFormatter()
     formatter.dateFormat = "dd-MMM"
     data![Keys.Date.rawValue] = formatter.stringFromDate(date)
   }
   
   func setTimeStart (date: NSDate) {
-    var formatter = NSDateFormatter()
+    let formatter = NSDateFormatter()
     formatter.dateFormat = "HH:mm:ss a"
     data![Keys.TimeStart.rawValue] = formatter.stringFromDate(date)
   }
   
   func setTimeEnd (date: NSDate) {
-    var formatter = NSDateFormatter()
+    let formatter = NSDateFormatter()
     formatter.dateFormat = "HH:mm:ss a"
     data![Keys.TimeEnd.rawValue] = formatter.stringFromDate(date)
   }

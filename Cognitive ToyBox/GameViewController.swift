@@ -96,6 +96,7 @@ public class GameViewController: UIViewController {
     SoundSourceHelper.stopBGM()
     GlobalConfiguration.releaseScene(self.skView.scene)
     ActionHelper.releaseBearAtlas()
+    
     self.dismissViewControllerAnimated(false) {}
   }
   @IBOutlet weak var quitButtonBorder: UIImageView!
@@ -107,9 +108,6 @@ public class GameViewController: UIViewController {
     
   }
   
-  @IBAction func playSoundButton(sender: AnyObject) {
-    
-  }
   
   func displayQuitPanel () {
     skView.paused = true
@@ -246,7 +244,7 @@ public class GameViewController: UIViewController {
   public func presentGameScene (newScene:Bool = true) {
     GlobalConfiguration.releaseScene(skView.scene)
     var scene:SKScene
-    var success = gameController.startNewSession(newScene)
+    let success = gameController.startNewSession(newScene)
     if !success  {
       
 
@@ -367,7 +365,7 @@ public class GameViewController: UIViewController {
     quitButton.imageView?.animationDuration = 0.6
     quitButton.imageView?.startAnimating()
     
-    var buttonBorderImages = [UIImage(named: "emptyButton1")!, UIImage(named:"emptyButton2")!]
+    let buttonBorderImages = [UIImage(named: "emptyButton1")!, UIImage(named:"emptyButton2")!]
     continueButtonBorder.animationImages = buttonBorderImages
     continueButtonBorder.animationDuration = 0.4
     continueButtonBorder.startAnimating()
@@ -378,7 +376,7 @@ public class GameViewController: UIViewController {
     
     
     
-    var longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressHandler")
+    let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressHandler")
     longPressRecognizer.minimumPressDuration = 3
 //    self.homeButton.addGestureRecognizer(longPressRecognizer)
     

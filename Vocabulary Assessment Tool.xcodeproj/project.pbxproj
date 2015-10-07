@@ -8,40 +8,40 @@
 
 /* Begin PBXBuildFile section */
 		2F35968B1BA7E21D00C4700C /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F35968A1BA7E21D00C4700C /* TutorialViewController.swift */; };
-		2F6984E71BB3496400F5E1DA /* ball.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984C51BB3496400F5E1DA /* ball.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984E81BB3496400F5E1DA /* basket.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984C61BB3496400F5E1DA /* basket.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984E91BB3496400F5E1DA /* belt.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984C71BB3496400F5E1DA /* belt.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984EA1BB3496400F5E1DA /* bench.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984C81BB3496400F5E1DA /* bench.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984EB1BB3496400F5E1DA /* bird.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984C91BB3496400F5E1DA /* bird.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984EC1BB3496400F5E1DA /* bowl.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984CA1BB3496400F5E1DA /* bowl.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984ED1BB3496400F5E1DA /* chair.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984CB1BB3496400F5E1DA /* chair.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984EE1BB3496400F5E1DA /* dog.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984CC1BB3496400F5E1DA /* dog.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984EF1BB3496400F5E1DA /* dress.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984CD1BB3496400F5E1DA /* dress.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F01BB3496400F5E1DA /* flag.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984CE1BB3496400F5E1DA /* flag.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F11BB3496400F5E1DA /* glasses.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984CF1BB3496400F5E1DA /* glasses.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F21BB3496400F5E1DA /* gloves.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D01BB3496400F5E1DA /* gloves.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F31BB3496400F5E1DA /* glue.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D11BB3496400F5E1DA /* glue.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F41BB3496400F5E1DA /* hammer.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D21BB3496400F5E1DA /* hammer.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F51BB3496400F5E1DA /* hose.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D31BB3496400F5E1DA /* hose.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F61BB3496400F5E1DA /* jar.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D41BB3496400F5E1DA /* jar.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F71BB3496400F5E1DA /* keys.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D51BB3496400F5E1DA /* keys.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F81BB3496400F5E1DA /* ladder.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D61BB3496400F5E1DA /* ladder.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984F91BB3496400F5E1DA /* lamp.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D71BB3496400F5E1DA /* lamp.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984FA1BB3496400F5E1DA /* napkin.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D81BB3496400F5E1DA /* napkin.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984FB1BB3496400F5E1DA /* necklace.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984D91BB3496400F5E1DA /* necklace.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984FC1BB3496400F5E1DA /* pig.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984DA1BB3496400F5E1DA /* pig.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984FD1BB3496400F5E1DA /* pretzel.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984DB1BB3496400F5E1DA /* pretzel.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984FE1BB3496400F5E1DA /* scarf.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984DC1BB3496400F5E1DA /* scarf.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6984FF1BB3496400F5E1DA /* shovel.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984DD1BB3496400F5E1DA /* shovel.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6985001BB3496400F5E1DA /* sled.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984DE1BB3496400F5E1DA /* sled.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6985011BB3496400F5E1DA /* sofa.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984DF1BB3496400F5E1DA /* sofa.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6985021BB3496400F5E1DA /* stairs.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984E01BB3496400F5E1DA /* stairs.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6985031BB3496400F5E1DA /* tape.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984E11BB3496400F5E1DA /* tape.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6985041BB3496400F5E1DA /* toast.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984E21BB3496400F5E1DA /* toast.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6985051BB3496400F5E1DA /* tractor.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984E31BB3496400F5E1DA /* tractor.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6985061BB3496400F5E1DA /* tray.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984E41BB3496400F5E1DA /* tray.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6985071BB3496400F5E1DA /* tricycle.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984E51BB3496400F5E1DA /* tricycle.atlas */; settings = {ASSET_TAGS = (); }; };
-		2F6985081BB3496400F5E1DA /* zipper.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2F6984E61BB3496400F5E1DA /* zipper.atlas */; settings = {ASSET_TAGS = (); }; };
+		2F6985C91BBBB49200F5E1DA /* ball.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985A71BBBB49200F5E1DA /* ball.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985CA1BBBB49200F5E1DA /* basket.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985A81BBBB49200F5E1DA /* basket.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985CB1BBBB49200F5E1DA /* belt.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985A91BBBB49200F5E1DA /* belt.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985CC1BBBB49200F5E1DA /* bench.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985AA1BBBB49200F5E1DA /* bench.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985CD1BBBB49200F5E1DA /* bird.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985AB1BBBB49200F5E1DA /* bird.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985CE1BBBB49200F5E1DA /* bowl.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985AC1BBBB49200F5E1DA /* bowl.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985CF1BBBB49200F5E1DA /* chair.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985AD1BBBB49200F5E1DA /* chair.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D01BBBB49200F5E1DA /* dog.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985AE1BBBB49200F5E1DA /* dog.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D11BBBB49200F5E1DA /* dress.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985AF1BBBB49200F5E1DA /* dress.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D21BBBB49200F5E1DA /* flag.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B01BBBB49200F5E1DA /* flag.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D31BBBB49200F5E1DA /* glasses.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B11BBBB49200F5E1DA /* glasses.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D41BBBB49200F5E1DA /* gloves.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B21BBBB49200F5E1DA /* gloves.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D51BBBB49200F5E1DA /* glue.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B31BBBB49200F5E1DA /* glue.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D61BBBB49200F5E1DA /* hammer.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B41BBBB49200F5E1DA /* hammer.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D71BBBB49200F5E1DA /* hose.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B51BBBB49200F5E1DA /* hose.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D81BBBB49200F5E1DA /* jar.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B61BBBB49200F5E1DA /* jar.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985D91BBBB49200F5E1DA /* keys.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B71BBBB49200F5E1DA /* keys.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985DA1BBBB49200F5E1DA /* ladder.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B81BBBB49200F5E1DA /* ladder.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985DB1BBBB49200F5E1DA /* lamp.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985B91BBBB49200F5E1DA /* lamp.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985DC1BBBB49200F5E1DA /* napkin.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985BA1BBBB49200F5E1DA /* napkin.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985DD1BBBB49200F5E1DA /* necklace.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985BB1BBBB49200F5E1DA /* necklace.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985DE1BBBB49200F5E1DA /* pig.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985BC1BBBB49200F5E1DA /* pig.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985DF1BBBB49200F5E1DA /* pretzel.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985BD1BBBB49200F5E1DA /* pretzel.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E01BBBB49200F5E1DA /* scarf.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985BE1BBBB49200F5E1DA /* scarf.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E11BBBB49200F5E1DA /* shovel.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985BF1BBBB49200F5E1DA /* shovel.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E21BBBB49200F5E1DA /* sled.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985C01BBBB49200F5E1DA /* sled.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E31BBBB49200F5E1DA /* sofa.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985C11BBBB49200F5E1DA /* sofa.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E41BBBB49200F5E1DA /* stairs.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985C21BBBB49200F5E1DA /* stairs.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E51BBBB49200F5E1DA /* tape.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985C31BBBB49200F5E1DA /* tape.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E61BBBB49200F5E1DA /* toast.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985C41BBBB49200F5E1DA /* toast.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E71BBBB49200F5E1DA /* tractor.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985C51BBBB49200F5E1DA /* tractor.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E81BBBB49200F5E1DA /* tray.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985C61BBBB49200F5E1DA /* tray.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985E91BBBB49200F5E1DA /* tricycle.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985C71BBBB49200F5E1DA /* tricycle.caf */; settings = {ASSET_TAGS = (); }; };
+		2F6985EA1BBBB49200F5E1DA /* zipper.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6985C81BBBB49200F5E1DA /* zipper.caf */; settings = {ASSET_TAGS = (); }; };
 		2F7E38781B5770500094A16B /* 01 SMALL TOWN INSTRUMENTAL.aif in Resources */ = {isa = PBXBuildFile; fileRef = 2F7E371E1B5770500094A16B /* 01 SMALL TOWN INSTRUMENTAL.aif */; };
 		2F7E38791B5770500094A16B /* bensound-funnysong_30sec.aif in Resources */ = {isa = PBXBuildFile; fileRef = 2F7E371F1B5770500094A16B /* bensound-funnysong_30sec.aif */; };
 		2F7E387A1B5770500094A16B /* bensound_jazzyfrenchy_30sec.aif in Resources */ = {isa = PBXBuildFile; fileRef = 2F7E37201B5770500094A16B /* bensound_jazzyfrenchy_30sec.aif */; };
@@ -54,6 +54,40 @@
 		2F7E38811B5770500094A16B /* squeeze-toy-1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7E372A1B5770500094A16B /* squeeze-toy-1.caf */; };
 		2F7E38821B5770500094A16B /* squeeze-toy-3.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7E372B1B5770500094A16B /* squeeze-toy-3.caf */; };
 		2F7E38831B5770500094A16B /* squeeze-toy-4.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7E372C1B5770500094A16B /* squeeze-toy-4.caf */; };
+		2FA9CE971BC1CD81002985EE /* ball.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE751BC1CD81002985EE /* ball.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CE981BC1CD81002985EE /* basket.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE761BC1CD81002985EE /* basket.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CE991BC1CD81002985EE /* belt.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE771BC1CD81002985EE /* belt.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CE9A1BC1CD81002985EE /* bench.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE781BC1CD81002985EE /* bench.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CE9B1BC1CD81002985EE /* bird.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE791BC1CD81002985EE /* bird.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CE9C1BC1CD81002985EE /* bowl.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE7A1BC1CD81002985EE /* bowl.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CE9D1BC1CD81002985EE /* chair.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE7B1BC1CD81002985EE /* chair.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CE9E1BC1CD81002985EE /* dog.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE7C1BC1CD81002985EE /* dog.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CE9F1BC1CD81002985EE /* dress.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE7D1BC1CD81002985EE /* dress.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA01BC1CD81002985EE /* flag.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE7E1BC1CD81002985EE /* flag.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA11BC1CD81002985EE /* glasses.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE7F1BC1CD81002985EE /* glasses.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA21BC1CD81002985EE /* gloves.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE801BC1CD81002985EE /* gloves.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA31BC1CD81002985EE /* glue.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE811BC1CD81002985EE /* glue.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA41BC1CD81002985EE /* hammer.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE821BC1CD81002985EE /* hammer.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA51BC1CD81002985EE /* hose.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE831BC1CD81002985EE /* hose.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA61BC1CD81002985EE /* jar.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE841BC1CD81002985EE /* jar.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA71BC1CD81002985EE /* keys.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE851BC1CD81002985EE /* keys.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA81BC1CD81002985EE /* ladder.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE861BC1CD81002985EE /* ladder.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEA91BC1CD81002985EE /* lamp.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE871BC1CD81002985EE /* lamp.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEAA1BC1CD81002985EE /* napkin.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE881BC1CD81002985EE /* napkin.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEAB1BC1CD81002985EE /* necklace.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE891BC1CD81002985EE /* necklace.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEAC1BC1CD81002985EE /* pig.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE8A1BC1CD81002985EE /* pig.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEAD1BC1CD81002985EE /* pretzel.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE8B1BC1CD81002985EE /* pretzel.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEAE1BC1CD81002985EE /* scarf.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE8C1BC1CD81002985EE /* scarf.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEAF1BC1CD81002985EE /* shovel.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE8D1BC1CD81002985EE /* shovel.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEB01BC1CD81002985EE /* sled.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE8E1BC1CD81002985EE /* sled.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEB11BC1CD81002985EE /* sofa.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE8F1BC1CD81002985EE /* sofa.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEB21BC1CD81002985EE /* stairs.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE901BC1CD81002985EE /* stairs.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEB31BC1CD81002985EE /* tape.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE911BC1CD81002985EE /* tape.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEB41BC1CD81002985EE /* toast.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE921BC1CD81002985EE /* toast.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEB51BC1CD81002985EE /* tractor.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE931BC1CD81002985EE /* tractor.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEB61BC1CD81002985EE /* tray.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE941BC1CD81002985EE /* tray.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEB71BC1CD81002985EE /* tricycle.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE951BC1CD81002985EE /* tricycle.atlas */; settings = {ASSET_TAGS = (); }; };
+		2FA9CEB81BC1CD81002985EE /* zipper.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2FA9CE961BC1CD81002985EE /* zipper.atlas */; settings = {ASSET_TAGS = (); }; };
 		2FD013AC1B4CF77A00217F6B /* VocabularyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD013AB1B4CF77A00217F6B /* VocabularyScene.swift */; };
 		2FDF8D871BA35DEF000152A2 /* TutorialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDF8D861BA35DEF000152A2 /* TutorialScene.swift */; };
 		3568E5721A147CC9001CA426 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3568E5711A147CC9001CA426 /* Main.storyboard */; };
@@ -139,40 +173,40 @@
 
 /* Begin PBXFileReference section */
 		2F35968A1BA7E21D00C4700C /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
-		2F6984C51BB3496400F5E1DA /* ball.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ball.atlas; sourceTree = "<group>"; };
-		2F6984C61BB3496400F5E1DA /* basket.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = basket.atlas; sourceTree = "<group>"; };
-		2F6984C71BB3496400F5E1DA /* belt.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = belt.atlas; sourceTree = "<group>"; };
-		2F6984C81BB3496400F5E1DA /* bench.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bench.atlas; sourceTree = "<group>"; };
-		2F6984C91BB3496400F5E1DA /* bird.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bird.atlas; sourceTree = "<group>"; };
-		2F6984CA1BB3496400F5E1DA /* bowl.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bowl.atlas; sourceTree = "<group>"; };
-		2F6984CB1BB3496400F5E1DA /* chair.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = chair.atlas; sourceTree = "<group>"; };
-		2F6984CC1BB3496400F5E1DA /* dog.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = dog.atlas; sourceTree = "<group>"; };
-		2F6984CD1BB3496400F5E1DA /* dress.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = dress.atlas; sourceTree = "<group>"; };
-		2F6984CE1BB3496400F5E1DA /* flag.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = flag.atlas; sourceTree = "<group>"; };
-		2F6984CF1BB3496400F5E1DA /* glasses.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = glasses.atlas; sourceTree = "<group>"; };
-		2F6984D01BB3496400F5E1DA /* gloves.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = gloves.atlas; sourceTree = "<group>"; };
-		2F6984D11BB3496400F5E1DA /* glue.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = glue.atlas; sourceTree = "<group>"; };
-		2F6984D21BB3496400F5E1DA /* hammer.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hammer.atlas; sourceTree = "<group>"; };
-		2F6984D31BB3496400F5E1DA /* hose.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hose.atlas; sourceTree = "<group>"; };
-		2F6984D41BB3496400F5E1DA /* jar.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = jar.atlas; sourceTree = "<group>"; };
-		2F6984D51BB3496400F5E1DA /* keys.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = keys.atlas; sourceTree = "<group>"; };
-		2F6984D61BB3496400F5E1DA /* ladder.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ladder.atlas; sourceTree = "<group>"; };
-		2F6984D71BB3496400F5E1DA /* lamp.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = lamp.atlas; sourceTree = "<group>"; };
-		2F6984D81BB3496400F5E1DA /* napkin.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = napkin.atlas; sourceTree = "<group>"; };
-		2F6984D91BB3496400F5E1DA /* necklace.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = necklace.atlas; sourceTree = "<group>"; };
-		2F6984DA1BB3496400F5E1DA /* pig.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = pig.atlas; sourceTree = "<group>"; };
-		2F6984DB1BB3496400F5E1DA /* pretzel.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = pretzel.atlas; sourceTree = "<group>"; };
-		2F6984DC1BB3496400F5E1DA /* scarf.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = scarf.atlas; sourceTree = "<group>"; };
-		2F6984DD1BB3496400F5E1DA /* shovel.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = shovel.atlas; sourceTree = "<group>"; };
-		2F6984DE1BB3496400F5E1DA /* sled.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = sled.atlas; sourceTree = "<group>"; };
-		2F6984DF1BB3496400F5E1DA /* sofa.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = sofa.atlas; sourceTree = "<group>"; };
-		2F6984E01BB3496400F5E1DA /* stairs.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = stairs.atlas; sourceTree = "<group>"; };
-		2F6984E11BB3496400F5E1DA /* tape.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = tape.atlas; sourceTree = "<group>"; };
-		2F6984E21BB3496400F5E1DA /* toast.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = toast.atlas; sourceTree = "<group>"; };
-		2F6984E31BB3496400F5E1DA /* tractor.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = tractor.atlas; sourceTree = "<group>"; };
-		2F6984E41BB3496400F5E1DA /* tray.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = tray.atlas; sourceTree = "<group>"; };
-		2F6984E51BB3496400F5E1DA /* tricycle.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = tricycle.atlas; sourceTree = "<group>"; };
-		2F6984E61BB3496400F5E1DA /* zipper.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = zipper.atlas; sourceTree = "<group>"; };
+		2F6985A71BBBB49200F5E1DA /* ball.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ball.caf; sourceTree = "<group>"; };
+		2F6985A81BBBB49200F5E1DA /* basket.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = basket.caf; sourceTree = "<group>"; };
+		2F6985A91BBBB49200F5E1DA /* belt.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = belt.caf; sourceTree = "<group>"; };
+		2F6985AA1BBBB49200F5E1DA /* bench.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bench.caf; sourceTree = "<group>"; };
+		2F6985AB1BBBB49200F5E1DA /* bird.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bird.caf; sourceTree = "<group>"; };
+		2F6985AC1BBBB49200F5E1DA /* bowl.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bowl.caf; sourceTree = "<group>"; };
+		2F6985AD1BBBB49200F5E1DA /* chair.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chair.caf; sourceTree = "<group>"; };
+		2F6985AE1BBBB49200F5E1DA /* dog.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = dog.caf; sourceTree = "<group>"; };
+		2F6985AF1BBBB49200F5E1DA /* dress.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = dress.caf; sourceTree = "<group>"; };
+		2F6985B01BBBB49200F5E1DA /* flag.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = flag.caf; sourceTree = "<group>"; };
+		2F6985B11BBBB49200F5E1DA /* glasses.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = glasses.caf; sourceTree = "<group>"; };
+		2F6985B21BBBB49200F5E1DA /* gloves.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gloves.caf; sourceTree = "<group>"; };
+		2F6985B31BBBB49200F5E1DA /* glue.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = glue.caf; sourceTree = "<group>"; };
+		2F6985B41BBBB49200F5E1DA /* hammer.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = hammer.caf; sourceTree = "<group>"; };
+		2F6985B51BBBB49200F5E1DA /* hose.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = hose.caf; sourceTree = "<group>"; };
+		2F6985B61BBBB49200F5E1DA /* jar.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = jar.caf; sourceTree = "<group>"; };
+		2F6985B71BBBB49200F5E1DA /* keys.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = keys.caf; sourceTree = "<group>"; };
+		2F6985B81BBBB49200F5E1DA /* ladder.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ladder.caf; sourceTree = "<group>"; };
+		2F6985B91BBBB49200F5E1DA /* lamp.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lamp.caf; sourceTree = "<group>"; };
+		2F6985BA1BBBB49200F5E1DA /* napkin.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = napkin.caf; sourceTree = "<group>"; };
+		2F6985BB1BBBB49200F5E1DA /* necklace.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = necklace.caf; sourceTree = "<group>"; };
+		2F6985BC1BBBB49200F5E1DA /* pig.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pig.caf; sourceTree = "<group>"; };
+		2F6985BD1BBBB49200F5E1DA /* pretzel.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pretzel.caf; sourceTree = "<group>"; };
+		2F6985BE1BBBB49200F5E1DA /* scarf.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = scarf.caf; sourceTree = "<group>"; };
+		2F6985BF1BBBB49200F5E1DA /* shovel.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = shovel.caf; sourceTree = "<group>"; };
+		2F6985C01BBBB49200F5E1DA /* sled.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sled.caf; sourceTree = "<group>"; };
+		2F6985C11BBBB49200F5E1DA /* sofa.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sofa.caf; sourceTree = "<group>"; };
+		2F6985C21BBBB49200F5E1DA /* stairs.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = stairs.caf; sourceTree = "<group>"; };
+		2F6985C31BBBB49200F5E1DA /* tape.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tape.caf; sourceTree = "<group>"; };
+		2F6985C41BBBB49200F5E1DA /* toast.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = toast.caf; sourceTree = "<group>"; };
+		2F6985C51BBBB49200F5E1DA /* tractor.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tractor.caf; sourceTree = "<group>"; };
+		2F6985C61BBBB49200F5E1DA /* tray.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tray.caf; sourceTree = "<group>"; };
+		2F6985C71BBBB49200F5E1DA /* tricycle.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tricycle.caf; sourceTree = "<group>"; };
+		2F6985C81BBBB49200F5E1DA /* zipper.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zipper.caf; sourceTree = "<group>"; };
 		2F7E371E1B5770500094A16B /* 01 SMALL TOWN INSTRUMENTAL.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "01 SMALL TOWN INSTRUMENTAL.aif"; sourceTree = "<group>"; };
 		2F7E371F1B5770500094A16B /* bensound-funnysong_30sec.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bensound-funnysong_30sec.aif"; sourceTree = "<group>"; };
 		2F7E37201B5770500094A16B /* bensound_jazzyfrenchy_30sec.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = bensound_jazzyfrenchy_30sec.aif; sourceTree = "<group>"; };
@@ -185,6 +219,40 @@
 		2F7E372A1B5770500094A16B /* squeeze-toy-1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "squeeze-toy-1.caf"; sourceTree = "<group>"; };
 		2F7E372B1B5770500094A16B /* squeeze-toy-3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "squeeze-toy-3.caf"; sourceTree = "<group>"; };
 		2F7E372C1B5770500094A16B /* squeeze-toy-4.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "squeeze-toy-4.caf"; sourceTree = "<group>"; };
+		2FA9CE751BC1CD81002985EE /* ball.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ball.atlas; sourceTree = "<group>"; };
+		2FA9CE761BC1CD81002985EE /* basket.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = basket.atlas; sourceTree = "<group>"; };
+		2FA9CE771BC1CD81002985EE /* belt.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = belt.atlas; sourceTree = "<group>"; };
+		2FA9CE781BC1CD81002985EE /* bench.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bench.atlas; sourceTree = "<group>"; };
+		2FA9CE791BC1CD81002985EE /* bird.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bird.atlas; sourceTree = "<group>"; };
+		2FA9CE7A1BC1CD81002985EE /* bowl.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bowl.atlas; sourceTree = "<group>"; };
+		2FA9CE7B1BC1CD81002985EE /* chair.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = chair.atlas; sourceTree = "<group>"; };
+		2FA9CE7C1BC1CD81002985EE /* dog.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = dog.atlas; sourceTree = "<group>"; };
+		2FA9CE7D1BC1CD81002985EE /* dress.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = dress.atlas; sourceTree = "<group>"; };
+		2FA9CE7E1BC1CD81002985EE /* flag.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = flag.atlas; sourceTree = "<group>"; };
+		2FA9CE7F1BC1CD81002985EE /* glasses.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = glasses.atlas; sourceTree = "<group>"; };
+		2FA9CE801BC1CD81002985EE /* gloves.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = gloves.atlas; sourceTree = "<group>"; };
+		2FA9CE811BC1CD81002985EE /* glue.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = glue.atlas; sourceTree = "<group>"; };
+		2FA9CE821BC1CD81002985EE /* hammer.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hammer.atlas; sourceTree = "<group>"; };
+		2FA9CE831BC1CD81002985EE /* hose.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hose.atlas; sourceTree = "<group>"; };
+		2FA9CE841BC1CD81002985EE /* jar.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = jar.atlas; sourceTree = "<group>"; };
+		2FA9CE851BC1CD81002985EE /* keys.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = keys.atlas; sourceTree = "<group>"; };
+		2FA9CE861BC1CD81002985EE /* ladder.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ladder.atlas; sourceTree = "<group>"; };
+		2FA9CE871BC1CD81002985EE /* lamp.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = lamp.atlas; sourceTree = "<group>"; };
+		2FA9CE881BC1CD81002985EE /* napkin.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = napkin.atlas; sourceTree = "<group>"; };
+		2FA9CE891BC1CD81002985EE /* necklace.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = necklace.atlas; sourceTree = "<group>"; };
+		2FA9CE8A1BC1CD81002985EE /* pig.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = pig.atlas; sourceTree = "<group>"; };
+		2FA9CE8B1BC1CD81002985EE /* pretzel.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = pretzel.atlas; sourceTree = "<group>"; };
+		2FA9CE8C1BC1CD81002985EE /* scarf.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = scarf.atlas; sourceTree = "<group>"; };
+		2FA9CE8D1BC1CD81002985EE /* shovel.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = shovel.atlas; sourceTree = "<group>"; };
+		2FA9CE8E1BC1CD81002985EE /* sled.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = sled.atlas; sourceTree = "<group>"; };
+		2FA9CE8F1BC1CD81002985EE /* sofa.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = sofa.atlas; sourceTree = "<group>"; };
+		2FA9CE901BC1CD81002985EE /* stairs.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = stairs.atlas; sourceTree = "<group>"; };
+		2FA9CE911BC1CD81002985EE /* tape.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = tape.atlas; sourceTree = "<group>"; };
+		2FA9CE921BC1CD81002985EE /* toast.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = toast.atlas; sourceTree = "<group>"; };
+		2FA9CE931BC1CD81002985EE /* tractor.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = tractor.atlas; sourceTree = "<group>"; };
+		2FA9CE941BC1CD81002985EE /* tray.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = tray.atlas; sourceTree = "<group>"; };
+		2FA9CE951BC1CD81002985EE /* tricycle.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = tricycle.atlas; sourceTree = "<group>"; };
+		2FA9CE961BC1CD81002985EE /* zipper.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = zipper.atlas; sourceTree = "<group>"; };
 		2FD013AB1B4CF77A00217F6B /* VocabularyScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyScene.swift; sourceTree = "<group>"; };
 		2FDF8D861BA35DEF000152A2 /* TutorialScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialScene.swift; sourceTree = "<group>"; };
 		3568E5711A147CC9001CA426 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -289,9 +357,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F6985A61BBBB49200F5E1DA /* voice */ = {
+			isa = PBXGroup;
+			children = (
+				2F6985A71BBBB49200F5E1DA /* ball.caf */,
+				2F6985A81BBBB49200F5E1DA /* basket.caf */,
+				2F6985A91BBBB49200F5E1DA /* belt.caf */,
+				2F6985AA1BBBB49200F5E1DA /* bench.caf */,
+				2F6985AB1BBBB49200F5E1DA /* bird.caf */,
+				2F6985AC1BBBB49200F5E1DA /* bowl.caf */,
+				2F6985AD1BBBB49200F5E1DA /* chair.caf */,
+				2F6985AE1BBBB49200F5E1DA /* dog.caf */,
+				2F6985AF1BBBB49200F5E1DA /* dress.caf */,
+				2F6985B01BBBB49200F5E1DA /* flag.caf */,
+				2F6985B11BBBB49200F5E1DA /* glasses.caf */,
+				2F6985B21BBBB49200F5E1DA /* gloves.caf */,
+				2F6985B31BBBB49200F5E1DA /* glue.caf */,
+				2F6985B41BBBB49200F5E1DA /* hammer.caf */,
+				2F6985B51BBBB49200F5E1DA /* hose.caf */,
+				2F6985B61BBBB49200F5E1DA /* jar.caf */,
+				2F6985B71BBBB49200F5E1DA /* keys.caf */,
+				2F6985B81BBBB49200F5E1DA /* ladder.caf */,
+				2F6985B91BBBB49200F5E1DA /* lamp.caf */,
+				2F6985BA1BBBB49200F5E1DA /* napkin.caf */,
+				2F6985BB1BBBB49200F5E1DA /* necklace.caf */,
+				2F6985BC1BBBB49200F5E1DA /* pig.caf */,
+				2F6985BD1BBBB49200F5E1DA /* pretzel.caf */,
+				2F6985BE1BBBB49200F5E1DA /* scarf.caf */,
+				2F6985BF1BBBB49200F5E1DA /* shovel.caf */,
+				2F6985C01BBBB49200F5E1DA /* sled.caf */,
+				2F6985C11BBBB49200F5E1DA /* sofa.caf */,
+				2F6985C21BBBB49200F5E1DA /* stairs.caf */,
+				2F6985C31BBBB49200F5E1DA /* tape.caf */,
+				2F6985C41BBBB49200F5E1DA /* toast.caf */,
+				2F6985C51BBBB49200F5E1DA /* tractor.caf */,
+				2F6985C61BBBB49200F5E1DA /* tray.caf */,
+				2F6985C71BBBB49200F5E1DA /* tricycle.caf */,
+				2F6985C81BBBB49200F5E1DA /* zipper.caf */,
+			);
+			path = voice;
+			sourceTree = "<group>";
+		};
 		2F7E37151B5770500094A16B /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				2F6985A61BBBB49200F5E1DA /* voice */,
 				2F7E371D1B5770500094A16B /* BGM */,
 				2F7E37211B5770500094A16B /* ErrorSound */,
 				2F7E37251B5770500094A16B /* RewardSound */,
@@ -343,40 +453,40 @@
 		2F7E39C81B5782770094A16B /* object */ = {
 			isa = PBXGroup;
 			children = (
-				2F6984C51BB3496400F5E1DA /* ball.atlas */,
-				2F6984C61BB3496400F5E1DA /* basket.atlas */,
-				2F6984C71BB3496400F5E1DA /* belt.atlas */,
-				2F6984C81BB3496400F5E1DA /* bench.atlas */,
-				2F6984C91BB3496400F5E1DA /* bird.atlas */,
-				2F6984CA1BB3496400F5E1DA /* bowl.atlas */,
-				2F6984CB1BB3496400F5E1DA /* chair.atlas */,
-				2F6984CC1BB3496400F5E1DA /* dog.atlas */,
-				2F6984CD1BB3496400F5E1DA /* dress.atlas */,
-				2F6984CE1BB3496400F5E1DA /* flag.atlas */,
-				2F6984CF1BB3496400F5E1DA /* glasses.atlas */,
-				2F6984D01BB3496400F5E1DA /* gloves.atlas */,
-				2F6984D11BB3496400F5E1DA /* glue.atlas */,
-				2F6984D21BB3496400F5E1DA /* hammer.atlas */,
-				2F6984D31BB3496400F5E1DA /* hose.atlas */,
-				2F6984D41BB3496400F5E1DA /* jar.atlas */,
-				2F6984D51BB3496400F5E1DA /* keys.atlas */,
-				2F6984D61BB3496400F5E1DA /* ladder.atlas */,
-				2F6984D71BB3496400F5E1DA /* lamp.atlas */,
-				2F6984D81BB3496400F5E1DA /* napkin.atlas */,
-				2F6984D91BB3496400F5E1DA /* necklace.atlas */,
-				2F6984DA1BB3496400F5E1DA /* pig.atlas */,
-				2F6984DB1BB3496400F5E1DA /* pretzel.atlas */,
-				2F6984DC1BB3496400F5E1DA /* scarf.atlas */,
-				2F6984DD1BB3496400F5E1DA /* shovel.atlas */,
-				2F6984DE1BB3496400F5E1DA /* sled.atlas */,
-				2F6984DF1BB3496400F5E1DA /* sofa.atlas */,
-				2F6984E01BB3496400F5E1DA /* stairs.atlas */,
-				2F6984E11BB3496400F5E1DA /* tape.atlas */,
-				2F6984E21BB3496400F5E1DA /* toast.atlas */,
-				2F6984E31BB3496400F5E1DA /* tractor.atlas */,
-				2F6984E41BB3496400F5E1DA /* tray.atlas */,
-				2F6984E51BB3496400F5E1DA /* tricycle.atlas */,
-				2F6984E61BB3496400F5E1DA /* zipper.atlas */,
+				2FA9CE751BC1CD81002985EE /* ball.atlas */,
+				2FA9CE761BC1CD81002985EE /* basket.atlas */,
+				2FA9CE771BC1CD81002985EE /* belt.atlas */,
+				2FA9CE781BC1CD81002985EE /* bench.atlas */,
+				2FA9CE791BC1CD81002985EE /* bird.atlas */,
+				2FA9CE7A1BC1CD81002985EE /* bowl.atlas */,
+				2FA9CE7B1BC1CD81002985EE /* chair.atlas */,
+				2FA9CE7C1BC1CD81002985EE /* dog.atlas */,
+				2FA9CE7D1BC1CD81002985EE /* dress.atlas */,
+				2FA9CE7E1BC1CD81002985EE /* flag.atlas */,
+				2FA9CE7F1BC1CD81002985EE /* glasses.atlas */,
+				2FA9CE801BC1CD81002985EE /* gloves.atlas */,
+				2FA9CE811BC1CD81002985EE /* glue.atlas */,
+				2FA9CE821BC1CD81002985EE /* hammer.atlas */,
+				2FA9CE831BC1CD81002985EE /* hose.atlas */,
+				2FA9CE841BC1CD81002985EE /* jar.atlas */,
+				2FA9CE851BC1CD81002985EE /* keys.atlas */,
+				2FA9CE861BC1CD81002985EE /* ladder.atlas */,
+				2FA9CE871BC1CD81002985EE /* lamp.atlas */,
+				2FA9CE881BC1CD81002985EE /* napkin.atlas */,
+				2FA9CE891BC1CD81002985EE /* necklace.atlas */,
+				2FA9CE8A1BC1CD81002985EE /* pig.atlas */,
+				2FA9CE8B1BC1CD81002985EE /* pretzel.atlas */,
+				2FA9CE8C1BC1CD81002985EE /* scarf.atlas */,
+				2FA9CE8D1BC1CD81002985EE /* shovel.atlas */,
+				2FA9CE8E1BC1CD81002985EE /* sled.atlas */,
+				2FA9CE8F1BC1CD81002985EE /* sofa.atlas */,
+				2FA9CE901BC1CD81002985EE /* stairs.atlas */,
+				2FA9CE911BC1CD81002985EE /* tape.atlas */,
+				2FA9CE921BC1CD81002985EE /* toast.atlas */,
+				2FA9CE931BC1CD81002985EE /* tractor.atlas */,
+				2FA9CE941BC1CD81002985EE /* tray.atlas */,
+				2FA9CE951BC1CD81002985EE /* tricycle.atlas */,
+				2FA9CE961BC1CD81002985EE /* zipper.atlas */,
 			);
 			path = object;
 			sourceTree = "<group>";
@@ -600,7 +710,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Cognitive ToyBox";
 				TargetAttributes = {
 					359306A51A14784200A7DE3D = {
@@ -637,69 +747,103 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FA9CEAD1BC1CD81002985EE /* pretzel.atlas in Resources */,
+				2F6985EA1BBBB49200F5E1DA /* zipper.caf in Resources */,
+				2F6985CF1BBBB49200F5E1DA /* chair.caf in Resources */,
 				43344F281ADA856100FAC865 /* LaunchScreen.xib in Resources */,
-				2F6984FB1BB3496400F5E1DA /* necklace.atlas in Resources */,
-				2F6984F71BB3496400F5E1DA /* keys.atlas in Resources */,
 				43344F1D1AD9111500FAC865 /* InfoView2.xib in Resources */,
-				2F6984F11BB3496400F5E1DA /* glasses.atlas in Resources */,
+				2F6985D01BBBB49200F5E1DA /* dog.caf in Resources */,
 				2F7E38821B5770500094A16B /* squeeze-toy-3.caf in Resources */,
-				2F6984FF1BB3496400F5E1DA /* shovel.atlas in Resources */,
+				2FA9CEA31BC1CD81002985EE /* glue.atlas in Resources */,
 				4394C2451A8D586D00845C11 /* znuscriptheavy-webfont.ttf in Resources */,
-				2F6985081BB3496400F5E1DA /* zipper.atlas in Resources */,
 				438211F41AD7CDAD005D228B /* InfoView8.xib in Resources */,
 				4394C2461A8D586D00845C11 /* znuscriptoutline-webfont.ttf in Resources */,
-				2F6985001BB3496400F5E1DA /* sled.atlas in Resources */,
-				2F6984EA1BB3496400F5E1DA /* bench.atlas in Resources */,
-				2F6984FD1BB3496400F5E1DA /* pretzel.atlas in Resources */,
-				2F6984F31BB3496400F5E1DA /* glue.atlas in Resources */,
+				2FA9CE981BC1CD81002985EE /* basket.atlas in Resources */,
+				2F6985E31BBBB49200F5E1DA /* sofa.caf in Resources */,
+				2F6985D81BBBB49200F5E1DA /* jar.caf in Resources */,
+				2FA9CEA81BC1CD81002985EE /* ladder.atlas in Resources */,
 				3568E5721A147CC9001CA426 /* Main.storyboard in Resources */,
+				2FA9CEAE1BC1CD81002985EE /* scarf.atlas in Resources */,
+				2FA9CEAA1BC1CD81002985EE /* napkin.atlas in Resources */,
+				2F6985DD1BBBB49200F5E1DA /* necklace.caf in Resources */,
+				2FA9CEA01BC1CD81002985EE /* flag.atlas in Resources */,
+				2F6985E61BBBB49200F5E1DA /* toast.caf in Resources */,
+				2FA9CEA61BC1CD81002985EE /* jar.atlas in Resources */,
 				43C8CFB81AE088B5006A65C3 /* InfoViewAnimation.mov in Resources */,
-				2F6984EE1BB3496400F5E1DA /* dog.atlas in Resources */,
-				2F6984FE1BB3496400F5E1DA /* scarf.atlas in Resources */,
-				2F6985071BB3496400F5E1DA /* tricycle.atlas in Resources */,
-				2F6984F51BB3496400F5E1DA /* hose.atlas in Resources */,
 				2F7E387B1B5770500094A16B /* wrong tone a.caf in Resources */,
+				2FA9CEAF1BC1CD81002985EE /* shovel.atlas in Resources */,
 				2F7E38791B5770500094A16B /* bensound-funnysong_30sec.aif in Resources */,
+				2F6985DA1BBBB49200F5E1DA /* ladder.caf in Resources */,
+				2F6985D51BBBB49200F5E1DA /* glue.caf in Resources */,
+				2F6985E11BBBB49200F5E1DA /* shovel.caf in Resources */,
+				2F6985D91BBBB49200F5E1DA /* keys.caf in Resources */,
+				2FA9CEA71BC1CD81002985EE /* keys.atlas in Resources */,
+				2FA9CEB31BC1CD81002985EE /* tape.atlas in Resources */,
+				2F6985DC1BBBB49200F5E1DA /* napkin.caf in Resources */,
+				2FA9CEA41BC1CD81002985EE /* hammer.atlas in Resources */,
+				2F6985CC1BBBB49200F5E1DA /* bench.caf in Resources */,
+				2F6985E91BBBB49200F5E1DA /* tricycle.caf in Resources */,
+				2F6985D31BBBB49200F5E1DA /* glasses.caf in Resources */,
+				2F6985CB1BBBB49200F5E1DA /* belt.caf in Resources */,
+				2F6985DB1BBBB49200F5E1DA /* lamp.caf in Resources */,
+				2FA9CEB21BC1CD81002985EE /* stairs.atlas in Resources */,
+				2F6985E01BBBB49200F5E1DA /* scarf.caf in Resources */,
 				4382122E1AD84C22005D228B /* Blop.caf in Resources */,
-				2F6985021BB3496400F5E1DA /* stairs.atlas in Resources */,
-				2F6984EF1BB3496400F5E1DA /* dress.atlas in Resources */,
+				2FA9CE9C1BC1CD81002985EE /* bowl.atlas in Resources */,
+				2FA9CEA21BC1CD81002985EE /* gloves.atlas in Resources */,
 				4327C3BB1AD4C1FF00245A88 /* InfoView7.xib in Resources */,
+				2F6985E81BBBB49200F5E1DA /* tray.caf in Resources */,
 				2F7E38811B5770500094A16B /* squeeze-toy-1.caf in Resources */,
-				2F6984EC1BB3496400F5E1DA /* bowl.atlas in Resources */,
+				2F6985D41BBBB49200F5E1DA /* gloves.caf in Resources */,
+				2FA9CEAB1BC1CD81002985EE /* necklace.atlas in Resources */,
 				2F7E387A1B5770500094A16B /* bensound_jazzyfrenchy_30sec.aif in Resources */,
-				2F6984E71BB3496400F5E1DA /* ball.atlas in Resources */,
-				2F6984EB1BB3496400F5E1DA /* bird.atlas in Resources */,
+				2F6985CD1BBBB49200F5E1DA /* bird.caf in Resources */,
 				2F7E387F1B5770500094A16B /* right_tone.caf in Resources */,
-				2F6985031BB3496400F5E1DA /* tape.atlas in Resources */,
-				2F6985061BB3496400F5E1DA /* tray.atlas in Resources */,
-				2F6985011BB3496400F5E1DA /* sofa.atlas in Resources */,
-				2F6984FA1BB3496400F5E1DA /* napkin.atlas in Resources */,
-				2F6984F61BB3496400F5E1DA /* jar.atlas in Resources */,
+				2F6985D21BBBB49200F5E1DA /* flag.caf in Resources */,
 				43344F231AD9138E00FAC865 /* InfoView6.xib in Resources */,
+				2F6985C91BBBB49200F5E1DA /* ball.caf in Resources */,
+				2FA9CEAC1BC1CD81002985EE /* pig.atlas in Resources */,
 				2F7E387E1B5770500094A16B /* right tone2.caf in Resources */,
+				2FA9CE971BC1CD81002985EE /* ball.atlas in Resources */,
+				2FA9CEB11BC1CD81002985EE /* sofa.atlas in Resources */,
+				2F6985D71BBBB49200F5E1DA /* hose.caf in Resources */,
 				2F7E38831B5770500094A16B /* squeeze-toy-4.caf in Resources */,
-				2F6984F41BB3496400F5E1DA /* hammer.atlas in Resources */,
+				2FA9CEA11BC1CD81002985EE /* glasses.atlas in Resources */,
+				2FA9CE9A1BC1CD81002985EE /* bench.atlas in Resources */,
 				3568E5B91A147DAD001CA426 /* GameScene.sks in Resources */,
-				2F6984E91BB3496400F5E1DA /* belt.atlas in Resources */,
+				2FA9CE9F1BC1CD81002985EE /* dress.atlas in Resources */,
 				3568E57F1A147CF1001CA426 /* Images.xcassets in Resources */,
-				2F6984F21BB3496400F5E1DA /* gloves.atlas in Resources */,
-				2F6984E81BB3496400F5E1DA /* basket.atlas in Resources */,
+				2FA9CEA91BC1CD81002985EE /* lamp.atlas in Resources */,
+				2FA9CEB51BC1CD81002985EE /* tractor.atlas in Resources */,
 				2F7E387C1B5770500094A16B /* wrong tone b.caf in Resources */,
+				2FA9CE9D1BC1CD81002985EE /* chair.atlas in Resources */,
+				2F6985CE1BBBB49200F5E1DA /* bowl.caf in Resources */,
 				4327C3B91AD4B81200245A88 /* InfoView5.xib in Resources */,
-				2F6985041BB3496400F5E1DA /* toast.atlas in Resources */,
-				2F6984F01BB3496400F5E1DA /* flag.atlas in Resources */,
+				2FA9CE9B1BC1CD81002985EE /* bird.atlas in Resources */,
+				2F6985E71BBBB49200F5E1DA /* tractor.caf in Resources */,
+				2F6985E41BBBB49200F5E1DA /* stairs.caf in Resources */,
+				2F6985D11BBBB49200F5E1DA /* dress.caf in Resources */,
 				4394C2441A8D586D00845C11 /* znuscript-webfont.ttf in Resources */,
-				2F6984F91BB3496400F5E1DA /* lamp.atlas in Resources */,
-				2F6984F81BB3496400F5E1DA /* ladder.atlas in Resources */,
+				2FA9CEB61BC1CD81002985EE /* tray.atlas in Resources */,
+				2F6985E21BBBB49200F5E1DA /* sled.caf in Resources */,
+				2FA9CEB01BC1CD81002985EE /* sled.atlas in Resources */,
+				2FA9CEB81BC1CD81002985EE /* zipper.atlas in Resources */,
+				2FA9CEB71BC1CD81002985EE /* tricycle.atlas in Resources */,
+				2FA9CE9E1BC1CD81002985EE /* dog.atlas in Resources */,
+				2FA9CEB41BC1CD81002985EE /* toast.atlas in Resources */,
+				2F6985CA1BBBB49200F5E1DA /* basket.caf in Resources */,
+				2F6985DF1BBBB49200F5E1DA /* pretzel.caf in Resources */,
 				43344F1F1AD9120700FAC865 /* InfoView3.xib in Resources */,
+				2FA9CEA51BC1CD81002985EE /* hose.atlas in Resources */,
+				2F6985E51BBBB49200F5E1DA /* tape.caf in Resources */,
 				2F7E38801B5770500094A16B /* pew.caf in Resources */,
 				2F7E387D1B5770500094A16B /* wrong tone c.caf in Resources */,
 				43344F1B1AD90F8A00FAC865 /* InfoView1.xib in Resources */,
-				2F6984ED1BB3496400F5E1DA /* chair.atlas in Resources */,
+				2F6985D61BBBB49200F5E1DA /* hammer.caf in Resources */,
+				2FA9CE991BC1CD81002985EE /* belt.atlas in Resources */,
 				43344F211AD912A000FAC865 /* InfoView4.xib in Resources */,
 				2F7E38781B5770500094A16B /* 01 SMALL TOWN INSTRUMENTAL.aif in Resources */,
-				2F6984FC1BB3496400F5E1DA /* pig.atlas in Resources */,
-				2F6985051BB3496400F5E1DA /* tractor.atlas in Resources */,
+				2F6985DE1BBBB49200F5E1DA /* pig.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,6 +961,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -895,6 +1040,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flurry",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cognitivetoybox2.VAT;
 				PRODUCT_NAME = "Vocabulary Assessment Tool";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_FORMAT = RGBA8888_COMPRESSED;
@@ -923,6 +1069,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flurry",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cognitivetoybox2.VAT;
 				PRODUCT_NAME = "Vocabulary Assessment Tool";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_FORMAT = RGBA8888_COMPRESSED;
@@ -947,6 +1094,7 @@
 				);
 				INFOPLIST_FILE = "Cognitive ToyBoxTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.CognitiveToyBox.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Vocabulary Assessment ToolTests";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cognitive ToyBoxTests/Cognitive ToyBoxTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -966,6 +1114,7 @@
 				);
 				INFOPLIST_FILE = "Cognitive ToyBoxTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.CognitiveToyBox.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Vocabulary Assessment ToolTests";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cognitive ToyBoxTests/Cognitive ToyBoxTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vocabulary Assessment Tool.app/Vocabulary Assessment Tool";

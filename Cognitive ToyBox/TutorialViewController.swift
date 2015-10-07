@@ -11,7 +11,7 @@ import SpriteKit
 
 class TutorialViewController: UIViewController {
   @IBOutlet var skView: SKView!
-  
+  var isFinished = false
   
   override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +30,12 @@ class TutorialViewController: UIViewController {
       //    displayStartScene()
     }
     }
+  override func viewWillAppear(animated: Bool) {
+    if isFinished {
+      self.dismissViewControllerAnimated(false) {}
+      
+    }
+  }
 
   func presentTutorialScene (round:Int) {
     
@@ -42,22 +48,26 @@ class TutorialViewController: UIViewController {
     
     
     
-    var object = CognitiveToyBoxObjectBuilder()
+    let object = CognitiveToyBoxObjectBuilder()
     
-    object.name = "dog"
-    object.filename = "shutterstock_121287229"
+    object.name = "chair"
+//    object.filename = "ABLUECH17"
+    object.filename = "shutterstock_104639921"
     scene.objectList.append(object.build())
     
     object.name = "ball"
-    object.filename = "shutterstock_107204279"
+//    object.filename = "ABALL"
+    object.filename = "shutterstock_170247413"
     scene.objectList.append(object.build())
     
-    object.name = "bird"
-    object.filename = "shutterstock_128779304"
+    object.name = "sofa"
+//    object.filename = "ACOUCH14"
+    object.filename = "shutterstock_171073781"
     scene.objectList.append(object.build())
     
-    object.name = "dress"
-    object.filename = "shutterstock_133206035"
+    object.name = "glasses"
+//    object.filename = "AGLASSE10"
+    object.filename = "shutterstock_207959095"
     scene.objectList.append(object.build())
     
       

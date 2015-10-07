@@ -38,7 +38,7 @@ public enum Stages: Int {
       }
       
       /* All returns all categories */
-      var allCategories = NSMutableSet()
+      let allCategories = NSMutableSet()
       for level in Stages.difficultyLevels {
         allCategories.unionSet(level as Set<NSObject>)
       }
@@ -232,7 +232,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._numMatchingTasksBeforeFakeObjects
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._numMatchingTasksBeforeFakeObjects = newValue
       instance.updateGameControllers() {
         (gameController: ConfigurableGameController) -> () in
@@ -250,7 +250,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._numFakeObjectsAfterMatchingTasks
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._numFakeObjectsAfterMatchingTasks = newValue
       instance.updateGameControllers() {
         (gameController: ConfigurableGameController) -> () in
@@ -268,7 +268,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._numMatchingTasksBeforeVocabularyWords
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._numMatchingTasksBeforeVocabularyWords = newValue
       instance.updateGameControllers() {
         (gameController: ConfigurableGameController) -> () in
@@ -286,7 +286,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._numVocabularyWordsAfterMatchingTasks
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._numVocabularyWordsAfterMatchingTasks = newValue
       instance.updateGameControllers() {
         (gameController: ConfigurableGameController) -> () in
@@ -304,7 +304,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._stage
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._stage = newValue
       instance.updateGameControllers() {
         (gameController: ConfigurableGameController) -> () in
@@ -318,7 +318,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
   private let _minDaysBeforeStageUpdate: Int = 2
   private var _lastStageUpdate: NSDate! = nil
   public class func checkStageUpdate () {
-    var instance = self.sharedInstance
+    let instance = self.sharedInstance
     let now = NSDate(timeIntervalSinceNow: 0)
     
     /* check interval since last update */
@@ -386,7 +386,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._backgroundImageName
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._backgroundImageName = newValue
       
       instance.updateScenes(instance.applySettings)
@@ -403,7 +403,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
   }
   
   public class func passOneSession () {
-    var instance = self.sharedInstance
+    let instance = self.sharedInstance
     
     if !instance._allowBackgroundAutoSwitch || instance._backgroundAutoSwitch <= 0 {
       return
@@ -456,7 +456,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._nextButtonHidden
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._nextButtonHidden = newValue
       instance.updateScenes() {
         (scene: ConfigurableScene) -> () in
@@ -477,7 +477,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._bearHidden
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._bearHidden = newValue
       instance.updateScenes() {
         (scene: ConfigurableScene) -> () in
@@ -503,7 +503,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._newSessionInterval
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._newSessionInterval = newValue
       instance.updateActionHelpers() {
         (actionHelper: ConfigurableActionHelper) -> () in
@@ -522,7 +522,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._objectPresentMode
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._objectPresentMode = newValue
       instance.updateActionHelpers() {
         (actionHelper: ConfigurableActionHelper) -> () in
@@ -539,7 +539,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._playtimeInterval
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._playtimeInterval = newValue
       instance.updateActionHelpers() {
         (actionHelper: ConfigurableActionHelper) -> () in
@@ -558,7 +558,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._rewardSoundName
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._rewardSoundName = newValue
       instance.updateSoundHelpers() {
         (soundHelper: ConfigurableSoundSourceHelper) -> () in
@@ -577,7 +577,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._errorSoundName
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._errorSoundName = newValue
       instance.updateSoundHelpers() {
         (soundHelper: ConfigurableSoundSourceHelper) -> () in
@@ -596,7 +596,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     return self.sharedInstance._playtimeSongName
     }
     set {
-      var instance = self.sharedInstance
+      let instance = self.sharedInstance
       instance._playtimeSongName = newValue
       instance.updateSoundHelpers() {
         (soundHelper: ConfigurableSoundSourceHelper) -> () in
@@ -722,7 +722,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
   
   /* add */
   public class func addGameController (gameController: ConfigurableGameController) {
-    var instance = self.sharedInstance
+    let instance = self.sharedInstance
     if instance.gameControllers.containsObject(gameController) {
       return
     }
@@ -730,7 +730,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     instance.applySettings(gameController)
   }
   public class func addScene (scene: ConfigurableScene) {
-    var instance = self.sharedInstance
+    let instance = self.sharedInstance
     if instance.scenes.containsObject(scene) {
       return
     }
@@ -738,7 +738,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     instance.applySettings(scene)
   }
   public class func addActionHelper (actionHelper: ConfigurableActionHelper) {
-    var instance = self.sharedInstance
+    let instance = self.sharedInstance
     if instance.actionHelpers.containsObject(actionHelper) {
       return
     }
@@ -746,7 +746,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     instance.applySettings(actionHelper)
   }
   public class func addSoundHelper (soundHelper: ConfigurableSoundSourceHelper) {
-    var instance = self.sharedInstance
+    let instance = self.sharedInstance
     if instance.soundHelpers.containsObject(soundHelper) {
       return
     }
@@ -783,7 +783,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     if self._backgroundImageName == .White {
       
       if scene.background == nil {
-        var size = SKSpriteNode(imageNamed: BackgroundImageNames.Classroom.rawValue).size
+        let size = SKSpriteNode(imageNamed: BackgroundImageNames.Classroom.rawValue).size
         scene.background = SKSpriteNode(color: UIColor.whiteColor(), size: size)
       } else {
         scene.background.color = UIColor.whiteColor()
@@ -895,8 +895,8 @@ public class GlobalConfiguration: NSObject, NSCoding {
   /* core data related */
   private class func updateCoreData () {
     
-    var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var context:NSManagedObjectContext = appDelegate.managedObjectContext
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let context:NSManagedObjectContext = appDelegate.managedObjectContext
     
     
     NSLog("Scanning resources...")
@@ -910,7 +910,7 @@ public class GlobalConfiguration: NSObject, NSCoding {
     var newObj : NSManagedObject
     var saveError : NSErrorPointer = nil
     
-    var categories = NSMutableSet()
+    let categories = NSMutableSet()
     
     for obj in objs {
       
@@ -972,16 +972,16 @@ public class GlobalConfiguration: NSObject, NSCoding {
   
   private class func clearCoreData () {
     
-    var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var context:NSManagedObjectContext = appDelegate.managedObjectContext
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let context:NSManagedObjectContext = appDelegate.managedObjectContext
     
     NSLog("Clearing Core Data...")
     var request = NSFetchRequest(entityName: "CTBObject")
     request.returnsObjectsAsFaults = false
     request.includesPropertyValues = false
     
-    var error : NSErrorPointer = nil
-    var saveError : NSErrorPointer = nil
+//    var error : NSErrorPointer = nil
+//    var saveError : NSErrorPointer = nil
 //    var results : NSArray = context.executeFetchRequest(request, error: error)!
     var results = NSArray()
     do{

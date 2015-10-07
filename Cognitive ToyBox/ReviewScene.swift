@@ -132,7 +132,7 @@ class ReviewScene: SKScene, ConfigurableScene {
   
   func showHelmet () {
     if GlobalConfiguration.backgroundImageName == BackgroundImageNames.Space {
-      var helmetAtlas = SKTextureAtlas(named: "bear_dancing_helmet")
+      let helmetAtlas = SKTextureAtlas(named: "bear_dancing_helmet")
       helmetAtlas.preloadWithCompletionHandler({})
       bearHelmet = SKSpriteNode(texture: helmetAtlas.textureNamed(helmetAtlas.textureNames.first as String!))
       bearHelmet.runAction(SKAction.repeatActionForever(ActionHelper.bearDancingHelmet()))
@@ -191,11 +191,11 @@ class ReviewScene: SKScene, ConfigurableScene {
     self.initLabels()
     
     // masks
-    var color = UIColor(red: 0, green: 1, blue: 0, alpha: 0.5)
+    let color = UIColor(red: 0, green: 1, blue: 0, alpha: 0.5)
 
       if #available(iOS 8.0, *) {
           self.colorMask = SKShapeNode(rect: self.frame)
-          var colorMask = self.colorMask as! SKShapeNode
+          let colorMask = self.colorMask as! SKShapeNode
           colorMask.strokeColor = color
           colorMask.fillColor = color
       } else {
@@ -391,7 +391,7 @@ class ReviewScene: SKScene, ConfigurableScene {
         var dx : CGFloat
         var dy : CGFloat
         var force : CGVector
-        var minDiff = CGFloat(50)
+        let minDiff = CGFloat(50)
         
             
         dx = spriteNode!.position.x - location.x
@@ -419,10 +419,10 @@ class ReviewScene: SKScene, ConfigurableScene {
 //    var gravity = self.physicsWorld.gravity
 //    var gravityChange = CGVectorMake(<#dx: CGFloat#>, <#dy: CGFloat#>)
 //    println(self.mainNode.position)
-    var minX = CGRectGetMinX(self.frame)
-    var minY = CGRectGetMinY(self.frame)
-    var maxX = CGRectGetMaxX(self.frame)
-    var maxY = CGRectGetMaxY(self.frame)
+    let minX = CGRectGetMinX(self.frame)
+    let minY = CGRectGetMinY(self.frame)
+    let maxX = CGRectGetMaxX(self.frame)
+    let maxY = CGRectGetMaxY(self.frame)
     
     for node in nodeList {
       if node.position.x < minX || node.position.x > maxX || node.position.y < minY || node.position.y > maxY {
@@ -613,7 +613,7 @@ class ReviewScene: SKScene, ConfigurableScene {
     let delayActionBefore = ActionHelper.timeToPlayDelayBefore()
     
     var position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
-    var preExplode = ActionHelper.preExplode(scale: self.playgroundScale, duration: duration)
+    let preExplode = ActionHelper.preExplode(scale: self.playgroundScale, duration: duration)
     
     for node in newNodeList {
       if node === newNodeList.first {
@@ -733,7 +733,7 @@ class ReviewScene: SKScene, ConfigurableScene {
   
   func addGlows () {
     for node in nodeList {
-      var glow = SKSpriteNode(imageNamed: "glow")
+      let glow = SKSpriteNode(imageNamed: "glow")
       glow.position = node.position
       glow.zPosition = node.zPosition - 1
       glow.runAction(ActionHelper.beaconGlow())

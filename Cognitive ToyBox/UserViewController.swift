@@ -121,6 +121,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
 //    presentTutorialScene()
   }
   @IBAction func freeGame(sender: UIButton) {
+    sender.setImage(UIImage(named:"playButtonPressed"),forState:UIControlState.Normal)
 //    UserInfoHelper.clearUser()
     self.performSegueWithIdentifier("tutorialSegue", sender: sender)
 //    self.performSegueWithIdentifier("gameViewSegueFree", sender: sender)
@@ -371,6 +372,7 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
 //      datePicker.date = dateOfBirth
 //      displayDate(dateOfBirth)
 //    }
+
     
   }
   

@@ -79,7 +79,7 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
   }
   
   
-  public func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+  public func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
     var playOncePlayer:AVAudioPlayer? = nil
     var index:Int = 0
     for p in playOncePlayers {
@@ -137,11 +137,11 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
 //  }
   
   private class func soundActionWithName (name: String) -> SKAction {
-    var playOncePlayer = self.playSoundOnce(name, startImmediately: false, interrupt: false)
+    let playOncePlayer = self.playSoundOnce(name, startImmediately: false, interrupt: false)
     
     if let player = playOncePlayer {
-      var durAction = SKAction.waitForDuration(player.duration)
-      var playAction = SKAction.runBlock { () -> Void in
+      let durAction = SKAction.waitForDuration(player.duration)
+      let playAction = SKAction.runBlock { () -> Void in
         player.play()
         return
       }
@@ -152,8 +152,8 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
   }
   private class func songActionWithName (name: String) -> SKAction {
     self.playSongOnce(name, startImmediately: false, interrupt: false)
-    var durAction = SKAction.waitForDuration(self.sharedInstance.bgmPlayer.duration)
-    var playAction = SKAction.runBlock() {
+    let durAction = SKAction.waitForDuration(self.sharedInstance.bgmPlayer.duration)
+    let playAction = SKAction.runBlock() {
       self.sharedInstance.bgmPlayer.play()
       return
     }
@@ -219,6 +219,10 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
     return self.soundActionWithName("\(name)_look")
   }
   
+  public class func soundFindObject(name name:String)-> SKAction{
+    return self.soundActionWithName("\(name)")
+  }
+  
   public class func soundBlop () -> SKAction {
     return self.soundActionWithName("Blop")
   }
@@ -253,7 +257,7 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
   
   public class func soundTouch () -> SKAction {
     // randoml pick a sound effect
-    var touchSound = TouchSoundName.getRandom()
+    let touchSound = TouchSoundName.getRandom()
     return self.soundActionWithName(touchSound.rawValue)
   }
   
@@ -323,7 +327,7 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
   }
   
   public class func playSoundOnce (soundName: String, startImmediately: Bool = true, interrupt: Bool = true) -> AVAudioPlayer? {
-    var instance = self.sharedInstance
+    let instance = self.sharedInstance
     var playOncePlayer:InterruptibleAVAudioPlayer
     var shouldRecoverBGM:Bool = true
     
@@ -337,7 +341,7 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
       }
     }
     
-    var error: NSError
+    
     if let url:NSURL = NSBundle.mainBundle().URLForResource(soundName, withExtension: self.soundExtension) {
       var soundPlayer = InterruptibleAVAudioPlayer()
       do{
@@ -348,7 +352,7 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
       
       instance.playOncePlayers.append(soundPlayer)
       playOncePlayer = instance.playOncePlayers.last!
-//      ErrorLogger.logError(error, message: "Cannot play sound")
+
       
       playOncePlayer.delegate = instance
       playOncePlayer.numberOfLoops = 0
@@ -370,7 +374,7 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
   }
   
   public class func playSongOnce (songName: String, startImmediately: Bool = true, interrupt: Bool = true) -> AVAudioPlayer? {
-    var instance = self.sharedInstance
+    let instance = self.sharedInstance
     var playOncePlayer:InterruptibleAVAudioPlayer
     var shouldRecoverBGM:Bool = true
     
@@ -384,7 +388,7 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
       }
     }
     
-    var error: NSError
+//    var error: NSError
     if let url:NSURL = NSBundle.mainBundle().URLForResource(songName, withExtension: self.songExtension) {
       var soundPlayer = InterruptibleAVAudioPlayer()
       do{

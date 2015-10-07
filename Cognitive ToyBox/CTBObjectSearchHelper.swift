@@ -16,7 +16,7 @@ extension Array
   {
     for _ in 0..<10
     {
-      sort { (_,_) in arc4random() < arc4random() }
+      sortInPlace { (_,_) in arc4random() < arc4random() }
     }
   }
   
@@ -44,21 +44,21 @@ public class CognitiveToyBoxObjectSearchHelper {
   /* return a random picked object different from given id */
   public class func getRandomObject (exceptId:Int = -1, forNames:NSSet? = nil, entityName:String = "CTBObject") -> CognitiveToyBoxObject? {
     
-    var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var context:NSManagedObjectContext = appDelegate.managedObjectContext
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let context:NSManagedObjectContext = appDelegate.managedObjectContext
     
     NSLog("Getting random object...")
-    var request = NSFetchRequest(entityName: entityName)
+    let request = NSFetchRequest(entityName: entityName)
     request.returnsObjectsAsFaults = false
     
-    var predicate = NSPredicate(format: "id != %d", exceptId)
+    let predicate = NSPredicate(format: "id != %d", exceptId)
     
     /* specify object for debug purpose */
 //    predicate = NSPredicate(format: "name = %@ && suffix = nil", "plate")
 
     request.predicate = predicate
     
-    var error : NSErrorPointer = nil
+//    var error : NSErrorPointer = nil
 //    var results = context.executeFetchRequest(request, error: error) as! [NSManagedObject]
     var results:[NSManagedObject]!
     do {
@@ -89,7 +89,7 @@ public class CognitiveToyBoxObjectSearchHelper {
     
     
     let nsmObject = results[Int(arc4random_uniform(UInt32(results.count)))] as NSManagedObject
-    var ctbObject = CognitiveToyBoxObjectBuilder().buildFromNSManagedObject(nsmObject)
+    let ctbObject = CognitiveToyBoxObjectBuilder().buildFromNSManagedObject(nsmObject)
     
     NSLog("Done fetching \(ctbObject).")
     return ctbObject
@@ -134,15 +134,15 @@ public class CognitiveToyBoxObjectSearchHelper {
   
   /* return a random picked object where name=name */
   public class func getSameNameObjectList (name name:String,exceptId:Int = -1) -> [CognitiveToyBoxObject] {
-    var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var context:NSManagedObjectContext = appDelegate.managedObjectContext
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let context:NSManagedObjectContext = appDelegate.managedObjectContext
     
     NSLog("Getting same name object list...")
-    var error : NSErrorPointer = nil
-    var request = NSFetchRequest(entityName: "CTBObject")
+//    var error : NSErrorPointer = nil
+    let request = NSFetchRequest(entityName: "CTBObject")
     request.returnsObjectsAsFaults = false
     
-    var predicate = NSPredicate(format: "name = %@ && id != %d", name,exceptId)
+    let predicate = NSPredicate(format: "name = %@ && id != %d", name,exceptId)
     request.predicate = predicate
     
 //    var results = context.executeFetchRequest(request, error: error) as! [NSManagedObject]
@@ -162,7 +162,7 @@ public class CognitiveToyBoxObjectSearchHelper {
       return []
     }
     
-    var rawResults = results.map() {
+    let rawResults = results.map() {
       (nsmObject:NSManagedObject) -> (CognitiveToyBoxObject) in
       CognitiveToyBoxObjectBuilder().buildFromNSManagedObject(nsmObject)
     }
@@ -261,12 +261,12 @@ public class CognitiveToyBoxObjectSearchHelper {
 //  }
   
   public class func getDiffNameObjectList (name name:String, forNames:NSSet? = nil) -> [CognitiveToyBoxObject] {
-    var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var context:NSManagedObjectContext = appDelegate.managedObjectContext
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let context:NSManagedObjectContext = appDelegate.managedObjectContext
     
     NSLog("Getting different name list...")
-    var error : NSErrorPointer = nil
-    var request = NSFetchRequest(entityName: "CTBObject")
+//    var error : NSErrorPointer = nil
+    let request = NSFetchRequest(entityName: "CTBObject")
     request.returnsObjectsAsFaults = false
     
     var predicate:NSPredicate! = nil
@@ -296,7 +296,7 @@ public class CognitiveToyBoxObjectSearchHelper {
       return [CognitiveToyBoxObject]()
     }
     
-    var filteredResults = results.map() {
+    let filteredResults = results.map() {
       (nsmObject:NSManagedObject) -> (CognitiveToyBoxObject) in
       CognitiveToyBoxObjectBuilder().buildFromNSManagedObject(nsmObject)
     }
@@ -329,7 +329,7 @@ public class CognitiveToyBoxObjectSearchHelper {
       return nil
     }
     
-    var ctbObject = results[Int(arc4random_uniform(UInt32(results.count)))]
+    let ctbObject = results[Int(arc4random_uniform(UInt32(results.count)))]
     NSLog("Done fetching \(ctbObject).")
     return ctbObject
   }
@@ -400,15 +400,15 @@ public class CognitiveToyBoxObjectSearchHelper {
       return [CognitiveToyBoxObject]()
     }
     
-    var appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var context:NSManagedObjectContext = appDelegate.managedObjectContext
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let context:NSManagedObjectContext = appDelegate.managedObjectContext
     
     NSLog("Getting same name list...")
-    var error : NSErrorPointer = nil
-    var request = NSFetchRequest(entityName: "CTBObject")
+//    var error : NSErrorPointer = nil
+    let request = NSFetchRequest(entityName: "CTBObject")
     request.returnsObjectsAsFaults = false
     
-    var predicate = NSPredicate(format: "name = %@", name)
+    let predicate = NSPredicate(format: "name = %@", name)
     request.predicate = predicate
     
     
