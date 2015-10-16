@@ -5,6 +5,17 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="ProximaNova-Bold.otf">
+            <string>ProximaNova-Bold</string>
+            <string>ProximaNova-Bold</string>
+            <string>ProximaNova-Bold</string>
+            <string>ProximaNova-Bold</string>
+            <string>ProximaNova-Bold</string>
+            <string>ProximaNova-Bold</string>
+        </mutableArray>
+        <mutableArray key="ProximaNova-Regular.otf">
+            <string>ProximaNova-Regular</string>
+        </mutableArray>
         <mutableArray key="znuscriptheavy-webfont.ttf">
             <string>ZNuscriptHeavy-Medium</string>
             <string>ZNuscriptHeavy-Medium</string>
@@ -213,6 +224,13 @@
                                 <rect key="frame" x="798" y="47" width="150" height="2"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="150/150" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ELG-hO-UpZ">
+                                <rect key="frame" x="850" y="38" width="106" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="24"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oQ5-kp-B4S" userLabel="seeResultButton">
                                 <rect key="frame" x="692" y="36" width="57" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -223,13 +241,6 @@
                                     <action selector="analysisButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="CMG-Wr-I7W"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="150/150" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ELG-hO-UpZ">
-                                <rect key="frame" x="852" y="69" width="63" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -475,11 +486,14 @@
                                     <outlet property="delegate" destination="5cM-B6-6yH" id="6Hk-3D-E0M"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="middleTruncation" id="enh-bL-wWB">
+                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="middleTruncation" id="enh-bL-wWB" userLabel="resultButton">
                                 <rect key="frame" x="85" y="560" width="268" height="104"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="analyzeResultButton"/>
                                 <state key="highlighted" image="analyzeResultPressedButton"/>
+                                <connections>
+                                    <action selector="analysisButton:" destination="5cM-B6-6yH" eventType="touchUpInside" id="BZ8-nu-nOh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -505,6 +519,7 @@
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
                         <segue destination="zU9-D2-aI9" kind="modal" identifier="cameraSegue" id="Ih4-h9-mZG"/>
+                        <segue destination="c8U-AQ-cW3" kind="modal" identifier="homeToAnalysisSegue" id="2MF-wu-Lp5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oOF-64-5c9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -996,16 +1011,33 @@
                     <view key="view" contentMode="scaleToFill" id="3mc-Sh-PsL" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TUTORIAL" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Weg-BU-lNG">
+                                <rect key="frame" x="802" y="69" width="171" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="34"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="question 2 of 2 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OQw-xj-9cV" userLabel="QUESTION">
+                                <rect key="frame" x="804" y="101" width="166" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="24"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="questionNumLabel" destination="OQw-xj-9cV" id="14L-wW-fat"/>
                         <outlet property="skView" destination="3mc-Sh-PsL" id="rPp-FL-39K"/>
                         <segue destination="BV1-FR-VrT" kind="modal" identifier="startGameSegue" modalTransitionStyle="crossDissolve" id="aLM-KX-TCH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qWe-Sq-X1U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1381" y="1007"/>
+            <point key="canvasLocation" x="-975" y="1073"/>
         </scene>
         <!--Analysis View Controller-->
         <scene sceneID="fS9-wD-Qff">
@@ -1015,53 +1047,96 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HVd-zJ-BLG">
-                                <rect key="frame" x="958" y="20" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Clear">
-                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="clearButton:" destination="c8U-AQ-cW3" eventType="touchUpInside" id="Mlu-yD-cua"/>
-                                </connections>
-                            </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ogr-kK-xq6">
-                                <rect key="frame" x="53" y="357" width="914" height="391"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="resultBG" id="lmo-EM-vQP">
+                                <rect key="frame" x="5" y="0.0" width="1014" height="768"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="50" sectionFooterHeight="22" id="Ogr-kK-xq6">
+                                <rect key="frame" x="100" y="256" width="400" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <sections/>
                                 <connections>
                                     <outlet property="dataSource" destination="c8U-AQ-cW3" id="0FT-MU-kTF"/>
                                     <outlet property="delegate" destination="c8U-AQ-cW3" id="jxe-mM-Ji5"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gQ9-42-60g">
-                                <rect key="frame" x="44" y="20" width="42" height="30"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="50" sectionFooterHeight="22" id="eMa-iW-M5X">
+                                <rect key="frame" x="524" y="256" width="400" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="c8U-AQ-cW3" id="5lh-sX-QVT"/>
+                                    <outlet property="delegate" destination="c8U-AQ-cW3" id="Vv6-BR-bGp"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HVd-zJ-BLG">
+                                <rect key="frame" x="742" y="20" width="262" height="97"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="clearResultButton">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="clearResultButtonPressed"/>
+                                <connections>
+                                    <action selector="clearButton:" destination="c8U-AQ-cW3" eventType="touchUpInside" id="Mlu-yD-cua"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bXK-mK-RPZ">
+                                <rect key="frame" x="408" y="165" width="222" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="BACK">
+                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="34"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CeD-41-Xx9">
+                                <rect key="frame" x="408" y="203" width="222" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="34"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="total questions :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="64E-M7-kGQ">
+                                <rect key="frame" x="125" y="165" width="263" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="35"/>
+                                <color key="textColor" red="1" green="0.57491089516338556" blue="0.17001998578627098" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="words assessed :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rBH-g1-zlT">
+                                <rect key="frame" x="125" y="203" width="275" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="35"/>
+                                <color key="textColor" red="1" green="0.57491089520000005" blue="0.1700199858" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gQ9-42-60g">
+                                <rect key="frame" x="20" y="39" width="57" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="homeButton">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="backToMain:" destination="c8U-AQ-cW3" eventType="touchUpInside" id="dBE-wN-Xkb"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" id="MfH-Gz-rOf">
-                                <rect key="frame" x="0.0" y="58" width="1024" height="291"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="chartView" destination="MfH-Gz-rOf" id="obl-FA-f8a"/>
-                        <outlet property="tableView" destination="Ogr-kK-xq6" id="xmO-iy-6rq"/>
+                        <outlet property="masterTableView" destination="Ogr-kK-xq6" id="9Vq-GN-ifn"/>
+                        <outlet property="questionNumLabel" destination="bXK-mK-RPZ" id="Oed-Ls-O94"/>
+                        <outlet property="unMasterTableView" destination="eMa-iW-M5X" id="1iB-fX-AKb"/>
+                        <outlet property="wordNumLabel" destination="CeD-41-Xx9" id="KZa-dR-sWi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prG-AE-4nj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-808" y="2023"/>
+            <point key="canvasLocation" x="-1696" y="2202"/>
         </scene>
     </scenes>
     <resources>
@@ -1072,16 +1147,19 @@
         <image name="bearSleeping1" width="156" height="150"/>
         <image name="bearWaving1" width="118" height="125"/>
         <image name="camera" width="65" height="50"/>
+        <image name="clearResultButton" width="262" height="97"/>
+        <image name="clearResultButtonPressed" width="262" height="97"/>
         <image name="counterBadge" width="52" height="70"/>
         <image name="emptyButton1" width="207" height="208"/>
         <image name="exitButton" width="41" height="41"/>
         <image name="freeButton" width="166" height="72"/>
-        <image name="homeButton" width="51" height="56"/>
+        <image name="homeButton" width="57" height="60"/>
         <image name="howToPlayButton" width="208" height="88"/>
         <image name="infoCard" width="1024" height="768"/>
         <image name="playButton" width="397" height="187"/>
         <image name="playButtonPressed" width="397" height="187"/>
         <image name="playButton_info" width="139" height="143"/>
+        <image name="resultBG" width="1024" height="768"/>
         <image name="rewardTrophy" width="1024" height="768"/>
         <image name="settingButton" width="51" height="56"/>
         <image name="soundButton" width="53" height="57"/>
@@ -1093,8 +1171,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qgI-FX-cXz"/>
         <segue reference="MPL-wf-Wi6"/>
+        <segue reference="aLM-KX-TCH"/>
         <segue reference="9B3-8P-6Xe"/>
     </inferredMetricsTieBreakers>
 </document>

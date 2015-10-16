@@ -27,7 +27,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
     let versionNum = Int(UIDevice.currentDevice().systemVersion.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "."))[0])
     
     var selectionRegistered = false
-    var labelFontSize = CGFloat(72)
+    var labelFontSize = CGFloat(70)
     
     var gameController: GameController! = nil
     weak var _gameViewController: GameViewController? = nil
@@ -59,12 +59,8 @@ class VocabularyScene: SKScene, ConfigurableScene {
     let foundLabel        = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
   
     var soundPlayButton :SKSpriteNode! = nil
- 
-  
-//    let cacheDescriptionLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
-//    let cacheQuestionLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
-//    let cacheWrongLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
-//    let cacheFoundLabel = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+    var soundPlayIcon:SKSpriteNode! = nil
+
     var border : SKSpriteNode! = nil
     var mainObjectNode: SKSpriteNode! = nil
     var secondaryMainNode: SKSpriteNode! = nil
@@ -265,8 +261,8 @@ class VocabularyScene: SKScene, ConfigurableScene {
         let allTouches = event.allTouches()! as NSSet
         
         for touch : AnyObject in allTouches {
-            var location = (touch as! UITouch).locationInNode(self)
-            var node = self.nodeAtPoint(location)
+            let location = (touch as! UITouch).locationInNode(self)
+            let node = self.nodeAtPoint(location)
             
             if node.alpha != 1 {
                 continue
@@ -501,15 +497,9 @@ class VocabularyScene: SKScene, ConfigurableScene {
     // refresh main
     self.objectName = self.gameController.getMainObj().name
     self.descriptionLabel.text = "\(objectName)"
-    //        self.questionLabel.text = "\(objectName)"
+//        self.questionLabel.text = "\(objectName)"
     
-    let labelWidth = self.descriptionLabel.frame.width
-    var labelHeight =  self.descriptionLabel.frame.height
-//    var size = self.soundPlayButton.size
-    
-    self.soundPlayButton.size.width = 1.2*labelWidth
-    self.soundPlayButton.yScale = 1.2
-
+    self.setLabelSize()
     
     self.wrongLabel.text = "That's not \(objectName)!"
     self.runAction(ActionHelper.waitForMainObjectSound ()){
@@ -547,7 +537,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
   //prepare the next group of objects
   func loadNextGroup(){
     
-    var success = self.gameController.startNewSession(true)
+    let success = self.gameController.startNewSession(true)
     
     if success {
       // change label text
@@ -556,12 +546,7 @@ class VocabularyScene: SKScene, ConfigurableScene {
       self.descriptionLabel.text = "\(objectName)"
 //      self.questionLabel.text = "\(objectName)"
       
-      var labelWidth = self.descriptionLabel.frame.width
-      var labelHeight =  self.descriptionLabel.frame.height
-//      var size = self.soundPlayButton.size
-      
-      self.soundPlayButton.size.width = 1.2*labelWidth
-      self.soundPlayButton.yScale = 1.2
+      self.setLabelSize()
       
 //      if #available(iOS 8.0, *) {
 //        self.soundPlayButton = SKShapeNode(rect: CGRect(x: CGRectGetMidX(self.frame), y: CGRectGetMidY(self.frame)+frame.height/3, width: labelWidth, height:labelHeight), cornerRadius: 10.0)
@@ -601,10 +586,20 @@ class VocabularyScene: SKScene, ConfigurableScene {
     func initLabels () {
         self.descriptionLabel.fontSize = self.labelFontSize
         self.descriptionLabel.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
+      
+        self.descriptionLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right;
+        self.descriptionLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+      
         self.soundPlayButton = SKSpriteNode(texture: SKTexture(imageNamed:"soundPlayButton"))
         self.soundPlayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + self.size.height*0.35)
+      
+        self.soundPlayIcon = SKSpriteNode(texture: SKTexture(imageNamed:"soundPlayIcon"))
+      
 //        self.questionLabel.fontSize = self.labelFontSize
 //        self.questionLabel.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
+
+
+
       
         self.wrongLabel.fontSize = self.labelFontSize
         self.wrongLabel.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
@@ -618,22 +613,51 @@ class VocabularyScene: SKScene, ConfigurableScene {
         self.foundLabel.hidden = true
         
         self.addChild(self.descriptionLabel)
+        self.addChild(self.soundPlayButton)
+        self.addChild(self.soundPlayIcon)
+      
 //        self.addChild(self.questionLabel)
         self.addChild(self.foundLabel)
         self.addChild(self.wrongLabel)
-        self.addChild(self.soundPlayButton)
+      
     }
+
+// dynamical calculate the button size
+    func setLabelSize(){
+      
+      let margin:CGFloat = 20
     
+      let labelWidth = self.descriptionLabel.frame.width
+      
+      self.soundPlayIcon.xScale = 1
+      self.soundPlayIcon.yScale = 1
+      
+      self.soundPlayButton.size.width = labelWidth + self.soundPlayIcon.frame.width + 2*margin
+    
+      self.soundPlayButton.yScale = 1.2
+      
+      self.soundPlayIcon.anchorPoint = CGPointMake(0, 0.5)
+      self.soundPlayIcon.position = CGPointMake(self.soundPlayButton.position.x - self.soundPlayButton.size.width/2 + margin, self.soundPlayButton.position.y)
+      
+      self.soundPlayIcon.xScale = 0.6
+      self.soundPlayIcon.yScale = 0.6
+      
+      self.descriptionLabel.position = CGPointMake(self.soundPlayButton.position.x + self.soundPlayButton.size.width/2 - margin, self.soundPlayButton.position.y)
+    
+    }
+  
     /* initialize GameViewController.Layers */
     func initLayers () {
         self.descriptionLabel.zPosition = GameViewController.Layers.Label.rawValue
+        self.soundPlayIcon.zPosition = GameViewController.Layers.Label.rawValue
+        self.soundPlayButton.zPosition = GameViewController.Layers.BelowLabel.rawValue
 //        self.questionLabel.zPosition = GameViewController.Layers.Label.rawValue
         self.wrongLabel.zPosition = GameViewController.Layers.Label.rawValue
         self.foundLabel.zPosition = GameViewController.Layers.Label.rawValue
         self.colorMask.zPosition = GameViewController.Layers.Mask.rawValue
         self.topMask.zPosition = GameViewController.Layers.Top.rawValue
         self.mainObjectNode.zPosition = GameViewController.Layers.AboveMask.rawValue
-        self.soundPlayButton.zPosition = GameViewController.Layers.BelowLabel.rawValue
+      
         
         //    self.firstOptionNode.zPosition = GameViewController.Layers.AboveMask.rawValue
         //    self.secondOptionNode.zPosition = GameViewController.Layers.AboveMask.rawValue
@@ -658,8 +682,10 @@ class VocabularyScene: SKScene, ConfigurableScene {
         let frame = self.initFrame
         
         // draw label
-        
-        self.descriptionLabel.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
+      
+//        self.descriptionLabel.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
+      
+      
         
         //    var mainTextureAtlas = SKTextureAtlas(named: self.gameController.getMainObj().name)
         self.mainObjectNode = SKSpriteNode(texture: SKTexture(imageNamed: imageFileName))
@@ -776,8 +802,8 @@ class VocabularyScene: SKScene, ConfigurableScene {
         var index = 0
         
         // draw label
-      self.descriptionLabel.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
-//        self.questionLabel.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
+//      self.descriptionLabel.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
+
       
         for option in self.gameController.options {
             var object = option.first!

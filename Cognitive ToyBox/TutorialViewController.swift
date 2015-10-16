@@ -11,6 +11,7 @@ import SpriteKit
 
 class TutorialViewController: UIViewController {
   @IBOutlet var skView: SKView!
+  @IBOutlet weak var questionNumLabel: UILabel!
   var isFinished = false
   
   override func viewDidLoad() {
@@ -50,27 +51,41 @@ class TutorialViewController: UIViewController {
     
     let object = CognitiveToyBoxObjectBuilder()
     
-    object.name = "chair"
-//    object.filename = "ABLUECH17"
-    object.filename = "shutterstock_104639921"
+    object.name = "cat"
+    object.filename = "shutterstock_183082052"
+    scene.objectList.append(object.build())
+    
+    object.name = "keys"
+    object.filename = "shutterstock_7039687"
     scene.objectList.append(object.build())
     
     object.name = "ball"
-//    object.filename = "ABALL"
+    object.filename = "shutterstock_195844679"
+    scene.objectList.append(object.build())
+    
+    object.name = "boat"
+    object.filename = "shutterstock_205889836"
+    scene.objectList.append(object.build())
+    
+    
+    
+    // second round
+    object.name = "airplane"
+    object.filename = "shutterstock_93645625"
+    scene.objectListSecond.append(object.build())
+    
+    object.name = "dog"
+    object.filename = "shutterstock_104236235"
+    scene.objectListSecond.append(object.build())
+    
+    object.name = "bird"
+    object.filename = "shutterstock_212438875"
+    scene.objectListSecond.append(object.build())
+    
+    object.name = "ball"
     object.filename = "shutterstock_170247413"
-    scene.objectList.append(object.build())
+    scene.objectListSecond.append(object.build())
     
-    object.name = "sofa"
-//    object.filename = "ACOUCH14"
-    object.filename = "shutterstock_171073781"
-    scene.objectList.append(object.build())
-    
-    object.name = "glasses"
-//    object.filename = "AGLASSE10"
-    object.filename = "shutterstock_207959095"
-    scene.objectList.append(object.build())
-    
-      
       
     skView.presentScene(scene)
   }

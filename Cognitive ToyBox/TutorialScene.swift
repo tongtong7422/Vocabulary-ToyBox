@@ -20,8 +20,9 @@ class TutorialScene: SKScene, ConfigurableScene {
   }
   
   // hard code
-  private let h_correctIndex = [0,1]
-  
+//  private let h_correctIndex = [0,1]
+  private let h_correctIndex = [2,1]
+
   // constants
   let versionNum = Int(UIDevice.currentDevice().systemVersion.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "."))[0])
   let labelFontSize   :CGFloat = 60
@@ -29,14 +30,19 @@ class TutorialScene: SKScene, ConfigurableScene {
   let mainScaleAfter  :CGFloat = 0.7
   let normalScale     :CGFloat = 0.85
   
-  let descriptionLabel1  = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+  let descriptionLabel  = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
   let descriptionLabel2  = SKLabelNode(fontNamed: GlobalConfiguration.labelFont)
+  
+  var soundPlayButton :SKSpriteNode! = nil
+  var soundPlayIcon:SKSpriteNode! = nil
+  var handSign: SKSpriteNode! = nil
   
   let touchAreaLength : CGFloat = 240
   
   // private member variables
   private var round:Int        = 0
-  
+  private var wrongCounter     = 0
+  private var wrongIndex       = 0
   private var toddlerLock:Bool = false
   
   /* special treatment for toddlers on touching! */
@@ -60,6 +66,8 @@ class TutorialScene: SKScene, ConfigurableScene {
   var correctIndex  : Int                           = 0
   var background    : SKSpriteNode!                 = nil
   var objectList    : [CognitiveToyBoxObject]       = []
+  var objectListSecond    : [CognitiveToyBoxObject] = []
+
   
   // properties
   var correctNode: SKSpriteNode! {
@@ -119,13 +127,8 @@ class TutorialScene: SKScene, ConfigurableScene {
     self.addChild(self.topMask)
     
     self.initFrame = self.frame
-    
-    //        if gameController.task == .Vocabulary {
+  
     self.optionsFrame = self.frame
-    //        } else {
-    //            self.optionsFrame = CGRectOffset(CGRectInset(self.frame, 0, offset), 0, -offset)
-    //        }
-    //    }
     
     self.initOptions()
     self.initFrames()
@@ -178,17 +181,25 @@ class TutorialScene: SKScene, ConfigurableScene {
     let allTouches = event.allTouches()! as NSSet
     
     for touch : AnyObject in allTouches {
-      var location = (touch as! UITouch).locationInNode(self)
-      var node = self.nodeAtPoint(location)
+      let location = (touch as! UITouch).locationInNode(self)
+      let node = self.nodeAtPoint(location)
       
       if node.alpha != 1 {
         continue
       }
       
       var isInWrongFrame = false
-      for wrongFrame in wrongFrameList {
-        if CGRectContainsPoint(wrongFrame, location) {
+//      for wrongFrame in wrongFrameList {
+//        if CGRectContainsPoint(wrongFrame, location) {
+//          isInWrongFrame = true
+//          break
+//        }
+//      }
+      
+      for i in 0..<3  {
+        if CGRectContainsPoint(wrongFrameList[i], location) {
           isInWrongFrame = true
+          wrongIndex = i
           break
         }
       }
@@ -233,7 +244,7 @@ class TutorialScene: SKScene, ConfigurableScene {
     self.background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
     self.background.zPosition = GameViewController.Layers.Bottom.rawValue
     
-    var border = SKSpriteNode(imageNamed: "border")
+    let border = SKSpriteNode(imageNamed: "border")
     border.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
     border.zPosition = GameViewController.Layers.Bottom.rawValue
     
@@ -245,23 +256,39 @@ class TutorialScene: SKScene, ConfigurableScene {
   
   /* initialize labels */
   func initLabels () {
-    self.descriptionLabel1.fontSize = self.labelFontSize
-    self.descriptionLabel1.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
-    self.descriptionLabel1.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
+    self.descriptionLabel.fontSize = self.labelFontSize
+    self.descriptionLabel.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
+    self.descriptionLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Right
+    self.descriptionLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+    self.descriptionLabel.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
     
-    self.descriptionLabel2.fontSize = self.labelFontSize
-    self.descriptionLabel2.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
-    self.descriptionLabel2.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 4)
     
-    self.addChild(self.descriptionLabel1)
-    self.addChild(self.descriptionLabel2)
+    self.soundPlayButton = SKSpriteNode(texture: SKTexture(imageNamed:"soundPlayButton"))    
+    self.soundPlayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + self.size.height*0.35)
+    
+    self.soundPlayIcon = SKSpriteNode(texture: SKTexture(imageNamed:"soundPlayIcon"))
+    
+    
+//    self.descriptionLabel2.fontSize = self.labelFontSize
+//    self.descriptionLabel2.fontColor = UIColor(white: CGFloat(0), alpha: CGFloat(1))
+//    self.descriptionLabel2.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 4)
+    
+    self.addChild(self.descriptionLabel)
+    self.addChild(self.soundPlayButton)
+    self.addChild(self.soundPlayIcon)
+    
+
+//    self.addChild(self.descriptionLabel2)
   }
   
   /* initialize GameViewController.Layers */
   func initLayers () {
-    self.descriptionLabel1.zPosition = GameViewController.Layers.Label.rawValue
-    self.descriptionLabel2.zPosition = GameViewController.Layers.Label.rawValue
+    self.descriptionLabel.zPosition = GameViewController.Layers.Label.rawValue
+//    self.descriptionLabel2.zPosition = GameViewController.Layers.Label.rawValue
     self.topMask.zPosition = GameViewController.Layers.Top.rawValue
+
+    self.soundPlayIcon.zPosition = GameViewController.Layers.Label.rawValue
+    self.soundPlayButton.zPosition = GameViewController.Layers.BelowLabel.rawValue
     
     for node in optionNodeList {
       node.zPosition = GameViewController.Layers.AboveMask.rawValue
@@ -273,11 +300,10 @@ class TutorialScene: SKScene, ConfigurableScene {
   func initOptions () {
     
     // init scene
-    let frame = self.initFrame
     var index = 0
     
     for object in self.objectList {
-      var node = SKSpriteNode(texture: SKTexture(imageNamed: object.description))
+      let node = SKSpriteNode(texture: SKTexture(imageNamed: object.description))
       node.position = VocabularyScene.optionLocation(frame: optionsFrame, index: index)
       node.xScale = normalScale
       node.yScale = normalScale
@@ -286,7 +312,6 @@ class TutorialScene: SKScene, ConfigurableScene {
       
       index++
     }
-    
     
     
   }
@@ -300,24 +325,26 @@ class TutorialScene: SKScene, ConfigurableScene {
         continue
       }
       
-      var wrongFrame = CGRect(origin: CGPointApplyAffineTransform(optionNodeList[i].position, CGAffineTransformMakeTranslation(-touchAreaLength/2, -touchAreaLength/2)) , size: CGSize(width: touchAreaLength, height: touchAreaLength))
+      let wrongFrame = CGRect(origin: CGPointApplyAffineTransform(optionNodeList[i].position, CGAffineTransformMakeTranslation(-touchAreaLength/2, -touchAreaLength/2)) , size: CGSize(width: touchAreaLength, height: touchAreaLength))
       wrongFrameList.append(wrongFrame)
     }
   }
   
   func initCache () {
-    let frame = self.initFrame
+
     var index = 0
     
+    objectList = []
+    wrongFrameList = []
     
-    for object in self.objectList {
-      var node = SKSpriteNode(texture: SKTexture(imageNamed: object.description))
+    for object in self.objectListSecond {
+      let node = SKSpriteNode(texture: SKTexture(imageNamed: object.description))
       node.position = VocabularyScene.optionLocation(frame: optionsFrame, index: index)
       node.xScale = normalScale
       node.yScale = normalScale
       
       cacheOptionNodeList.append(node)
-      
+      objectList.append(object)
       index++
     }
     
@@ -333,7 +360,7 @@ class TutorialScene: SKScene, ConfigurableScene {
         continue
       }
       
-      var wrongFrame = CGRect(origin: CGPointApplyAffineTransform(cacheOptionNodeList[i].position, CGAffineTransformMakeTranslation(-touchAreaLength/2, -touchAreaLength/2)) , size: CGSize(width: touchAreaLength, height: touchAreaLength))
+      let wrongFrame = CGRect(origin: CGPointApplyAffineTransform(cacheOptionNodeList[i].position, CGAffineTransformMakeTranslation(-touchAreaLength/2, -touchAreaLength/2)) , size: CGSize(width: touchAreaLength, height: touchAreaLength))
       wrongFrameList.append(wrongFrame)
     }
     
@@ -342,24 +369,26 @@ class TutorialScene: SKScene, ConfigurableScene {
   
   /* display options and label */
   func displayOptions () {
-    descriptionLabel1.text = "In this game, I’m going to tell you to pick one."
-    descriptionLabel2.text = "Put your finger on the chair "
+    descriptionLabel.text = "ball"
+    setLabelSize()
+//    descriptionLabel2.text = "Put your finger on the chair "
     for node in optionNodeList {
       self.addChild(node)
     }
     
     self.allowTouching()
     // play sound effect
-    self.runAction(SoundSourceHelper.soundFind(name: objectList[correctIndex].name))
-    self.emphasizeOptions() {
-      [unowned self] () -> () in
-      
+    self.runAction(ActionHelper.waitForMainObjectFlipSound ()){
+      self.runAction(SoundSourceHelper.soundFindObject(name: self.objectList[self.correctIndex].name))
     }
+
+//    self.runAction(SoundSourceHelper.soundFind(name: objectList[correctIndex].name))
+    
     
   }
   
   func displayCache () {
-    
+    descriptionLabel.text = "dog"
     
     for node in cacheOptionNodeList {
       self.addChild(node)
@@ -368,10 +397,6 @@ class TutorialScene: SKScene, ConfigurableScene {
     self.allowTouching()
     // play sound effect
     self.runAction(SoundSourceHelper.soundFind(name: objectList[correctIndex].name))
-    self.emphasizeOptions() {
-      [unowned self] () -> () in
-      
-    }
     
   }
   
@@ -405,6 +430,41 @@ class TutorialScene: SKScene, ConfigurableScene {
 //    self.preventTouching()
 //    
 //    self.objectFound()
+    self.removeAllActions()
+    
+    wrongCounter++
+    var realIndex = 0
+    if wrongIndex < h_correctIndex[round]{
+      realIndex = wrongIndex
+    }else{
+      realIndex = wrongIndex+1
+    }
+    
+    self.runAction(SoundSourceHelper.soundTouchWrongObject(name: objectList[realIndex].name))
+      
+    if wrongCounter >= 3 {
+      self.handSign = SKSpriteNode(texture: SKTexture(imageNamed:"handSign"))
+      self.handSign.position = CGPointMake(CGRectGetMidX(self.correctFrame), CGRectGetMidY(self.correctFrame)-self.correctFrame.size.height/6)
+      self.handSign.zPosition = GameViewController.Layers.Label.rawValue
+      self.handSign.anchorPoint = CGPointMake(0.4, 1)
+      self.handSign.xScale = 0.5
+      self.handSign.yScale = 0.5
+      self.handSign.zRotation = 1/3
+      
+      self.addChild(handSign)
+      //add action
+      let wiggleIn = SKAction.scaleTo(0.9, duration: 0.5)
+      let wiggleOut = SKAction.scaleTo(0.5, duration: 0.5)
+      let wiggle = SKAction.sequence([wiggleIn, wiggleOut])
+      let wiggleRepeat = SKAction.repeatActionForever(wiggle)
+      handSign.runAction(wiggleRepeat, withKey: "wiggle")
+      
+      
+      self.runAction(SoundSourceHelper.soundTouchWrongObject(name: objectList[realIndex].name))
+      
+    }
+    
+    
     
     self.runAction(ActionHelper.maskDelay()) {
       [unowned self] () -> () in
@@ -414,6 +474,12 @@ class TutorialScene: SKScene, ConfigurableScene {
   }
   
   func objectFound () {
+    
+    self.removeAllActions()
+    
+    if self.handSign != nil {
+      self.handSign.hidden = true
+    }
     
     self.runAction(SoundSourceHelper.soundBlop()) {
       [unowned self] () -> () in
@@ -426,9 +492,8 @@ class TutorialScene: SKScene, ConfigurableScene {
   func nextRound()
   {
     ++round
-    descriptionLabel1.text = "Now let’s do the next one. "
-    descriptionLabel2.text = "Please put your finger on the ball!"
     
+
     if (round >= h_correctIndex.count)
     {
       self.tutorialViewController?.isFinished = true
@@ -440,6 +505,16 @@ class TutorialScene: SKScene, ConfigurableScene {
       self.removeFromParent()
       
     } else {
+      
+      
+      descriptionLabel.text = "dog"
+      
+      self.initCache()
+      self.playFlipAnimation()
+      self.runAction(ActionHelper.waitForMainObjectFlipSound ()){
+        self.runAction(SoundSourceHelper.soundFindObject(name: "dog"))
+      }
+
       self.resetScene()
       
     }
@@ -450,10 +525,16 @@ class TutorialScene: SKScene, ConfigurableScene {
   func resetScene()
   {
     correctIndex = h_correctIndex[round]
+    wrongFrameList = []
+    wrongCounter = 0
+    wrongIndex = 0
+    
     // set label
+    
+    self.tutorialViewController?.questionNumLabel.text = "question \(round+1) of 2"
     // set mask
     // set frame
-    if (!self.optionNodeList.isEmpty)
+    if (!self.optionNodeList.isEmpty  )
     {
       initFrames()
     }
@@ -503,7 +584,27 @@ class TutorialScene: SKScene, ConfigurableScene {
     
   }
 
-  
+  func setLabelSize(){
+    
+    let margin:CGFloat = 20
+    
+    let labelWidth = self.descriptionLabel.frame.width
+    
+    self.soundPlayButton.size.width = labelWidth + self.soundPlayIcon.frame.width + 2*margin
+    
+    self.soundPlayButton.yScale = 1.2
+    
+    //      self.soundPlayIcon.position = CGPointMake(-self.soundPlayButton.size.width/2, 0)
+    //      self.soundPlayIcon.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + frame.height / 3)
+    self.soundPlayIcon.anchorPoint = CGPointMake(0, 0.5)
+    self.soundPlayIcon.position = CGPointMake(self.soundPlayButton.position.x - self.soundPlayButton.size.width/2 + margin, self.soundPlayButton.position.y)
+    self.soundPlayIcon.xScale = 0.6
+    self.soundPlayIcon.yScale = 0.6
+    
+    self.descriptionLabel.position = CGPointMake(self.soundPlayButton.position.x + self.soundPlayButton.size.width/2 - margin, self.soundPlayButton.position.y)
+    
+
+  }
   
   
   /* touch control */

@@ -24,7 +24,7 @@ public class CognitiveToyBoxObject : NSObject {
  
   public class var allObjects: [String] {
     get {
-      return ["ball", "basket","belt", "bench","bird","bowl","chair","dog","dress","flag","glasses","gloves","glue","hammer","hose","jar","keys","ladder","lamp","napkin","necklace","pig","pretzel","scarf","shovel","sled","sofa","stairs","tape","toast","tractor","tractor","tray","tricycle","zipper"]
+      return ["airplane","ball", "basket","belt", "bench","bird","bowl","boat","cat","chair","dog","dress","flag","glasses","gloves","glue","hammer","hose","jar","keys","ladder","lamp","napkin","necklace","pig","pretzel","scarf","shovel","sled","sofa","stairs","tape","toast","tractor","tractor","tray","tricycle","zipper"]
     }
   }
   
@@ -53,7 +53,7 @@ public class CognitiveToyBoxObject : NSObject {
   }
   public class var testObjects: [String] {
     get {
-      return ["zipper","glasses","hammer","sofa","chair","belt"]
+      return ["dog","dress","bird","ball","keys"]
     }
   }
   

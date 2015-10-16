@@ -73,6 +73,10 @@ class UserViewController: UIViewController, UITextFieldDelegate, UICollectionVie
   
 //  @IBOutlet weak var datePicker: UIDatePicker!
   
+  @IBAction func analysisButton(sender: UIButton) {
+    self.performSegueWithIdentifier("homeToAnalysisSegue", sender: self)
+    return
+  }
   @IBAction func switchSoundMode(sender: UIButton) {
     GlobalConfiguration.muted = !GlobalConfiguration.muted
     if GlobalConfiguration.muted {

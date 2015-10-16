@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AnalysisViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TKChartDelegate, TKChartDataSource {
+class AnalysisViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
   class Word: NSObject {
     let name: String
@@ -21,6 +21,8 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     }
   }
   
+  let textColor = UIColor(red:0.40, green:0.40, blue:0.40, alpha:1.0)
+  
   /* custom type to represent table sections*/
 //  class Section {
 //    var words: [Word] = []
@@ -31,29 +33,40 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
 //    
 //  }
   
-  @IBOutlet var chartView: UIView!
-  @IBOutlet var tableView: UITableView!
+//  @IBOutlet var chartView: UIView!
   
+  @IBOutlet weak var questionNumLabel: UILabel!
+  @IBOutlet weak var wordNumLabel: UILabel!
+  @IBOutlet weak var masterTableView: UITableView!
+  @IBOutlet weak var unMasterTableView: UITableView!
   var popoverController : UIPopoverController? = nil
   var sourceViewController: UIViewController? = nil
   
   var names = [String]()
   var accuracy = [Float]()
-  var levelOfWord = [String]()
+  var masterWords : [String] = [String]()
+  var unmasterWords : [String] = [String]()
   
+  var masterWordsAccuracyLevel : [Int] = [Int]()
+  var unmasterWordsAccuracyLevel : [Int] = [Int]()
+  var masterImages : [UIImage] = [UIImage]()
+  var unmasterImages : [UIImage] = [UIImage]()
+  var totalQuestions : Int = 0
+  var wordsAssessed :Int = 0
+  
+//  var levelOfWord = [String]()
   
   var performance : [String: PerformanceData]!
   
 //  var _sections: [Section]?
-
-  var levelNames = [String]()
-  var levelMasterPercentage = [Float]()
+//  var levelNames = [String]()
+  
+//  var levelMasterPercentage = [Float]()
 
   var isMaster :[String: Bool] = [:]
   
-  var series = [TKChartSeries]()
-  
-  var chart : TKChart!
+//  var series = [TKChartSeries]()
+//  var chart : TKChart!
   
   
   @IBAction func clearButton(sender: AnyObject) {
@@ -61,13 +74,23 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     self.names = []
     self.accuracy = []
     self.performance = [:]
+    self.masterWords = []
+    self.unmasterWords = []
+    self.masterWordsAccuracyLevel = []
+    self.unmasterWordsAccuracyLevel = []
+    self.masterImages = []
+    self.unmasterImages = []
+    self.totalQuestions = 0
+    self.wordsAssessed  = 0
 //    self._sections  = [Section]()
-    self.levelNames = []
-    self.levelMasterPercentage = []
+//    self.levelNames = []
+//    self.levelMasterPercentage = []
     self.isMaster = [:]
-    self.tableView.reloadData()
+    self.masterTableView.reloadData()
+    self.unMasterTableView.reloadData()
     loadData()
-    self.chart.reloadData()
+    initLabel()
+//    self.chart.reloadData()
   }
   
   deinit {
@@ -78,8 +101,14 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.masterTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "masterCell")
+    self.unMasterTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "unmasterCell")
+
+    self.masterTableView.separatorStyle = UITableViewCellSeparatorStyle.None;
+    self.unMasterTableView.separatorStyle = UITableViewCellSeparatorStyle.None;
 
     loadData()
+    initLabel()
     
   }
   
@@ -88,41 +117,47 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
     
     self.popoverController?.setPopoverContentSize(CGSize(width: 1024, height: 768), animated: false)
     
+    
   }
   
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-    
-    // init chart
-    chart = TKChart(frame: self.chartView.frame)
-    
-    // init delegate
-    chart.delegate = self
-    
-    // init dataSource
-    chart.dataSource = self
-    
-    // auto resizing
-    chart.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
-    
-    chart.title().text = "Performance"
-
-    chart.title().hidden = false
-    
-    chart.allowAnimations = true
-    chart.legend().hidden = true
-    let formatter = NSNumberFormatter()
-    formatter.numberStyle = .PercentStyle
-    chart.yAxis.labelFormatter = formatter
-    
-    // add chart
-    self.view.addSubview(chart)
-    
-    
-  }
+//*************************************************
+//  prepare chartview
+//  ***********************************************
+  
+//  override func viewWillLayoutSubviews() {
+//    super.viewWillLayoutSubviews()
+//    
+//    // init chart
+//    chart = TKChart(frame: self.chartView.frame)
+//    
+//    // init delegate
+//    chart.delegate = self
+//    
+//    // init dataSource
+//    chart.dataSource = self
+//    
+//    // auto resizing
+//    chart.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+//    
+//    chart.title.text = "Performance"
+//
+//    chart.title.hidden = false
+//    
+//    chart.allowAnimations = true
+//    chart.legend.hidden = true
+//    let formatter = NSNumberFormatter()
+//    formatter.numberStyle = .PercentStyle
+//    chart.yAxis!.labelFormatter = formatter
+//    
+//    // add chart
+//    self.view.addSubview(chart)
+//    
+//    
+//  }
   
   override func viewDidDisappear(animated: Bool) {
     self.popoverController = nil
+
   }
   
   override func didReceiveMemoryWarning() {
@@ -140,7 +175,120 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
 //    }
 //    return sectionItems
 //  }
- 
+
+/* UITableView DataSource*/
+
+//  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//    let cell : UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Default")
+//    var label : UILabel
+//    // get the items in this section
+//    let sectionItems = self.getSectionItems(indexPath.section)
+//
+//    // get the item for the row in this section
+//    let wordItem = sectionItems[indexPath.row]
+//
+//    cell.textLabel!.text = wordItem.name
+//    var accuracy = NSString(format: "%.0f", wordItem.accuracy*100)
+//    cell.detailTextLabel?.text = "\(accuracy)%"
+//
+//
+////    cell.textLabel!.text = self.names[indexPath.row]
+////    var accuracy = NSString(format: "%.0f", self.accuracy[indexPath.row]*100)
+////    cell.detailTextLabel?.text = "\(accuracy)%"
+//
+//    return cell
+//  }
+
+  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    return 1
+  }
+
+  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if tableView == masterTableView {
+      return self.masterWords.count;
+    } else {
+      return self.unmasterWords.count;
+    }
+  }
+  
+  func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath) ->  UITableViewCell {
+    var masterCell:UITableViewCell?
+    var unmasterCell:UITableViewCell?
+    if tableView == masterTableView {
+      masterCell = self.masterTableView.dequeueReusableCellWithIdentifier("masterCell") as? UITableViewCell!
+      if masterCell == nil {
+        masterCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "masterCell")
+      }
+      masterCell!.textLabel!.text = self.masterWords[indexPath.row]
+      masterCell!.imageView!.image = self.masterImages[indexPath.row]
+      
+      masterCell!.contentView.transform = CGAffineTransformMakeScale(-1,1);
+      masterCell!.imageView!.transform = CGAffineTransformMakeScale(-1,1);
+      masterCell!.textLabel!.transform = CGAffineTransformMakeScale(-1,1);
+      masterCell!.textLabel!.font = UIFont(name:GlobalConfiguration.labelFont, size:28)
+      masterCell!.textLabel!.textColor = textColor
+      return masterCell!
+      
+    } else {
+      unmasterCell = self.unMasterTableView.dequeueReusableCellWithIdentifier("unmasterCell") as? UITableViewCell!
+      if unmasterCell == nil {
+        unmasterCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "unmasterCell")
+      }
+      unmasterCell!.textLabel!.text = self.unmasterWords[indexPath.row]
+      unmasterCell!.imageView!.image = self.unmasterImages[indexPath.row]
+      
+      unmasterCell!.contentView.transform = CGAffineTransformMakeScale(-1,1);
+      unmasterCell!.imageView!.transform = CGAffineTransformMakeScale(-1,1);
+      unmasterCell!.textLabel!.transform = CGAffineTransformMakeScale(-1,1);
+      unmasterCell!.textLabel!.font = UIFont(name:GlobalConfiguration.labelFont, size:28)
+      unmasterCell!.textLabel!.textColor = textColor
+      return unmasterCell!
+    }
+  }
+  
+  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
+  }
+  func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 50.0
+  }
+  
+  func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    
+    class CustomView: UITableViewHeaderFooterView
+    {
+      private override func layoutSubviews() {
+        super.layoutSubviews()
+        self.textLabel?.font = UIFont(name:GlobalConfiguration.labelFont, size:28)
+        self.textLabel?.textAlignment = .Center
+      }
+    }
+
+    let mheader: CustomView = CustomView()
+    let uheader: CustomView = CustomView()
+    
+    
+    if tableView == masterTableView{
+      
+      mheader.textLabel!.text = "words known";
+      mheader.textLabel!.textColor = textColor
+      mheader.backgroundView = UIView(frame: mheader.bounds)
+      mheader.backgroundView!.backgroundColor = UIColor.clearColor()
+      
+      return mheader
+    }else{
+      
+      uheader.textLabel!.text = "words unknown";
+      uheader.textLabel!.textColor = textColor
+      uheader.backgroundView = UIView(frame: uheader.bounds)
+      uheader.backgroundView!.backgroundColor = UIColor.clearColor()
+      return uheader
+    }
+    
+  }
+
+
+
 /* UITableView DataSource, with three sections*/
 /*****************************************************************************/
 //  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -198,27 +346,16 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
 //  }
 /**************************************************************************************************/
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 0
-  }
-  
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    return UITableViewCell()
-  }
-  
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    
-  }
   
   
   /********************* chart ***********************************/
-  func numberOfSeriesForChart(chart: TKChart!) -> UInt {
-    return UInt(self.series.count)
-  }
-  
-  func seriesForChart(chart: TKChart!, atIndex index: UInt) -> TKChartSeries! {
-    return self.series[Int(index)]
-  }
+//  func numberOfSeriesForChart(chart: TKChart!) -> UInt {
+//    return UInt(self.series.count)
+//  }
+//  
+//  func seriesForChart(chart: TKChart!, atIndex index: UInt) -> TKChartSeries! {
+//    return self.series[Int(index)]
+//  }
   
   /***************************************************************/
   @IBAction func backToMain(sender: UIButton) {
@@ -244,16 +381,32 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
 //        controller.dismissViewControllerAnimated(false) {}
 //      }
 //    }
+    
+  }
+  
+  func initLabel() {
+    self.questionNumLabel.text = "\(self.totalQuestions)"
+    self.wordNumLabel.text     = "\(self.wordsAssessed)"
   }
   
   func loadData () {
     
     self.names = []
     self.accuracy = []
-    self.levelOfWord = []
-    self.levelNames = []
-    self.series = []
-    self.levelMasterPercentage = []
+    self.masterWords = []
+    self.unmasterWords = []
+    self.masterWordsAccuracyLevel = []
+    self.unmasterWordsAccuracyLevel = []
+    self.masterImages = []
+    self.unmasterImages = []
+    self.totalQuestions = 0
+    self.wordsAssessed = 0
+    
+    
+//    self.levelOfWord = []
+//    self.levelNames = []
+//    self.series = []
+//    self.levelMasterPercentage = []
 //    self._sections = [Section]()
 //    var easyCorrectNum : Int = 0
 //    var middleCorrectNum : Int = 0
@@ -271,15 +424,66 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
 
     performance = UserPerformanceHelper.getPerformance()
     for (key, value) in performance {
-      self.names.append(key)
-      self.accuracy.append(value.accuracy)
       
-      if value.accuracy < 0.8 {
-        self.isMaster[key] = false
-      }else {
-        self.isMaster[key] = true
+      
+      if value.total == 5 {
+        
+        self.names.append(key)
+        self.accuracy.append(value.accuracy)
+        self.wordsAssessed++
+        
+        if value.accuracy < 0.8  {
+          
+          self.isMaster[key] = false
+          
+          if value.accuracy == 0.6{
+            
+            let image : UIImage = UIImage(named: "threeOutOfFive")!
+            self.unmasterWordsAccuracyLevel.append(3)
+            self.unmasterImages.append(image)
+            self.unmasterWords.append(key)
+          }else if value.accuracy == 0.4 {
+            
+            let image : UIImage = UIImage(named: "twoOutOfFive")!
+            self.unmasterWordsAccuracyLevel.append(2)
+            self.unmasterImages.append(image)
+            self.unmasterWords.append(key)
+          }else if value.accuracy == 0.2 {
+            
+            let image : UIImage = UIImage(named: "oneOutOfFive")!
+            self.unmasterWordsAccuracyLevel.append(1)
+            self.unmasterImages.append(image)
+            self.unmasterWords.append(key)
+          }else if value.accuracy == 0.0{
+            
+            let image : UIImage = UIImage(named: "zeroOutOfFive")!
+            self.unmasterWordsAccuracyLevel.append(0)
+            self.unmasterImages.append(image)
+            self.unmasterWords.append(key)
+          }
+          
+        }else {
+          
+          self.isMaster[key] = true
+          
+          if value.accuracy == 0.8{
+            
+            let image : UIImage = UIImage(named: "fiveOutOfFive")!
+            self.masterWordsAccuracyLevel.append(5)
+            self.masterImages.append(image)
+            self.masterWords.append(key)
+          }else{
+            let image : UIImage = UIImage(named: "fourOutOfFive")!
+            self.masterWordsAccuracyLevel.append(4)
+            self.masterImages.append(image)
+            self.masterWords.append(key)
+            
+          }
+          
+        }
+        
       }
-
+      
 
 /* vocabulary with hardness level */
 
@@ -313,6 +517,7 @@ class AnalysisViewController: UIViewController, UITableViewDelegate, UITableView
 //      }
       
     }
+    self.totalQuestions = self.wordsAssessed*5
     
 /* vocabulary with hardness level */
 //    if easyNum != 0 {

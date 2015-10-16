@@ -7,5 +7,5 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <TelerikUI/TelerikUI.h>
+//#import <TelerikUI/TelerikUI.h>
 #import "Flurry.h"

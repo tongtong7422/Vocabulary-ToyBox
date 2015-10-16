@@ -218,10 +218,32 @@ public class GlobalConfiguration: NSObject, NSCoding {
 //    }
 //  }
   
-  private let _labelFont: String = "ZNuscriptHeavy"//"Vag Round"
+//  private let _labelFont: String = "ZNuscriptHeavy"//"Vag Round"
+//  public class var labelFont: String {
+//    get {
+//      return self.sharedInstance._labelFont
+//    }
+//  }
+  
+  private let _labelFont: String = "ProximaNova-Regular"
   public class var labelFont: String {
     get {
       return self.sharedInstance._labelFont
+    }
+  }
+
+  
+  private let _resultLabelFont: String = "ProximaNova-Bold"
+  public class var resultLabelFont: String {
+    get {
+      return self.sharedInstance._resultLabelFont
+    }
+  }
+  
+  private let _resultTextFont: String = "ProximaNova-Regular"
+  public class var resultTextFont: String {
+    get {
+      return self.sharedInstance._resultTextFont
     }
   }
   

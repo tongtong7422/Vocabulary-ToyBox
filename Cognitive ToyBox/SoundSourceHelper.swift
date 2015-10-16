@@ -269,6 +269,12 @@ public class SoundSourceHelper: NSObject, ConfigurableSoundSourceHelper, AVAudio
     return self.soundActionWithName("orisitthisone")
   }
   
+  //Tutorial Touch Wrong Object sound
+  public class func soundTouchWrongObject(name name:String)-> SKAction{
+    return self.soundActionWithName("wrong_\(name)")
+  }
+  
+  
   public class func stopBGM (completion: () -> () = {}) {
     if self.sharedInstance.bgmPlayer != nil {
       self.sharedInstance.bgmPlayer.shouldPlay = false

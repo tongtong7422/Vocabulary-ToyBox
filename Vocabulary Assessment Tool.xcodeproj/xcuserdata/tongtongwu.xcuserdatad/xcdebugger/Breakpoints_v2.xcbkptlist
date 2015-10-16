@@ -73,22 +73,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Cognitive ToyBox/UserPerformanceHelper.swift"
-            timestampString = "465250507.547492"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "309"
-            endingLineNumber = "309"
-            landmarkName = "getPerformance()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/GameViewController.swift"
             timestampString = "465291175.197107"
             startingColumnNumber = "9223372036854775807"
@@ -266,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287059.821354"
+            timestampString = "466639551.128456"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1026"
-            endingLineNumber = "1026"
+            startingLineNumber = "1052"
+            endingLineNumber = "1052"
             landmarkName = "wrongSelection()"
             landmarkType = "5">
          </BreakpointContent>
@@ -282,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287059.821354"
+            timestampString = "466554046.918919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "546"
-            endingLineNumber = "546"
+            startingLineNumber = "536"
+            endingLineNumber = "536"
             landmarkName = "VocabularyScene"
             landmarkType = "3">
          </BreakpointContent>
@@ -298,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465281524.294571"
+            timestampString = "466545948.168644"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
             landmarkName = "handleTouch(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -314,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287059.821354"
+            timestampString = "466639551.128456"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "841"
-            endingLineNumber = "841"
+            startingLineNumber = "867"
+            endingLineNumber = "867"
             landmarkName = "initCache()"
             landmarkType = "5">
          </BreakpointContent>
@@ -330,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287059.821354"
+            timestampString = "466639551.128456"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1168"
-            endingLineNumber = "1168"
+            startingLineNumber = "1194"
+            endingLineNumber = "1194"
             landmarkName = "playFlipAnimation()"
             landmarkType = "5">
          </BreakpointContent>
@@ -346,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287059.821354"
+            timestampString = "466639551.128456"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "994"
-            endingLineNumber = "994"
+            startingLineNumber = "1020"
+            endingLineNumber = "1020"
             landmarkName = "correctSelection()"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287059.821354"
+            timestampString = "466639551.128456"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1016"
-            endingLineNumber = "1016"
+            startingLineNumber = "1042"
+            endingLineNumber = "1042"
             landmarkName = "correctSelection()"
             landmarkType = "5">
          </BreakpointContent>
@@ -378,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287059.821354"
+            timestampString = "466639551.128456"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1068"
-            endingLineNumber = "1068"
+            startingLineNumber = "1094"
+            endingLineNumber = "1094"
             landmarkName = "objectFound()"
             landmarkType = "5">
          </BreakpointContent>
@@ -406,31 +390,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/AnalysisViewController.swift"
-            timestampString = "465262091.683653"
+            timestampString = "466650675.785747"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
-            landmarkName = "loadData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cognitive ToyBox/AnalysisViewController.swift"
-            timestampString = "465262091.683653"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
+            startingLineNumber = "378"
+            endingLineNumber = "378"
             landmarkName = "backToMain(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -442,11 +410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/UserViewController.swift"
-            timestampString = "465257738.553748"
+            timestampString = "466586403.772623"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
             landmarkName = "displayDate(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -458,11 +426,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/UserViewController.swift"
-            timestampString = "465257738.553748"
+            timestampString = "466586403.772623"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "417"
-            endingLineNumber = "417"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
             landmarkName = "textFieldShouldBeginEditing(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -474,11 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/UserViewController.swift"
-            timestampString = "465257738.553748"
+            timestampString = "466586403.772623"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "freeGame(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -602,11 +570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/SoundSourceHelper.swift"
-            timestampString = "465275004.574749"
+            timestampString = "466578119.269425"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
+            startingLineNumber = "408"
+            endingLineNumber = "408"
             landmarkName = "playSongOnce(_:startImmediately:interrupt:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -634,27 +602,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287059.821354"
+            timestampString = "466639551.128456"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "620"
-            endingLineNumber = "620"
-            landmarkName = "initLabels()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287059.821354"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1048"
-            endingLineNumber = "1048"
+            startingLineNumber = "1074"
+            endingLineNumber = "1074"
             landmarkName = "wrongSelection()"
             landmarkType = "5">
          </BreakpointContent>
@@ -665,13 +617,45 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Cognitive ToyBox/VocabularyScene.swift"
-            timestampString = "465287877.868681"
+            filePath = "Cognitive ToyBox/AnalysisViewController.swift"
+            timestampString = "466648250.788964"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "564"
-            endingLineNumber = "564"
-            landmarkName = "loadNextGroup()"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "AnalysisViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cognitive ToyBox/AnalysisViewController.swift"
+            timestampString = "466648250.788964"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "AnalysisViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cognitive ToyBox/AnalysisViewController.swift"
+            timestampString = "466650675.785747"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
+            landmarkName = "tableView(_:viewForHeaderInSection:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

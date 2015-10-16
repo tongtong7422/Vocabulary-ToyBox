@@ -19,11 +19,14 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>ProximaNova-Bold.otf</string>
+		<string>ProximaNova-Semibold.otf</string>
+		<string>ProximaNova-Regular.otf</string>
 		<string>znuscript-webfont.ttf</string>
 		<string>znuscriptheavy-webfont.ttf</string>
 		<string>znuscriptoutline-webfont.ttf</string>
@@ -34,6 +37,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations~ipad</key>
